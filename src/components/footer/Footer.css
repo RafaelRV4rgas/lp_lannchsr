@@ -1,0 +1,78 @@
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding-block: 55px 25px;
+  background: #0c0a0c;
+}
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+.footer-top .eyebrow {
+  margin-bottom: 20px;
+}
+.organization {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 440px;
+}
+.organization img {
+  border-radius: 3px;
+  object-fit: contain;
+  background: white;
+  flex-shrink: 0;
+}
+.organization strong {
+  letter-spacing: 0.08em;
+}
+.organization p {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin-top: 8px;
+}
+.president {
+  align-self: center;
+}
+.president p {
+  margin-top: 14px;
+  font-size: 0.9375rem;
+}
+.supporters {
+  margin-block: 45px;
+}
+.supporters ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 30px;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+.footer-bottom {
+  border-top: 1px solid var(--line);
+  padding-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  flex-wrap: wrap;
+}
+@media (max-width: 760px) {
+  .footer-top {
+    flex-direction: column;
+  }
+  .president {
+    align-self: start;
+  }
+  .organization img {
+    width: 75px;
+    height: 60px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+  }
+}

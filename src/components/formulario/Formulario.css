@@ -1,0 +1,125 @@
+.registration-card {
+  background: linear-gradient(135deg, #2b1b25, #1b151a);
+  border: 1px solid #593440;
+  border-radius: 6px;
+  padding: 38px;
+  width: 100%;
+  min-width: 0;
+}
+.registration-card h3 {
+  font-size: 1.8rem;
+  line-height: 1.25;
+  margin-block: 24px 18px;
+  letter-spacing: -0.02em;
+}
+.registration-card > p:not(.small-label):not(.form-price) {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+.registration-card .button {
+  width: 100%;
+  margin-top: 25px;
+}
+.student-note {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding-block: 24px;
+  margin-block: 18px;
+  border-block: 1px solid var(--line);
+}
+.student-note > span {
+  color: var(--accent-light);
+  font-size: 1.6rem;
+}
+.student-note strong {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+.student-note p {
+  color: var(--muted);
+  font-size: 0.8125rem;
+  margin-top: 3px;
+}
+.registration-card .form-footnote {
+  text-align: center;
+  font-size: 0.75rem !important;
+  margin-top: 16px;
+}
+.registration-card fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  min-width: 0;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 18px;
+}
+.field label {
+  font-size: 0.875rem;
+}
+.field input,
+.field select {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid #79636c;
+  border-radius: 3px;
+  background: #161116;
+  color: var(--text);
+}
+.field [aria-invalid='true'] {
+  border-color: #f8a1ae;
+}
+.field-error {
+  color: #ffc1cb !important;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.academic-fields {
+  border-left: 2px solid var(--accent);
+  padding-left: 16px;
+}
+.consent {
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.consent input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+  margin-top: 3px;
+}
+.form-price {
+  font-size: 1.7rem;
+  color: var(--accent-light);
+}
+.form-price span {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+@media (max-width: 760px) {
+  .registration-card {
+    padding: 26px;
+  }
+}
