@@ -6,7 +6,7 @@ it('uses a header token and rejects malformed server responses', async () => {
       JSON.stringify({
         status: 'confirmed',
         paymentUrl: null,
-        reservationExpiresAt: null,
+        paymentExpiresAt: null,
       }),
     ),
   )

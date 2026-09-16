@@ -1,6 +1,6 @@
 # Pendências para finalizar o projeto
 
-Atualizado em 06/09/2026. Referências: [spec](./spec.md) e [plano de implementação](./superpowers/plans/2026-09-06-simposio-neuro.md).
+Atualizado em 15/09/2026. Referências: [spec](./spec.md) e [plano de implementação](./superpowers/plans/2026-09-06-simposio-neuro.md).
 
 Marcar um item somente quando a decisão ou o material estiver registrado. Os campos “Resposta” ficam em aberto para preenchimento pela organização ou pelo responsável técnico. As propostas abaixo não são decisões já aprovadas.
 
@@ -10,13 +10,16 @@ Marcar um item somente quando a decisão ou o material estiver registrado. Os ca
 | --- | --- | --- | --- |
 | [ ] | Data do evento | Em aberto | Abrir inscrições |
 | [ ] | Horário de início, término previsto e fuso oficial | Em aberto | Divulgar informações completas e orientar participantes |
-| [ ] | Programação: horários, temas e palestrante de cada sessão | Já definida; solicitar material | Finalizar seção de programação |
-| [ ] | Palestrantes: nome, especialidade, apresentação curta e fotografia | Já definidos; solicitar material | Finalizar seção de palestrantes |
+| [x] | Temas e palestrantes de cada sessão | 10 temas e 12 palestrantes recebidos; cadastrados em `src/content/speakers.ts` | Estruturar programação |
+| [ ] | Horários e ordem das apresentações | Solicitar material | Finalizar programação |
+| [ ] | Fotografias dos palestrantes | Recebidas: Dr. Giovani Mendes e Dr. Renato Santos. Faltam 10; a prévia usa uma imagem genérica temporária | Finalizar seção de palestrantes |
+| [ ] | Apresentações curtas dos 12 palestrantes | A prévia usa textos demonstrativos identificados | Finalizar seção de palestrantes |
+| [ ] | CRMs dos 9 palestrantes restantes | Recebidos CRM-MT 4964 (Giovani Mendes), 8470 (Marcel Yamada) e 6414 (Virgilio Vilá) | Completar identificação profissional |
 | [ ] | Plataforma de transmissão | Em aberto | Preparar transmissão e integração operacional |
 | [ ] | Link de acesso ao evento | Em aberto | Liberar acesso aos inscritos confirmados |
 | [ ] | Contato oficial de atendimento: WhatsApp e/ou e-mail | Em aberto | Orientar participantes e tratar problemas |
 
-Lembrete já agendado para solicitar programação e palestrantes: **07/09/2026 às 13h, no fuso America/Cuiaba**.
+O lembrete para solicitar programação e palestrantes foi executado em **07/09/2026 às 13h, no fuso America/Cuiaba**. Os itens ainda não recebidos permanecem registrados acima.
 
 ## 2. Preço e regras comerciais
 
@@ -25,17 +28,12 @@ Lembrete já agendado para solicitar programação e palestrantes: **07/09/2026 
 | [ ] | Preço-base da inscrição em reais | Em aberto | Calcular e gerar cobranças |
 | [ ] | Formas de pagamento aceitas | Em aberto | Escolher e configurar o provedor |
 | [ ] | Se aceitar cartão: haverá parcelamento? Quantidade de parcelas e eventual custo para participante | Em aberto; dispensar se cartão não for aceito | Informar condições de pagamento |
-| [ ] | Reserva de 24 horas começará ativada ou desativada? | Em aberto | Configurar abertura das inscrições |
-| [ ] | Com a reserva desativada, qual será a validade da cobrança? | Em aberto; validade da cobrança é diferente de reserva de vaga | Configurar o checkout e pagamentos tardios |
+| [ ] | Qual será a validade da cobrança? | Em aberto; definir conforme os recursos do provedor | Configurar o checkout e pagamentos tardios |
 | [ ] | Quem poderá abrir e fechar as inscrições pelo painel? | Em aberto | Habilitar operação administrativa |
-| [ ] | Quando fechar inscrições manualmente, cobranças já emitidas continuarão pagáveis até vencer? | Proposta: respeitar validade e capacidade; confirmar | Evitar ambiguidade para quem já recebeu o link |
-| [ ] | Alterar a opção de reserva afetará apenas novas solicitações, preservando reservas existentes? | Proposta: sim; confirmar | Implementar mudanças sem alterar prazo já comunicado |
+| [ ] | Quando fechar inscrições manualmente, cobranças já emitidas continuarão pagáveis até vencer? | Proposta: respeitar a validade já comunicada; confirmar | Evitar ambiguidade para quem já recebeu o link |
 | [ ] | Regras de cancelamento e reembolso solicitado pelo participante, com prazos e canal de atendimento | Em aberto | Publicar condições e orientar atendimento |
-| [ ] | Se receber pagamento sem vaga: quem fará o estorno, por qual processo e em qual prazo? | Em aberto | Tratar concorrência e pagamentos tardios |
-| [ ] | Se uma pessoa pagar duas cobranças da mesma inscrição: como devolver o pagamento adicional? | Em aberto | Tratar duplicidade financeira sem conceder segunda vaga |
-| [ ] | Se houver cancelamento/estorno de inscrição confirmada, a vaga volta a ficar disponível e o acesso deixa de ser elegível para envio? | Em aberto | Definir efeitos do reembolso na inscrição e capacidade |
-
-**Dependência crítica:** o limite de vagas exige tratamento de pagamentos simultâneos. Verificar capacidade antes de abrir o link de pagamento, sozinho, não elimina o risco de receber dinheiro quando a última vaga já foi ocupada.
+| [ ] | Se uma pessoa pagar duas cobranças da mesma inscrição: como devolver o pagamento adicional? | Em aberto | Tratar duplicidade financeira |
+| [ ] | Se houver cancelamento/estorno de inscrição confirmada, o acesso deixa de ser elegível para envio? | Em aberto | Definir efeitos do reembolso na inscrição |
 
 ## 3. Materiais e informações para a página
 
@@ -58,7 +56,7 @@ Responsável: desenvolvimento em conjunto com quem administra as contas da organ
 | --- | --- | --- | --- |
 | [ ] | Provedor de pagamento e conta recebedora da organização | Em aberto | Implementar cobrança real |
 | [ ] | Validar API de cobrança, identificador por inscrição, webhook autenticado, consulta, expiração/cancelamento e estorno | Em aberto; registrar capacidades e limitações do escolhido | Implementar automação com segurança |
-| [ ] | Confirmar taxas, custos e compatibilidade dos meios de pagamento com o prazo de reserva | Em aberto | Fechar operação financeira |
+| [ ] | Confirmar taxas, custos e compatibilidade dos meios de pagamento com a validade da cobrança | Em aberto | Fechar operação financeira |
 | [ ] | WhatsApp Business Platform direto pela Meta ou por provedor | Em aberto | Implementar envio automático |
 | [ ] | Número oficial e responsável pela conta empresarial do WhatsApp | Em aberto | Configurar o remetente |
 | [ ] | Modelos aprovados de solicitação/cobrança, confirmação, acesso e recuperação segura de inscrição | Em aberto | Enviar mensagens iniciadas pelo sistema |
@@ -78,7 +76,7 @@ As escolhas técnicas devem ser registradas também em `docs/decisions/integrati
 | [ ] | Prazo de retenção e procedimento de exclusão dos dados de inscrição | Em aberto | Configurar armazenamento e operação |
 | [ ] | Texto do aviso de privacidade e autorização de mensagens relacionadas ao evento | Em aberto | Finalizar formulário |
 | [ ] | Procedimento para corrigir cadastro ou trocar WhatsApp quando o titular perdeu acesso ao número | Em aberto; exigir conferência pela organização | Recuperar inscrição sem expor dados pelo CPF |
-| [ ] | Responsável por acompanhar falhas de mensagem, cobranças e pagamentos sem vaga | Em aberto | Evitar solicitações sem tratamento |
+| [ ] | Responsável por acompanhar falhas de mensagem, cobranças e pagamentos duplicados ou tardios | Em aberto | Evitar solicitações sem tratamento |
 | [ ] | Confirmar recuperação da inscrição por link seguro enviado ao WhatsApp cadastrado | Proposta do plano; confirmar | Finalizar a jornada de retomada e modelo de mensagem |
 
 ## 6. Regras já definidas — não precisam ser rediscutidas
@@ -87,15 +85,14 @@ As escolhas técnicas devem ser registradas também em `docs/decisions/integrati
 - Presidência: Carolina Ayumi Kozima; organização: LANNcHSR.
 - Direção visual imersiva, com cérebro abstrato de pontos e conexões, movimento sutil e base em bordô, cinza e branco.
 - Inscrições só podem abrir com data definida; definir a data não as abre automaticamente.
-- Limite inicial configurável de **2.000 participantes**.
-- Reserva opcional com duração de **24 horas**. Falta escolher apenas seu estado inicial e finalizar regras operacionais de mudança.
-- Com reserva desativada, inscrições pendentes não ocupam vaga; somente confirmadas contam para o limite.
+- Não há limite comercial de inscrições nem reserva de vaga. Eventual limite da plataforma de transmissão será tratado como restrição técnica do serviço escolhido.
+- A validade do link de pagamento será definida separadamente conforme o provedor.
 - Estudantes de qualquer curso recebem **10% de desconto por autodeclaração**, sem comprovante.
 - Uma inscrição por CPF por evento.
 - Formulário: nome completo, CPF, profissão, e-mail e WhatsApp; para estudante, curso, semestre e universidade.
 - Solicitação e link de pagamento enviados automaticamente pelo WhatsApp.
 - Pagamento ocorre na página do provedor acessada pelo link.
-- Inscrição confirmada após pagamento verificado e atribuição de vaga dentro do limite.
+- Inscrição confirmada após pagamento verificado.
 - Acesso ao evento enviado pelo sistema aos confirmados: junto da confirmação quando já liberado ou após liberação posterior pela organização.
 - Painel protegido com regras, consulta de inscritos e acompanhamento de pagamentos; conteúdos editoriais continuam no código.
 - Certificados emitidos e enviados pela organização.
@@ -106,6 +103,6 @@ As escolhas técnicas devem ser registradas também em `docs/decisions/integrati
 
 **Depende dos serviços escolhidos:** adaptadores reais de pagamento, WhatsApp, persistência, autenticação e implantação.
 
-**Antes de abrir inscrições pagas:** preencher data/horário, preço, meios de pagamento e estado inicial da reserva; concluir regras operacionais, contas e integrações testadas, atendimento, privacidade e acessos administrativos. Materiais editoriais devem ser revisados para que a oferta pública seja fiel ao evento.
+**Antes de abrir inscrições pagas:** preencher data/horário, preço, meios de pagamento e validade da cobrança; concluir regras operacionais, contas e integrações testadas, atendimento, privacidade e acessos administrativos. Materiais editoriais devem ser revisados para que a oferta pública seja fiel ao evento.
 
 **Pode ser concluído depois da abertura, mas antes de enviar acesso:** cadastro e liberação do link de transmissão. Enquanto não estiver liberado, confirmar pagamento sem prometer que o link já foi enviado.

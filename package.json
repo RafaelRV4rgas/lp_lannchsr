@@ -9,6 +9,7 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "test": "vitest run",
+    "i": "npm i",
     "typecheck": "tsc -b && tsc -p tsconfig.tests.json"
   },
   "dependencies": {

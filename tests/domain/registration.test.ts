@@ -1,9 +1,21 @@
 import { describe, expect, it } from 'vitest'
 import {
+  formatBrazilianPhone,
+  formatCpf,
   normalizeRegistration,
   validateRegistration,
   type RegistrationInput,
 } from '../../src/domain/registration'
+
+it('formats and limits CPF and Brazilian phone input', () => {
+  expect(formatCpf('52998224725')).toBe('529.982.247-25')
+  expect(formatCpf('529.982.247-25999')).toBe('529.982.247-25')
+  expect(formatCpf('52998')).toBe('529.98')
+  expect(formatBrazilianPhone('65999991234')).toBe('(65) 99999-1234')
+  expect(formatBrazilianPhone('6533331234')).toBe('(65) 3333-1234')
+  expect(formatBrazilianPhone('+55 65 99999-1234')).toBe('(65) 99999-1234')
+  expect(formatBrazilianPhone('65999991234999')).toBe('(65) 99999-1234')
+})
 
 export const validInput: RegistrationInput = {
   fullName: 'Pessoa de Teste',
@@ -58,4 +70,19 @@ describe('registration validation', () => {
       normalizeRegistration({ ...validInput, course: 'stale' }).course,
     ).toBeUndefined()
   })
+})
+
+it('rejects semesters outside the dropdown options', () => {
+  const student = {
+    ...validInput,
+    profession: 'student',
+    course: 'Direito',
+    university: 'Universidade de teste',
+  }
+  for (const semester of ['', 'zero', '0', '14']) {
+    expect(validateRegistration({ ...student, semester })).toHaveProperty(
+      'semester',
+    )
+  }
+  expect(validateRegistration({ ...student, semester: 'outro' })).toEqual({})
 })

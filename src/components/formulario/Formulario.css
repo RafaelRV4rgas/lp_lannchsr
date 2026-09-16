@@ -1,6 +1,6 @@
 .registration-card {
-  background: linear-gradient(135deg, #2b1b25, #1b151a);
-  border: 1px solid #593440;
+  background: linear-gradient(135deg, var(--bordo), #231616);
+  border: 1px solid #593434;
   border-radius: 6px;
   padding: 38px;
   width: 100%;

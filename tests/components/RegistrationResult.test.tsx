@@ -7,26 +7,25 @@ it('shows payment link for a verified pending response', () => {
       result={{
         status: 'pending',
         paymentUrl: 'https://pay.example.com/1',
-        reservationExpiresAt: '2027-03-10T13:00:00Z',
+        paymentExpiresAt: '2027-03-10T13:00:00Z',
       }}
     />,
   )
   expect(
     screen.getByRole('link', { name: /pagar inscrição/i }),
   ).toHaveAttribute('href', 'https://pay.example.com/1')
-  expect(screen.getByText(/reservada até/i)).toBeInTheDocument()
+  expect(screen.getByText(/pagamento válido até/i)).toBeInTheDocument()
 })
 it.each([
   ['confirmed', 'Inscrição confirmada'],
   ['expired', 'Prazo encerrado'],
-  ['paid_without_seat', 'Pagamento em análise'],
   ['pending', 'Solicitação recebida'],
 ] as const)(
   'renders %s without inventing a payment link',
   (status, heading) => {
     render(
       <RegistrationResult
-        result={{ status, paymentUrl: null, reservationExpiresAt: null }}
+        result={{ status, paymentUrl: null, paymentExpiresAt: null }}
       />,
     )
     expect(screen.getByRole('heading', { name: heading })).toBeInTheDocument()
@@ -41,7 +40,7 @@ it('does not render unsafe payment URLs', () => {
       result={{
         status: 'pending',
         paymentUrl: 'javascript:alert(1)',
-        reservationExpiresAt: null,
+        paymentExpiresAt: null,
       }}
     />,
   )

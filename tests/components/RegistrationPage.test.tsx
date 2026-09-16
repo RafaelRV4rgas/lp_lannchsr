@@ -14,6 +14,7 @@ it('shows generic recovery confirmation after an expired token', async () => {
   render(<RegistrationPage accessToken="expired-test-token" client={client} />)
   await screen.findByRole('heading', { name: 'Retomar inscrição' })
   await user.type(screen.getByLabelText('CPF'), '52998224725')
+  expect(screen.getByLabelText('CPF')).toHaveValue('529.982.247-25')
   await user.click(
     screen.getByRole('button', { name: 'Solicitar link seguro' }),
   )
@@ -28,7 +29,7 @@ it('resumes an expired registration with the token and prevents duplicate reques
   let resolveResume!: (value: {
     status: 'pending'
     paymentUrl: null
-    reservationExpiresAt: null
+    paymentExpiresAt: null
   }) => void
   const client = {
     submit: vi.fn(),
@@ -38,7 +39,7 @@ it('resumes an expired registration with the token and prevents duplicate reques
       .mockResolvedValue({
         status: 'expired',
         paymentUrl: null,
-        reservationExpiresAt: null,
+        paymentExpiresAt: null,
       }),
     resume: vi.fn().mockImplementation(
       () =>
@@ -55,7 +56,7 @@ it('resumes an expired registration with the token and prevents duplicate reques
   resolveResume({
     status: 'pending',
     paymentUrl: null,
-    reservationExpiresAt: null,
+    paymentExpiresAt: null,
   })
   expect(
     await screen.findByRole('heading', { name: 'Solicitação recebida' }),

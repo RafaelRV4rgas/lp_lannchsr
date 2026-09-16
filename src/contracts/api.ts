@@ -3,11 +3,10 @@ export type RegistrationState =
   | 'pending'
   | 'confirmed'
   | 'expired'
-  | 'paid_without_seat'
 export interface RegistrationResult {
   status: RegistrationState
   paymentUrl: string | null
-  reservationExpiresAt: string | null
+  paymentExpiresAt: string | null
 }
 export interface RegistrationClient {
   submit(
@@ -39,20 +38,18 @@ export function parseRegistrationResult(value: unknown): RegistrationResult {
     throw new Error('INVALID_RESPONSE')
   const result = value as Record<string, unknown>
   if (
-    !['pending', 'confirmed', 'expired', 'paid_without_seat'].includes(
-      String(result.status),
-    ) ||
+    !['pending', 'confirmed', 'expired'].includes(String(result.status)) ||
     !(result.paymentUrl === null || typeof result.paymentUrl === 'string') ||
     !(
-      result.reservationExpiresAt === null ||
-      (typeof result.reservationExpiresAt === 'string' &&
-        Number.isFinite(Date.parse(result.reservationExpiresAt)))
+      result.paymentExpiresAt === null ||
+      (typeof result.paymentExpiresAt === 'string' &&
+        Number.isFinite(Date.parse(result.paymentExpiresAt)))
     )
   )
     throw new Error('INVALID_RESPONSE')
   return {
     status: result.status as RegistrationState,
     paymentUrl: safePaymentUrl(result.paymentUrl),
-    reservationExpiresAt: result.reservationExpiresAt,
+    paymentExpiresAt: result.paymentExpiresAt,
   }
 }

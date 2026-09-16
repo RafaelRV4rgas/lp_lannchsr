@@ -4,7 +4,7 @@ import type {
   RegistrationClient,
   RegistrationResult as Result,
 } from '../../contracts/api'
-import { validCpf } from '../../domain/registration'
+import { digitsOnly, formatCpf, validCpf } from '../../domain/registration'
 import { RegistrationResult } from './RegistrationResult'
 import '../formulario/Formulario.css'
 
@@ -84,7 +84,7 @@ export function RegistrationPage({
     setBusy(true)
     setError('')
     try {
-      await client.recover(cpf)
+      await client.recover(digitsOnly(cpf))
       setSent(true)
     } catch {
       setError('Não foi possível enviar agora. Tente novamente mais tarde.')
@@ -145,7 +145,7 @@ export function RegistrationPage({
                 autoComplete="off"
                 value={cpf}
                 maxLength={14}
-                onChange={(event) => setCpf(event.target.value)}
+                onChange={(event) => setCpf(formatCpf(event.target.value))}
                 required
               />
             </div>

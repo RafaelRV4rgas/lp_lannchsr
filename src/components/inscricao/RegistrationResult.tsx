@@ -7,22 +7,17 @@ const copy = {
   pending: {
     title: 'Solicitação recebida',
     description:
-      'Sua inscrição aguarda pagamento. A confirmação será enviada pelo WhatsApp após a aprovação e a atribuição da vaga.',
+      'Sua inscrição aguarda pagamento. A confirmação será enviada pelo WhatsApp após a aprovação.',
   },
   confirmed: {
     title: 'Inscrição confirmada',
     description:
-      'Seu pagamento foi aprovado e sua vaga está confirmada. O acesso ao evento será enviado pelo WhatsApp quando estiver liberado.',
+      'Seu pagamento foi aprovado e sua inscrição está confirmada. O acesso ao evento será enviado pelo WhatsApp quando estiver liberado.',
   },
   expired: {
     title: 'Prazo encerrado',
     description:
-      'O prazo desta solicitação terminou. Você pode tentar retomá-la, conforme a disponibilidade de vagas e as inscrições abertas.',
-  },
-  paid_without_seat: {
-    title: 'Pagamento em análise',
-    description:
-      'Recebemos seu pagamento, mas não foi possível atribuir uma vaga. A organização precisa verificar a situação. Não faça outro pagamento.',
+      'O prazo de pagamento desta solicitação terminou. Você pode tentar retomá-la enquanto as inscrições estiverem abertas.',
   },
 }
 export function RegistrationResult({
@@ -40,14 +35,14 @@ export function RegistrationResult({
     <div className="registration-card" role="status">
       <h2>{message.title}</h2>
       <p>{message.description}</p>
-      {result.status === 'pending' && result.reservationExpiresAt && (
+      {result.status === 'pending' && result.paymentExpiresAt && (
         <p>
-          Vaga reservada até{' '}
+          Link de pagamento válido até{' '}
           {new Intl.DateTimeFormat('pt-BR', {
             dateStyle: 'short',
             timeStyle: 'short',
             timeZone: 'America/Cuiaba',
-          }).format(new Date(result.reservationExpiresAt))}{' '}
+          }).format(new Date(result.paymentExpiresAt))}{' '}
           (horário de Cuiabá).
         </p>
       )}

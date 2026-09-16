@@ -1,22 +1,13 @@
-export interface Speaker {
-  name: string
-  specialty: string
-  bio: string
-  photoUrl?: string
-}
-export interface ScheduleItem {
-  time: string
-  title: string
-  speaker: string
-}
+import { speakers, talks } from './speakers'
+
 export const eventContent = {
   title: 'Neurocirurgia é tudo a Mesma Coisa?',
   subtitle:
     'Simpósio on-line: as diferentes grandes áreas e subespecialidades da Neurocirurgia.',
   organization: 'Liga de Neurologia e Neurocirurgia do Hospital Santa Rosa',
   president: 'Carolina Ayumi Kozima',
-  speakers: [] as Speaker[],
-  schedule: [] as ScheduleItem[],
+  speakers,
+  talks,
   supporters: [
     'Academia Brasileira de Neurocirurgia',
     'Sociedade Brasileira de Neurocirurgia',
@@ -68,7 +59,7 @@ export const eventContent = {
     {
       question: 'Como funcionarão a inscrição e o pagamento?',
       answer:
-        'Quando as inscrições abrirem, você poderá preencher o formulário e receber o link de pagamento pelo WhatsApp. A inscrição será confirmada após a aprovação do pagamento e a disponibilidade de vaga.',
+        'Quando as inscrições abrirem, você poderá preencher o formulário e receber o link de pagamento pelo WhatsApp. A inscrição será confirmada após a aprovação do pagamento.',
     },
     {
       question: 'Como receberei o acesso e o certificado?',

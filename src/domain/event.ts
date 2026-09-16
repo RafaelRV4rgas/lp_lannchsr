@@ -4,8 +4,6 @@ export interface EventRules {
   registrationsOpen: boolean
   basePriceCents: number | null
   studentDiscountPercent: number
-  capacity: number
-  reservationEnabled: boolean | null
   integrationsReady: boolean
 }
 
@@ -13,10 +11,8 @@ export const defaultEventRules: Readonly<EventRules> = Object.freeze({
   startsAt: null,
   timeZone: null,
   registrationsOpen: false,
-  basePriceCents: null,
+  basePriceCents: 2500,
   studentDiscountPercent: 10,
-  capacity: 2000,
-  reservationEnabled: null,
   integrationsReady: false,
 })
 
@@ -61,10 +57,7 @@ export function canOpenRegistrations(rules: EventRules): boolean {
     !validDate(rules.startsAt) ||
     !rules.timeZone ||
     rules.basePriceCents === null ||
-    typeof rules.reservationEnabled !== 'boolean' ||
-    !rules.integrationsReady ||
-    !Number.isSafeInteger(rules.capacity) ||
-    rules.capacity <= 0
+    !rules.integrationsReady
   )
     return false
   try {

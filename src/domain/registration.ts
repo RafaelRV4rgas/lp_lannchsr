@@ -14,6 +14,34 @@ export type RegistrationErrors = Partial<
 >
 export const digitsOnly = (value: string): string => value.replace(/\D/g, '')
 
+export function formatCpf(value: string): string {
+  const digits = digitsOnly(value).slice(0, 11)
+  if (digits.length <= 3) return digits
+  if (digits.length <= 6) return `${digits.slice(0, 3)}.${digits.slice(3)}`
+  if (digits.length <= 9)
+    return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6)}`
+  return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6, 9)}-${digits.slice(9)}`
+}
+
+export function formatBrazilianPhone(value: string): string {
+  const raw = digitsOnly(value)
+  const digits = (raw.length > 11 && raw.startsWith('55') ? raw.slice(2) : raw)
+    .slice(0, 11)
+  if (digits.length <= 2) return digits ? `(${digits}` : ''
+  const ddd = digits.slice(0, 2)
+  const number = digits.slice(2)
+  const prefixLength = digits.length === 11 ? 5 : 4
+  if (number.length <= prefixLength) return `(${ddd}) ${number}`
+  return `(${ddd}) ${number.slice(0, prefixLength)}-${number.slice(prefixLength)}`
+}
+export const semesterOptions = [
+  ...Array.from({ length: 12 }, (_, index) => ({
+    value: String(index + 1),
+    label: `${index + 1}º semestre`,
+  })),
+  { value: 'outro', label: 'Outros' },
+]
+
 export function validCpf(value: string): boolean {
   const digits = digitsOnly(value)
   if (!/^\d{11}$/.test(digits) || /^(\d)\1{10}$/.test(digits)) return false
@@ -73,8 +101,8 @@ export function validateRegistration(
   if (data.profession === 'student') {
     if (!data.course || data.course.length > 160)
       errors.course = 'Informe seu curso.'
-    if (!data.semester || data.semester.length > 40)
-      errors.semester = 'Informe seu semestre.'
+    if (!semesterOptions.some((option) => option.value === data.semester))
+      errors.semester = 'Selecione seu semestre.'
     if (!data.university || data.university.length > 160)
       errors.university = 'Informe sua universidade.'
   }

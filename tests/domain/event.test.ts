@@ -7,15 +7,14 @@ import {
 } from '../../src/domain/event'
 
 describe('event rules', () => {
-  it('starts closed, without invented date/price or reservation preference', () => {
+  it('starts closed without a date, even with a configured price', () => {
     expect(defaultEventRules).toMatchObject({
       startsAt: null,
-      basePriceCents: null,
       registrationsOpen: false,
-      capacity: 2000,
       studentDiscountPercent: 10,
-      reservationEnabled: null,
     })
+    expect(defaultEventRules).not.toHaveProperty('capacity')
+    expect(defaultEventRules).not.toHaveProperty('reservationEnabled')
     expect(canOpenRegistrations(defaultEventRules)).toBe(false)
   })
   it('calculates prices in cents and rejects invalid amounts', () => {
@@ -28,13 +27,12 @@ describe('event rules', () => {
     for (const discount of [-1, 100, NaN])
       expect(() => calculatePriceCents(10000, discount, true)).toThrow()
   })
-  it('requires valid date, timezone, price, reservation choice and integrations; opening is explicit', () => {
+  it('requires valid date, timezone, price and integrations; opening is explicit', () => {
     const ready = {
       ...defaultEventRules,
       startsAt: '2027-03-10T13:00:00-04:00',
       timeZone: 'America/Cuiaba',
       basePriceCents: 10000,
-      reservationEnabled: false,
       integrationsReady: true,
     }
     expect(canOpenRegistrations(ready)).toBe(true)
@@ -48,8 +46,6 @@ describe('event rules', () => {
       { timeZone: 'invalid' },
       { basePriceCents: null },
       { integrationsReady: false },
-      { capacity: 0 },
-      { reservationEnabled: null },
     ]) {
       expect(canOpenRegistrations({ ...ready, ...patch })).toBe(false)
     }

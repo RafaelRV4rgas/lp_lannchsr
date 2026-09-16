@@ -24,7 +24,7 @@ export default function App() {
           <a href="#duvidas">Dúvidas</a>
         </nav>
         <a className="header-cta" href="#inscricao">
-          Inscrições <span aria-hidden="true">↗</span>
+          Inscrever-se <span aria-hidden="true">➔</span>
         </a>
       </header>
       <main id="conteudo">
@@ -55,6 +55,7 @@ export default function App() {
           </div>
           <Formulario
             rules={defaultEventRules}
+            previewWhenClosed={import.meta.env.DEV}
             onSubmit={registrationClient.submit}
           />
         </section>

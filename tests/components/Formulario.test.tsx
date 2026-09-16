@@ -1,5 +1,5 @@
 import { expect, it, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Formulario } from '../../src/components/formulario/Formulario'
 import { defaultEventRules } from '../../src/domain/event'
@@ -9,7 +9,6 @@ const openRules = {
   startsAt: '2027-03-10T13:00:00-04:00',
   timeZone: 'America/Cuiaba',
   basePriceCents: 10000,
-  reservationEnabled: false,
   integrationsReady: true,
   registrationsOpen: true,
 }
@@ -79,4 +78,57 @@ it('blocks duplicate submissions while pending and reuses the key after failure'
   expect(onSubmit).toHaveBeenCalledTimes(2)
   expect(onSubmit.mock.calls[1][1]).toBe(onSubmit.mock.calls[0][1])
   expect(screen.getByRole('status')).toHaveTextContent('Solicitação recebida')
+})
+
+it('reports missing fields in a closed local preview without sending', async () => {
+  const user = userEvent.setup()
+  const onSubmit = vi.fn()
+  render(
+    <Formulario
+      rules={defaultEventRules}
+      previewWhenClosed
+      onSubmit={onSubmit}
+    />,
+  )
+  await user.click(screen.getByRole('button', { name: 'Solicitar inscrição' }))
+  expect(screen.getByRole('alert')).toHaveTextContent(
+    'Preencha os campos obrigatórios',
+  )
+  expect(screen.getByLabelText('Nome completo')).toHaveFocus()
+  expect(screen.getByLabelText('CPF')).toHaveAttribute('aria-invalid', 'true')
+  expect(onSubmit).not.toHaveBeenCalled()
+})
+
+it('requires selecting a semester from the dropdown', async () => {
+  const user = userEvent.setup()
+  render(<Formulario rules={openRules} />)
+  await user.selectOptions(screen.getByLabelText('Profissão'), 'student')
+  const semester = screen.getByRole('combobox', { name: 'Semestre' })
+  expect(semester).toBeRequired()
+  await user.click(screen.getByRole('button', { name: 'Solicitar inscrição' }))
+  expect(semester).toHaveAttribute('aria-invalid', 'true')
+  await user.selectOptions(semester, '3')
+  expect(semester).toHaveValue('3')
+  expect(semester).toHaveAttribute('aria-invalid', 'false')
+})
+
+it('formats and limits CPF and WhatsApp while typing', async () => {
+  const user = userEvent.setup()
+  render(<Formulario rules={openRules} />)
+  const cpf = screen.getByLabelText('CPF')
+  const whatsapp = screen.getByLabelText('WhatsApp com DDD')
+
+  await user.type(cpf, '52998224725999')
+  await user.type(whatsapp, '65999991234999')
+
+  expect(cpf).toHaveValue('529.982.247-25')
+  expect(whatsapp).toHaveValue('(65) 99999-1234')
+
+  fireEvent.change(cpf, { target: { value: '529.982.247-25999' } })
+  fireEvent.change(whatsapp, {
+    target: { value: '+55 (65) 99999-1234' },
+  })
+
+  expect(cpf).toHaveValue('529.982.247-25')
+  expect(whatsapp).toHaveValue('(65) 99999-1234')
 })

@@ -13,14 +13,13 @@
 ## Restrições globais
 
 - Cada CPF pode ter apenas uma inscrição por evento.
-- Limite inicial: 2.000 participantes, configurável.
 - Desconto estudantil: inicialmente 10%, configurável pelo painel.
 - O desconto de estudante vale para qualquer curso e é concedido por autodeclaração, sem upload ou análise de comprovante.
-- O painel permite ativar ou desativar a reserva de vaga por **24 horas**.
 - Definir uma data não abre inscrições automaticamente. A organização precisa acionar a abertura no painel.
 - Só permitir abertura com data definida, preço válido e integrações de produção prontas.
 - A página de retorno do pagamento não é prova de pagamento.
-- Nunca enviar acesso para inscrições pendentes, expiradas ou sem vaga.
+- Não há limite comercial de inscrições nem reserva de vaga; eventual limite da transmissão é uma restrição técnica da plataforma.
+- Nunca enviar acesso para inscrições pendentes ou expiradas.
 - Conteúdo e formulário devem funcionar mesmo sem carregar a animação.
 - Não há CMS, emissão de certificados, transmissão própria ou conta de participante nesta versão.
 - Preservar alterações existentes do usuário; revisar `git status` antes de cada tarefa e criar commits somente com arquivos da tarefa.
@@ -44,7 +43,6 @@ Não publicar dados fictícios de palestrantes, preço ou data. Fixtures de test
 | `src/content/event.ts` | Textos, programação, palestrantes e apoios editados no código |
 | `src/domain/event.ts` | Tipos de configuração e regras de abertura/preço |
 | `src/domain/registration.ts` | Campos, categoria e validação de inscrição |
-| `src/domain/capacity.ts` | Regras puras de reserva e disponibilidade |
 | `src/components/hero/Hero.tsx`, `BrainVisual.tsx`, `Hero.css` | Abertura e visual abstrato independente |
 | `src/components/event/EventSections.tsx`, `EventSections.css` | Conteúdo público sem formulários |
 | `src/components/formulario/Formulario.tsx`, `Formulario.css` | Formulário existente e estados condicionais |
@@ -72,8 +70,6 @@ export interface EventRules {
   registrationsOpen: boolean;
   basePriceCents: number | null;
   studentDiscountPercent: number;
-  capacity: number;
-  reservationEnabled: boolean;
   integrationsReady: boolean; // determinado no servidor
 }
 export function calculatePriceCents(base: number, discount: number, student: boolean) {
@@ -87,7 +83,7 @@ export function calculatePriceCents(base: number, discount: number, student: boo
 - [x] Escrever os casos antes da função: `expect(calculatePriceCents(10000, 10, true)).toBe(9000)` e `expect(calculatePriceCents(10000, 10, false)).toBe(10000)`; rejeitar preço nulo/negativo e desconto inválido na fronteira da configuração.
 - [x] Testar `canOpenRegistrations`: falso sem data válida, fuso, preço ou integrações; verdadeiro com pré-requisitos, sem mudar automaticamente `registrationsOpen`.
 - [x] Executar `npm run test -- tests/domain/event.test.ts`, observar falha pelos símbolos ausentes e implementar as regras até passar.
-- [x] Criar conteúdo com título, subtítulo e informações da spec; `speakers` e `schedule` começam vazios; data e preço públicos começam ausentes, inscrições fechadas. O estado inicial da reserva permanece escolha obrigatória no checklist de abertura, sem inferir preferência do usuário.
+- [x] Criar conteúdo com título, subtítulo e informações da spec; `speakers` e `schedule` começam vazios; data e preço públicos começam ausentes, inscrições fechadas.
 - [x] Rodar `npm run build` e `npm run lint`; revisar diff e registrar somente a tarefa.
 
 **Saída:** dados editoriais centralizados e regras testadas, sem depender de materiais externos.
@@ -146,11 +142,11 @@ export interface RegistrationInput {
 
 ```ts
 import type { RegistrationInput } from '../domain/registration';
-export type RegistrationState = 'pending' | 'confirmed' | 'expired' | 'paid_without_seat';
+export type RegistrationState = 'pending' | 'confirmed' | 'expired';
 export interface RegistrationResult {
   status: RegistrationState;
   paymentUrl: string | null;
-  reservationExpiresAt: string | null;
+  paymentExpiresAt: string | null;
 }
 export interface RegistrationClient {
   submit(input: RegistrationInput, idempotencyKey: string): Promise<{ accepted: true }>;
@@ -161,35 +157,24 @@ export interface RegistrationClient {
 
 - [x] Definir `POST /api/registrations`, `POST /api/registrations/recovery`, `GET /api/registration` e `POST /api/registration/resume`; os dois últimos exigem token secreto enviado em header, nunca CPF como autorização.
 - [x] Propor verificação de contato por link enviado ao WhatsApp cadastrado, reutilizando o canal existente. Tanto cadastro duplicado quanto recuperação retornam resposta pública genérica; nenhum CPF fornece acesso a dados ou substitui contato existente.
-- [x] Documentar emissão, hash persistido, expiração de 30 minutos e troca do token por sessão curta; retirar token da URL após a troca. Tratar estes tempos como escolhas técnicas ajustáveis, sem alterar reserva de 24 horas.
+- [x] Documentar emissão, hash persistido, expiração de 30 minutos e troca do token por sessão curta; retirar token da URL após a troca. Tratar estes tempos como escolhas técnicas independentes da validade da cobrança.
 - [x] Criar cliente HTTP e testes com transporte simulado injetado. Não empacotar servidor fictício ou sinalizador de cobrança falsa em produção.
-- [x] Testar retorno pendente com link e prazo, link ainda indisponível, confirmado, expirado e pagamento recebido sem vaga; nunca derivar confirmação de query string de retorno do checkout.
+- [x] Testar retorno pendente com link e prazo de pagamento, link ainda indisponível, confirmado e expirado; nunca derivar confirmação de query string de retorno do checkout.
 - [x] Exibir mensagem genérica de recuperação e canal de suporte quando não houver acesso ao telefone original; alterações de contato dependem de conferência pela organização.
 - [x] Rodar `npm run test -- tests/components/RegistrationResult.test.tsx`, build e lint; registrar a tarefa.
 
 **Saída:** experiência do formulário e acompanhamento verificável com testes locais. A implementação do envio seguro de recuperação entra na tarefa 9 e exige modelo/custo de WhatsApp no levantamento da tarefa 6.
 
-## Tarefa 5 — Regras de capacidade independentes de provedor
+## Tarefa 5 — Simplificação das regras comerciais
 
-**Arquivos:** criar `src/domain/capacity.ts` e `tests/domain/capacity.test.ts`.
+**Arquivos:** remover `src/domain/capacity.ts` e `tests/domain/capacity.test.ts`; atualizar regras, contratos, componentes e documentação.
 
-**Interfaces:** `reservationExpiresAt(nowMs: number, enabled: boolean): number | null`; `hasCapacity(capacity: number, confirmed: number, activeReservations: number): boolean`.
+- [x] Remover limite comercial de participantes e reserva de vaga.
+- [x] Manter a validade da cobrança como conceito independente, exposto por `paymentExpiresAt`.
+- [x] Remover o estado `paid_without_seat` e mensagens relacionadas à atribuição de vaga.
+- [x] Atualizar testes e documentação para o fluxo sem capacidade.
 
-```ts
-export const RESERVATION_MS = 24 * 60 * 60 * 1000;
-export const reservationExpiresAt = (nowMs: number, enabled: boolean) =>
-  enabled ? nowMs + RESERVATION_MS : null;
-export const hasCapacity = (capacity: number, confirmed: number, activeReservations: number) =>
-  confirmed + activeReservations < capacity;
-```
-
-- [x] Testar prazo exato de 24 horas, ausência de reserva quando desativada e limite 2.000 com 1.999 confirmados e uma reserva válida.
-- [x] Testar que reservas concedidas antes de desativar a opção ainda contam até expirar; a nova configuração não apaga compromissos anteriores.
-- [x] Executar `npm run test -- tests/domain/capacity.test.ts`, implementar regras e repetir até passar.
-- [x] Documentar que a confirmação de quem já tem reserva consome sua própria vaga, sem contar reserva e confirmação duas vezes.
-- [x] Registrar explicitamente que estes testes puros não provam segurança concorrente: a prova transacional pertence à tarefa 7.
-
-**Saída:** regras portáveis prontas para uso por backend escolhido.
+**Saída:** confirmação baseada no pagamento, sem contagem ou reserva de vagas.
 
 ## Tarefa 6 — Escolhas técnicas e plano dos adaptadores
 
@@ -200,7 +185,7 @@ export const hasCapacity = (capacity: number, confirmed: number, activeReservati
 - [ ] Comparar até duas opções viáveis por integração em documentação oficial atual: criação identificável/idempotente de cobrança, expiração, autenticação do webhook, consulta, estorno, meios aceitos e tarifas.
 - [ ] Registrar na decisão de infraestrutura: runtime, banco transacional, migrations, execução agendada, fila/outbox, autenticação administrativa, segredos e ambientes de teste/produção.
 - [ ] Registrar no WhatsApp: número, conta, mecanismo de envio, modelos de cobrança/confirmação/acesso/recuperação, callbacks de entrega, tratamento de timeouts e custos.
-- [ ] Definir política operacional de estorno sem vaga, cancelamento e cobranças existentes após fechamento. Proposta: fechamento impede novas cobranças, mas processa as existentes segundo validade e capacidade; decisão final fica registrada antes de produção.
+- [ ] Definir política operacional de cancelamento, estorno, pagamentos duplicados e cobranças existentes após fechamento. Proposta: fechamento impede novas cobranças, mas respeita a validade já comunicada; decisão final fica registrada antes de produção.
 - [ ] Converter tarefas 7–11 em passos específicos do stack: arquivos exatos, migrations, handlers, comandos, fixtures e testes executáveis. Acrescentar os adaptadores concretos aos contratos abaixo, sem reformular o frontend inteiro.
 - [ ] Registrar contato de suporte, retenção e política de acesso administrativo. Não colocar credenciais nos documentos.
 
@@ -210,12 +195,12 @@ export const hasCapacity = (capacity: number, confirmed: number, activeReservati
 
 **Arquivos lógicos:** `server/registrations/`, `server/events/`, migrations e testes de integração definidos no complemento da tarefa 6.
 
-- [ ] Criar tabelas equivalentes a evento, inscrição, cobrança, reserva, consentimento, tokens/sessões, eventos recebidos, outbox e auditoria. Impor unicidade `(event_id, cpf_normalizado)`, identificador de cobrança e chave de evento externo.
+- [ ] Criar tabelas equivalentes a evento, inscrição, cobrança, consentimento, tokens/sessões, eventos recebidos, outbox e auditoria. Impor unicidade `(event_id, cpf_normalizado)`, identificador de cobrança e chave de evento externo.
 - [ ] Implementar submissão idempotente com regras executadas no servidor; dados cadastrais não são sobrescritos por submissão duplicada.
-- [ ] Serializar a decisão de capacidade no banco, usando lock por evento ou equivalente transacional. Confirmação, consumo de reserva e criação da notificação devem compartilhar transação.
-- [ ] Implementar job de expiração idempotente, com horário do servidor; verificar prazo também durante consultas/transações para não depender da pontualidade do job.
-- [ ] Testar 20 submissões simultâneas do mesmo CPF produzindo uma inscrição; testar duas confirmações simultâneas para a última vaga produzindo exatamente uma confirmação e uma exceção sem vaga.
-- [ ] Testar consumo da última reserva pelo seu titular, migração entre configurações, retomada sem ampliar prazo de tentativa existente e proibição de diminuir capacidade abaixo dos compromissos.
+- [ ] Confirmar pagamento e criar a notificação de confirmação de forma idempotente.
+- [ ] Implementar tratamento idempotente da expiração de cobranças, com horário do servidor; verificar o prazo também durante consultas para não depender da pontualidade do job.
+- [ ] Testar 20 submissões simultâneas do mesmo CPF produzindo uma inscrição e uma única cobrança ativa.
+- [ ] Testar retomada após expiração sem criar outra inscrição nem reaproveitar cobrança vencida.
 - [ ] Rodar esses cenários em banco real descartável do stack, não em armazenamento em memória; executar comandos do complemento e registrar evidências.
 
 **Saída:** núcleo persistente e concorrente, com pagamentos simulados apenas no ambiente de teste.
@@ -248,10 +233,10 @@ export interface PaymentProvider {
 ```
 
 - [ ] Implementar adaptador real e autenticação do webhook conforme documentação do fornecedor escolhido, incluindo leitura de corpo original quando exigida.
-- [ ] Confirmar cobrança no provedor, correlacionar inscrição, valor e moeda, ignorar eventos repetidos ou regressivos e registrar recebimentos sem vaga.
+- [ ] Confirmar cobrança no provedor, correlacionar inscrição, valor e moeda e ignorar eventos repetidos ou regressivos.
 - [ ] Em timeout de criação, consultar/reconciliar a mesma tentativa antes de gerar outra; nunca criar cegamente nova cobrança.
-- [ ] Cancelar cobrança expirada quando suportado; reconciliar falhas e avisos tardios, incluindo caso em que duas cobranças antigas/novas sejam pagas para a mesma inscrição. Pagamento adicional não concede outra vaga.
-- [ ] Testar assinatura inválida, valor divergente, duplicação, ordem invertida, timeout, pagamento tardio com/sem vaga e pagamento adicional; conferir no sandbox com eventos reais do fornecedor.
+- [ ] Cancelar cobrança expirada quando suportado; reconciliar falhas e avisos tardios, incluindo caso em que duas cobranças antigas/novas sejam pagas para a mesma inscrição.
+- [ ] Testar assinatura inválida, valor divergente, duplicação, ordem invertida, timeout, pagamento tardio e pagamento adicional; conferir no sandbox com eventos reais do fornecedor.
 - [ ] Implementar processo de estorno aprovado na tarefa 6 e documentar ações humanas restantes no painel.
 
 **Saída:** cobrança e confirmação verificadas de ponta a ponta no sandbox.
@@ -264,7 +249,7 @@ export interface PaymentProvider {
 - [ ] Integrar modelos de solicitação/link, confirmação, acesso e recuperação. Recuperação sempre utiliza contato persistido e aplica limites por origem e destinatário.
 - [ ] Agendar retentativas transitórias com backoff limitado; falhas permanentes e timeouts de resultado incerto aparecem para reconciliação, evitando prometer entrega exatamente uma vez quando o provedor não oferece essa garantia.
 - [ ] Ao confirmar, verificar se acesso já foi liberado. Ao liberar, percorrer confirmados sem notificação correspondente; usar a mesma chave de deduplicação para eliminar corrida entre liberação e confirmação.
-- [ ] Testar callback repetido, worker reiniciado, entrega falha, token expirado/reutilizado e liberação simultânea ao pagamento. Confirmar que pendentes e pagamentos sem vaga nunca recebem acesso.
+- [ ] Testar callback repetido, worker reiniciado, entrega falha, token expirado/reutilizado e liberação simultânea ao pagamento. Confirmar que pendentes nunca recebem acesso.
 - [ ] Testar com números autorizados de sandbox; não disparar mensagens para pessoas reais como teste sem autorização.
 
 **Saída:** automação verificada, com falhas visíveis e recuperação segura.
@@ -274,10 +259,10 @@ export interface PaymentProvider {
 **Arquivos lógicos:** `src/admin/` e `server/admin/`, com rotas, auth e testes especificados na tarefa 6.
 
 - [ ] Implementar login pelo mecanismo selecionado e autorização no servidor em todas as rotas administrativas, inclusive buscas e reenvios.
-- [ ] Criar formulário de configuração com data/hora/fuso, preço, desconto, capacidade, reserva, abertura/fechamento e link/liberação. Mostrar efeito de alterações antes de salvar; validar os mesmos limites na API.
+- [ ] Criar formulário de configuração com data/hora/fuso, preço, desconto, validade da cobrança, abertura/fechamento e link/liberação. Mostrar efeito de alterações antes de salvar; validar as mesmas regras na API.
 - [ ] Criar listagem paginada, busca por nome/CPF, detalhes, totais, mensagens com falha e exceções de pagamento. Nunca incluir link de transmissão no endpoint público do evento.
-- [ ] Adicionar reenvio elegível, auditoria e acompanhamento do tratamento de pagamento sem vaga. Não adicionar CMS nem botão de aprovação financeira sem evidência.
-- [ ] Testar chamadas diretas não autorizadas, configuração sem data, redução indevida de capacidade, alteração de preço sem mudar cobrança existente e tentativa de enviar acesso a pendente.
+- [ ] Adicionar reenvio elegível, auditoria e acompanhamento de pagamentos duplicados ou tardios. Não adicionar CMS nem botão de aprovação financeira sem evidência.
+- [ ] Testar chamadas diretas não autorizadas, configuração sem data, alteração de preço sem mudar cobrança existente e tentativa de enviar acesso a pendente.
 - [ ] Revisar teclado, estados vazios, mensagens de erro e ausência de dados sensíveis em logs/URLs.
 
 **Saída:** organização consegue configurar e operar o evento sem alterar conteúdo editorial.
@@ -288,10 +273,10 @@ export interface PaymentProvider {
 
 - [ ] Incorporar programação, palestrantes, logos oficiais, data, valor e políticas recebidas. Atualizar somente decisões afetadas na spec e neste plano; não substituir por exemplos de teste.
 - [ ] Verificar primeiro `npm run lint`, `npm run build` e `npm run test`. Rodar E2E via script `test:e2e` definido no complemento.
-- [ ] Validar no navegador e sandbox: profissional, estudante, duplicação de CPF, reserva ativa/inativa, expiração, última vaga, retomada segura, pagamento sem vaga, envio falho e acesso liberado antes/depois da confirmação.
+- [ ] Validar no navegador e sandbox: profissional, estudante, duplicação de CPF, expiração da cobrança, retomada segura, pagamento duplicado, envio falho e acesso liberado antes/depois da confirmação.
 - [ ] Verificar abertura condicionada à data e às integrações; preservar inscrições fechadas enquanto faltar algum pré-requisito operacional.
 - [ ] Configurar HTTPS, segredos, migrations, worker, agendamento, logs sem CPF/tokens, backup e procedimento de restauração; ensaiar restauração em ambiente separado.
-- [ ] Registrar em `docs/operations.md` como consultar falhas, reenviar mensagens, tratar pagamento sem vaga, fechar inscrições e reverter implantação sem apagar inscrições/pagamentos.
+- [ ] Registrar em `docs/operations.md` como consultar falhas, reenviar mensagens, tratar pagamentos duplicados ou tardios, fechar inscrições e reverter implantação sem apagar inscrições/pagamentos.
 - [ ] Apresentar ambiente revisável antes do lançamento público; seguir autorização de publicação vigente. A implementação só fica concluída após verificações, não apenas com build aprovado.
 
 **Saída:** sistema pronto para abertura quando os requisitos comerciais e operacionais estiverem preenchidos.
@@ -308,7 +293,7 @@ Não há necessidade de receber materiais para começar as primeiras cinco taref
 | --- | --- |
 | Evento, conteúdo, escopo e identidade | 1, 2, 11 |
 | Formulário, desconto e CPF único | 1, 3, 4, 7 |
-| Abertura, preço, capacidade e reserva | 1, 5, 7, 10 |
+| Abertura, preço e validade da cobrança | 1, 5, 7, 10 |
 | Pagamento e exceções | 6, 7, 8 |
 | WhatsApp e acesso | 4, 6, 9 |
 | Painel | 6, 10 |

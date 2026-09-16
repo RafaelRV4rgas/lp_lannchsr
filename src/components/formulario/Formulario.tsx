@@ -7,7 +7,10 @@ import {
   type EventRules,
 } from '../../domain/event'
 import {
+  formatBrazilianPhone,
+  formatCpf,
   normalizeRegistration,
+  semesterOptions,
   validateRegistration,
   type RegistrationErrors,
   type RegistrationInput,
@@ -16,6 +19,7 @@ import './Formulario.css'
 
 interface Props {
   rules?: EventRules
+  previewWhenClosed?: boolean
   onSubmit?: (
     input: RegistrationInput,
     idempotencyKey: string,
@@ -29,7 +33,11 @@ const emptyInput: RegistrationInput = {
   whatsapp: '',
   whatsappConsent: false,
 }
-export function Formulario({ rules = defaultEventRules, onSubmit }: Props) {
+export function Formulario({
+  rules = defaultEventRules,
+  onSubmit,
+  previewWhenClosed = false,
+}: Props) {
   const [input, setInput] = useState<RegistrationInput>(emptyInput)
   const [errors, setErrors] = useState<RegistrationErrors>({})
   const [status, setStatus] = useState<
@@ -39,6 +47,8 @@ export function Formulario({ rules = defaultEventRules, onSubmit }: Props) {
   const key = useRef<string | null>(null)
   const formRef = useRef<HTMLFormElement>(null)
   const student = input.profession === 'student'
+  const available = registrationsAvailable(rules)
+  const hasErrors = Object.values(errors).some(Boolean)
   const change = (name: keyof RegistrationInput, value: string | boolean) => {
     setInput((previous) => ({ ...previous, [name]: value }))
     setErrors((previous) => ({ ...previous, [name]: undefined }))
@@ -47,7 +57,7 @@ export function Formulario({ rules = defaultEventRules, onSubmit }: Props) {
   }
   async function submit(event: FormEvent) {
     event.preventDefault()
-    if (submitting.current || !registrationsAvailable(rules)) return
+    if (submitting.current) return
     const nextErrors = validateRegistration(input)
     setErrors(nextErrors)
     if (Object.keys(nextErrors).length) {
@@ -55,6 +65,7 @@ export function Formulario({ rules = defaultEventRules, onSubmit }: Props) {
       formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus()
       return
     }
+    if (!available) return
     submitting.current = true
     setStatus('sending')
     try {
@@ -68,7 +79,7 @@ export function Formulario({ rules = defaultEventRules, onSubmit }: Props) {
       submitting.current = false
     }
   }
-  if (!registrationsAvailable(rules))
+  if (!available && !previewWhenClosed)
     return (
       <div className="registration-card closed-registration">
         <span className="small-label">VAMOS NOS ENCONTRAR EM BREVE</span>
@@ -90,7 +101,7 @@ export function Formulario({ rules = defaultEventRules, onSubmit }: Props) {
         <button className="button" disabled>
           Inscrições em breve
         </button>
-        <p className="form-footnote">Evento on-line · Vagas limitadas</p>
+        <p className="form-footnote">Evento on-line</p>
       </div>
     )
   if (status === 'accepted')
@@ -102,7 +113,7 @@ export function Formulario({ rules = defaultEventRules, onSubmit }: Props) {
           WhatsApp cadastrado. Se já houver uma inscrição, as instruções de
           retomada serão enviadas ao contato original.
         </p>
-        <p>A solicitação ainda não é uma confirmação de vaga.</p>
+        <p>A solicitação ainda não é uma inscrição confirmada.</p>
       </div>
     )
   function field(
@@ -119,10 +130,18 @@ export function Formulario({ rules = defaultEventRules, onSubmit }: Props) {
           name={name}
           type={type}
           autoComplete={autoComplete}
-          inputMode={name === 'cpf' ? 'numeric' : undefined}
-          maxLength={name === 'cpf' ? 14 : name === 'whatsapp' ? 20 : 254}
+          inputMode={name === 'cpf' || name === 'whatsapp' ? 'numeric' : undefined}
+          maxLength={name === 'cpf' ? 14 : name === 'whatsapp' ? 19 : 254}
           value={String(input[name] ?? '')}
-          onChange={(e) => change(name, e.target.value)}
+          onChange={(e) => {
+            const value =
+              name === 'cpf'
+                ? formatCpf(e.target.value)
+                : name === 'whatsapp'
+                  ? formatBrazilianPhone(e.target.value)
+                  : e.target.value
+            change(name, value)
+          }}
           required
           aria-invalid={!!errors[name]}
           aria-describedby={errors[name] ? `${name}-error` : undefined}
@@ -145,14 +164,27 @@ export function Formulario({ rules = defaultEventRules, onSubmit }: Props) {
     >
       <p className="small-label">SUA INSCRIÇÃO</p>
       <h3>Faça parte do encontro.</h3>
+      {!available && (
+        <p>
+          Prévia do formulário. As inscrições ainda estão fechadas e nenhum dado
+          será enviado.
+        </p>
+      )}
+      {hasErrors && (
+        <p role="alert" className="field-error">
+          Preencha os campos obrigatórios e corrija os dados destacados abaixo.
+        </p>
+      )}
       <p className="form-price">
-        {formatPrice(
-          calculatePriceCents(
-            rules.basePriceCents!,
-            rules.studentDiscountPercent,
-            student,
-          ),
-        )}
+        {rules.basePriceCents === null
+          ? 'Valor em breve'
+          : formatPrice(
+              calculatePriceCents(
+                rules.basePriceCents!,
+                rules.studentDiscountPercent,
+                student,
+              ),
+            )}
         {student && (
           <span>Desconto estudantil de {rules.studentDiscountPercent}%</span>
         )}
@@ -190,7 +222,32 @@ export function Formulario({ rules = defaultEventRules, onSubmit }: Props) {
         {student && (
           <div className="academic-fields">
             {field('course', 'Curso')}
-            {field('semester', 'Semestre')}
+            <div className="field">
+              <label htmlFor="semester">Semestre</label>
+              <select
+                id="semester"
+                name="semester"
+                value={input.semester ?? ''}
+                onChange={(e) => change('semester', e.target.value)}
+                required
+                aria-invalid={!!errors.semester}
+                aria-describedby={
+                  errors.semester ? 'semester-error' : undefined
+                }
+              >
+                <option value="">Selecione o semestre</option>
+                {semesterOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              {errors.semester && (
+                <span id="semester-error" className="field-error">
+                  {errors.semester}
+                </span>
+              )}
+            </div>
             {field('university', 'Universidade')}
           </div>
         )}
@@ -235,7 +292,7 @@ export function Formulario({ rules = defaultEventRules, onSubmit }: Props) {
         {status === 'sending' ? 'Enviando…' : 'Solicitar inscrição'}
       </button>
       <p className="form-footnote">
-        A confirmação acontece após o pagamento e a atribuição da vaga.
+        A confirmação acontece após a aprovação do pagamento.
       </p>
     </form>
   )

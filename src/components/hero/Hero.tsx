@@ -13,9 +13,9 @@ export function Hero({ title, subtitle, registrationAvailable }: Props) {
       aria-labelledby="hero-title"
     >
       <div className="hero-copy">
-        <p className="eyebrow">
-          <span className="status-dot" /> SIMPÓSIO ON-LINE · LANNcHSR
-        </p>
+        {/*<p className="eyebrow">*/}
+          {/*<span className="status-dot" /> SIMPÓSIO ON-LINE · LANNcHSR*/}
+        {/*</p>*/}
         <h1 id="hero-title" aria-label={title}>
           Neurocirurgia
           <br />é tudo a<br />
@@ -30,7 +30,7 @@ export function Hero({ title, subtitle, registrationAvailable }: Props) {
             {registrationAvailable
               ? 'Solicitar inscrição'
               : 'Conheça o simpósio'}{' '}
-            <span aria-hidden="true">↗</span>
+            <span aria-hidden="true">➔</span>
           </a>
           <span className="hero-date">
             Data e horário

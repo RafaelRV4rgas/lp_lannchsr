@@ -2,7 +2,7 @@
 :root {
   font-family: Inter, 'Helvetica Neue', Arial, sans-serif;
   color: #f6f1f0;
-  background: #100d10;
+  background: #100d0d;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -10,8 +10,9 @@
   --surface: #1b151a;
   --text: #f6f1f0;
   --muted: #bdb1b7;
-  --accent: #b43e54;
-  --accent-light: #e2909f;
+  --accent: #721919;
+  --accent-light: #fd7d7d;
+  --bordo: #221111ff;
   --line: #ffffff1c;
   color-scheme: dark;
   font-size: 16px;

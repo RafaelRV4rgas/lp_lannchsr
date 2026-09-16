@@ -14,7 +14,7 @@
   margin-top: 12px;
 }
 .benefits-band {
-  background: #1b1319;
+  background: var(--bordo);
   border-block: 1px solid var(--line);
 }
 .benefits-grid {

@@ -63,7 +63,7 @@
   position: absolute;
   width: 64%;
   right: -3%;
-  top: 50px;
+  /*top: 50px;*/
   height: 650px;
   z-index: -1;
   display: grid;
