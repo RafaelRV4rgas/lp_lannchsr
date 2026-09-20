@@ -8,7 +8,7 @@ Marcar um item somente quando a decisão ou o material estiver registrado. Os ca
 
 | Concluído | Informação necessária | Resposta / material | Necessário para |
 | --- | --- | --- | --- |
-| [ ] | Data do evento | Em aberto | Abrir inscrições |
+| [x] | Data do evento | 21/02/2027 | Abrir inscrições após completar os demais requisitos |
 | [ ] | Horário de início, término previsto e fuso oficial | Em aberto | Divulgar informações completas e orientar participantes |
 | [x] | Temas e palestrantes de cada sessão | 10 temas e 12 palestrantes recebidos; cadastrados em `src/content/speakers.ts` | Estruturar programação |
 | [ ] | Horários e ordem das apresentações | Solicitar material | Finalizar programação |

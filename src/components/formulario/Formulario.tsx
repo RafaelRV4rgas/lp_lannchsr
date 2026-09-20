@@ -1,7 +1,6 @@
 import { useRef, useState, type FormEvent } from 'react'
 import {
   calculatePriceCents,
-  defaultEventRules,
   formatPrice,
   registrationsAvailable,
   type EventRules,
@@ -16,6 +15,7 @@ import {
   type RegistrationInput,
 } from '../../domain/registration'
 import './Formulario.css'
+import {eventContent} from "../../content/event.ts";
 
 interface Props {
   rules?: EventRules
@@ -34,7 +34,7 @@ const emptyInput: RegistrationInput = {
   whatsappConsent: false,
 }
 export function Formulario({
-  rules = defaultEventRules,
+  rules = eventContent.rules,
   onSubmit,
   previewWhenClosed = false,
 }: Props) {

@@ -1,13 +1,15 @@
 import { speakers, talks } from './speakers'
+import {rules} from "./rules.ts";
 
 export const eventContent = {
   title: 'Neurocirurgia é tudo a Mesma Coisa?',
   subtitle:
-    'Simpósio on-line: as diferentes grandes áreas e subespecialidades da Neurocirurgia.',
+    'Simpósio on-line: As diferentes grandes áreas e subespecialidades da Neurocirurgia.',
   organization: 'Liga de Neurologia e Neurocirurgia do Hospital Santa Rosa',
   president: 'Carolina Ayumi Kozima',
   speakers,
   talks,
+  rules,
   supporters: [
     'Academia Brasileira de Neurocirurgia',
     'Sociedade Brasileira de Neurocirurgia',

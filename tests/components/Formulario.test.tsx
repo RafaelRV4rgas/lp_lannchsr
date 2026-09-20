@@ -2,18 +2,27 @@ import { expect, it, vi } from 'vitest'
 import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Formulario } from '../../src/components/formulario/Formulario'
-import { defaultEventRules } from '../../src/domain/event'
+import type { EventRules } from '../../src/domain/event'
+
+const closedRules: EventRules = {
+  startsAt: '',
+  timeZone: null,
+  registrationsOpen: false,
+  basePriceCents: 2500,
+  studentDiscountPercent: 10,
+  integrationsReady: false,
+}
 
 const openRules = {
-  ...defaultEventRules,
+  ...closedRules,
   startsAt: '2027-03-10T13:00:00-04:00',
   timeZone: 'America/Cuiaba',
   basePriceCents: 10000,
   integrationsReady: true,
   registrationsOpen: true,
 }
-it('keeps registration closed without a date', () => {
-  render(<Formulario rules={defaultEventRules} />)
+it('keeps registration closed without a valid date', () => {
+  render(<Formulario rules={closedRules} />)
   expect(
     screen.getByRole('button', { name: /inscrições em breve/i }),
   ).toBeDisabled()
@@ -85,7 +94,7 @@ it('reports missing fields in a closed local preview without sending', async () 
   const onSubmit = vi.fn()
   render(
     <Formulario
-      rules={defaultEventRules}
+      rules={closedRules}
       previewWhenClosed
       onSubmit={onSubmit}
     />,

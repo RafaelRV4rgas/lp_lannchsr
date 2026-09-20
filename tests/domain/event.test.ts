@@ -2,20 +2,29 @@ import { describe, expect, it } from 'vitest'
 import {
   calculatePriceCents,
   canOpenRegistrations,
-  defaultEventRules,
   registrationsAvailable,
+  type EventRules,
 } from '../../src/domain/event'
 
+const closedRules: EventRules = {
+  startsAt: '',
+  timeZone: null,
+  registrationsOpen: false,
+  basePriceCents: 2500,
+  studentDiscountPercent: 10,
+  integrationsReady: false,
+}
+
 describe('event rules', () => {
-  it('starts closed without a date, even with a configured price', () => {
-    expect(defaultEventRules).toMatchObject({
-      startsAt: null,
+  it('starts closed with an invalid date, even with a configured price', () => {
+    expect(closedRules).toMatchObject({
+      startsAt: '',
       registrationsOpen: false,
       studentDiscountPercent: 10,
     })
-    expect(defaultEventRules).not.toHaveProperty('capacity')
-    expect(defaultEventRules).not.toHaveProperty('reservationEnabled')
-    expect(canOpenRegistrations(defaultEventRules)).toBe(false)
+    expect(closedRules).not.toHaveProperty('capacity')
+    expect(closedRules).not.toHaveProperty('reservationEnabled')
+    expect(canOpenRegistrations(closedRules)).toBe(false)
   })
   it('calculates prices in cents and rejects invalid amounts', () => {
     expect(calculatePriceCents(10000, 10, true)).toBe(9000)
@@ -29,7 +38,7 @@ describe('event rules', () => {
   })
   it('requires valid date, timezone, price and integrations; opening is explicit', () => {
     const ready = {
-      ...defaultEventRules,
+      ...closedRules,
       startsAt: '2027-03-10T13:00:00-04:00',
       timeZone: 'America/Cuiaba',
       basePriceCents: 10000,

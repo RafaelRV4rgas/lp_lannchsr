@@ -179,7 +179,7 @@ Credenciais ficam exclusivamente no servidor. Aplicar HTTPS, restrição de aces
 
 | Item | Situação / ação necessária |
 | --- | --- |
-| Data, horário e fuso do evento | Organização definirá; data é requisito para abrir inscrições |
+| Data, horário e fuso do evento | Data definida em 21/02/2027; horário e fuso oficial ainda pendentes |
 | Preço-base | Organização definirá antes da abertura |
 | Validade da cobrança | Definir prazo conforme os recursos do provedor de pagamento |
 | Programação e palestrantes | Nomes e 10 temas recebidos; horários e ordem pendentes; 2 de 12 fotos, 0 de 12 apresentações e 3 de 12 CRMs recebidos |

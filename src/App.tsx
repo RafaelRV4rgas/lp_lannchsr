@@ -1,13 +1,16 @@
 import './App.css'
+import type {EventRules} from './domain/event'
+
 import { Hero } from './components/hero/Hero'
 import { EventSections } from './components/event/EventSections'
 import { Footer } from './components/footer/Footer'
 import { Formulario } from './components/formulario/Formulario'
 import { eventContent } from './content/event'
-import { defaultEventRules, registrationsAvailable } from './domain/event'
+import { registrationsAvailable } from './domain/event'
 import { registrationClient } from './services/registration-client'
 
 export default function App() {
+  const defaultRules: EventRules = eventContent.rules;
   return (
     <>
       <a className="skip-link" href="#conteudo">
@@ -31,7 +34,8 @@ export default function App() {
         <Hero
           title={eventContent.title}
           subtitle={eventContent.subtitle}
-          registrationAvailable={registrationsAvailable(defaultEventRules)}
+          data={defaultRules.startsAt}
+          registrationAvailable={registrationsAvailable(defaultRules)}
         />
         <EventSections content={eventContent} />
         <section
@@ -54,7 +58,7 @@ export default function App() {
             </p>
           </div>
           <Formulario
-            rules={defaultEventRules}
+            rules={defaultRules}
             previewWhenClosed={import.meta.env.DEV}
             onSubmit={registrationClient.submit}
           />

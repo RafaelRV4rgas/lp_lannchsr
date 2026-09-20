@@ -1,20 +1,11 @@
 export interface EventRules {
-  startsAt: string | null
+  startsAt: string
   timeZone: string | null
   registrationsOpen: boolean
   basePriceCents: number | null
   studentDiscountPercent: number
   integrationsReady: boolean
 }
-
-export const defaultEventRules: Readonly<EventRules> = Object.freeze({
-  startsAt: null,
-  timeZone: null,
-  registrationsOpen: false,
-  basePriceCents: 2500,
-  studentDiscountPercent: 10,
-  integrationsReady: false,
-})
 
 export function calculatePriceCents(
   base: number,
@@ -36,7 +27,7 @@ export function calculatePriceCents(
   return price
 }
 
-function validDate(value: string | null): boolean {
+function validDate(value: string): boolean {
   if (
     !value ||
     !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2})$/.test(value) ||

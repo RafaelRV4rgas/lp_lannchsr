@@ -65,7 +65,7 @@ Arquivos existentes a modificar: `src/App.tsx`, `src/App.css`, `src/index.css`, 
 
 ```ts
 export interface EventRules {
-  startsAt: string | null; // ISO 8601 com offset
+  startsAt: string; // data obrigatória; horário e fuso são validados antes da abertura
   timeZone: string | null;
   registrationsOpen: boolean;
   basePriceCents: number | null;
