@@ -9,9 +9,12 @@ import { eventContent } from './content/event'
 import { registrationsAvailable } from './domain/event'
 import { registrationClient } from './services/registration-client'
 import {SmoothScroll} from './components/motion/SmoothScroll'
+import {useScrollReveal} from './components/motion/useScrollReveal'
 
 export default function App() {
   const defaultRules: EventRules = eventContent.rules;
+  useScrollReveal()
+
   return (
     <>
       <SmoothScroll />
@@ -45,7 +48,7 @@ export default function App() {
           id="inscricao"
           aria-labelledby="registration-title"
         >
-          <div>
+          <div data-scroll-reveal>
             <p className="eyebrow">SEU PRÓXIMO PASSO</p>
             <h2 id="registration-title">
               Encontre a área

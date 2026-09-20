@@ -4,7 +4,7 @@ export function Footer() {
   return (
     <footer className="site-footer">
       <div className="container">
-        <div className="footer-top">
+        <div className="footer-top" data-scroll-reveal>
           <div>
             <p className="eyebrow">REALIZAÇÃO</p>
             <div className="organization">
@@ -26,7 +26,7 @@ export function Footer() {
             <p>{eventContent.president}</p>
           </div>
         </div>
-        <div className="supporters">
+        <div className="supporters" data-scroll-reveal data-reveal-delay="1">
           <p className="small-label">APOIO</p>
           <ul>
             {eventContent.supporters.map((name) => (

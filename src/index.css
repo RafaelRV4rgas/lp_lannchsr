@@ -89,6 +89,27 @@ img {
 .section-space {
   padding-block: 110px;
 }
+[data-scroll-reveal][data-reveal-observed] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 650ms ease,
+    transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--reveal-order, 0) * 90ms);
+}
+[data-scroll-reveal][data-reveal-delay='1'] {
+  --reveal-order: 1;
+}
+[data-scroll-reveal][data-reveal-delay='2'] {
+  --reveal-order: 2;
+}
+[data-scroll-reveal][data-reveal-delay='3'] {
+  --reveal-order: 3;
+}
+[data-scroll-reveal][data-reveal-observed].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
 .eyebrow {
   font-size: 0.75rem;
   font-weight: 600;
@@ -168,5 +189,9 @@ h2 em {
   *::after {
     animation: none !important;
     transition: none !important;
+  }
+  [data-scroll-reveal][data-reveal-observed] {
+    opacity: 1;
+    transform: none;
   }
 }

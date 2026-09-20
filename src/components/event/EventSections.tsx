@@ -1,8 +1,10 @@
 import type {EventContent} from '../../content/event'
 import './EventSections.css'
 import {SpeakersSection} from './SpeakersSection'
+import {useScrollReveal} from '../motion/useScrollReveal'
 
 export function EventSections({content}: { content: EventContent }) {
+    useScrollReveal()
     return (
         <>
             <section
@@ -10,7 +12,7 @@ export function EventSections({content}: { content: EventContent }) {
                 id="sobre"
                 aria-labelledby="about-title"
             >
-                <div>
+                <div data-scroll-reveal>
                     <p className="eyebrow">A RESPOSTA É: NÃO.</p>
                     <h2 id="about-title">
                         Uma especialidade.
@@ -18,7 +20,7 @@ export function EventSections({content}: { content: EventContent }) {
                         <em>Muitos universos.</em>
                     </h2>
                 </div>
-                <div className="about-copy">
+                <div className="about-copy" data-scroll-reveal data-reveal-delay="1">
                     <p>
                         Cada grande área da neurocirurgia tem suas próprias perguntas,
                         técnicas e formas de cuidar.
@@ -39,8 +41,12 @@ export function EventSections({content}: { content: EventContent }) {
             </section>
             <section className="benefits-band" aria-label="O que você vai encontrar">
                 <div className="container benefits-grid">
-                    {content.benefits.map((benefit) => (
-                        <article key={benefit.number}>
+                    {content.benefits.map((benefit, index) => (
+                        <article
+                            key={benefit.number}
+                            data-scroll-reveal
+                            data-reveal-delay={index + 1}
+                        >
                             <span className="benefit-number">{benefit.number}</span>
                             <h3>{benefit.title}</h3>
                             <p>{benefit.text}</p>
@@ -53,7 +59,7 @@ export function EventSections({content}: { content: EventContent }) {
                 id="programacao"
                 aria-labelledby="program-title"
             >
-                <div className="section-heading">
+                <div className="section-heading" data-scroll-reveal>
                     <div style={{flex: 1}}>
                         <h2 id="program-title">
                             Cada área,
@@ -74,7 +80,7 @@ export function EventSections({content}: { content: EventContent }) {
                 id="duvidas"
                 aria-labelledby="faq-title"
             >
-                <div>
+                <div data-scroll-reveal>
                     <p className="eyebrow">ANTES DO ENCONTRO</p>
                     <h2 id="faq-title">
                         Suas dúvidas,
@@ -82,7 +88,7 @@ export function EventSections({content}: { content: EventContent }) {
                         <em>respondidas.</em>
                     </h2>
                 </div>
-                <div className="faq-list">
+                <div className="faq-list" data-scroll-reveal data-reveal-delay="1">
                     {content.faq.map((item) => (
                         <details key={item.question}>
                             <summary>

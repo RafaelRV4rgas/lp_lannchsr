@@ -24,7 +24,7 @@ Criado em 06/09/2026 e atualizado em 15/09/2026. Branch: `codex/primeiras-cinco-
 
 ## Verificação
 
-- 29 testes automatizados de regras, componentes e cliente HTTP passaram.
+- 33 testes automatizados de regras, componentes e cliente HTTP passaram.
 - Verificação de tipos inclui os testes, além dos arquivos da aplicação.
 - Build de produção e lint verificados na entrega.
 - Inspeção de navegador em 360, 768 e 1440 pixels. Verificado carregamento das imagens e ausência de rolagem horizontal; FAQ abriu corretamente. Layout de tablet foi ajustado para composição vertical da abertura.

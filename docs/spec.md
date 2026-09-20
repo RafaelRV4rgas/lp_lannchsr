@@ -49,6 +49,7 @@ Direção aprovada: **imersiva, com cérebro abstrato formado por pontos e conex
 - Seções de apresentação, público e benefícios, programação, palestrantes, inscrição, dúvidas frequentes, organização e apoios.
 - A programação reúne 12 palestrantes em 10 temas. Duas fotos oficiais já foram incorporadas; os demais cards usam imagem genérica temporária e as apresentações curtas continuam demonstrativas.
 - Os cards dos palestrantes entram em sequência quando aparecem na tela, respeitando a preferência por movimento reduzido.
+- A navegação usa scroll inercial moderado e revela os principais blocos uma única vez ao entrarem na tela, preservando o movimento nativo para quem prefere redução de animações.
 - Layout responsivo, formulário legível e navegável por teclado, campos com rótulos e mensagens de erro acessíveis.
 - Animação simplificada no celular, estática com preferência por redução de movimento e alternativa estática quando a renderização não for suportada.
 - Conteúdo e formulário devem funcionar mesmo sem carregar a animação.

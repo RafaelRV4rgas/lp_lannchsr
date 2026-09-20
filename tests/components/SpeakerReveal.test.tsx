@@ -36,7 +36,9 @@ it('reveals each speaker once when its card enters the viewport', () => {
 
   act(() => {
     notify(
-      [{ isIntersecting: true, target: cards[0] } as IntersectionObserverEntry],
+      [
+        { isIntersecting: true, target: cards[0] } as unknown as IntersectionObserverEntry,
+      ],
       {} as IntersectionObserver,
     )
   })

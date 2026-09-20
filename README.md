@@ -44,6 +44,8 @@ O cérebro é uma imagem original de pontos e conexões, com movimento CSS discr
 
 Os cards dos palestrantes entram em sequência quando a seção aparece na tela. Essa animação também respeita a preferência do sistema por movimento reduzido. As fotos de Dr. Giovani Mendes e Dr. Renato Santos já foram incorporadas; os outros 10 cards usam uma imagem genérica temporária. As 12 apresentações curtas ainda são demonstrativas. Há 3 CRMs informados e 9 pendentes.
 
+A navegação utiliza Lenis para scroll inercial moderado. Títulos, textos, benefícios, FAQ, inscrição e rodapé são revelados uma única vez ao entrarem na tela. Os dois comportamentos respeitam `prefers-reduced-motion`.
+
 Nenhuma publicação, integração financeira ou envio real foi realizado nesta etapa.
 
 ## Documentação

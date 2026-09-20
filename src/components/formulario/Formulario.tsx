@@ -81,7 +81,11 @@ export function Formulario({
   }
   if (!available && !previewWhenClosed)
     return (
-      <div className="registration-card closed-registration">
+      <div
+        className="registration-card closed-registration"
+        data-scroll-reveal
+        data-reveal-delay="1"
+      >
         <span className="small-label">VAMOS NOS ENCONTRAR EM BREVE</span>
         <h3>
           Novas conexões
@@ -157,6 +161,8 @@ export function Formulario({
   return (
     <form
       className="registration-card"
+      data-scroll-reveal
+      data-reveal-delay="1"
       onSubmit={submit}
       noValidate
       ref={formRef}
