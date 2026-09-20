@@ -3,28 +3,23 @@ export interface EventRules {
   timeZone: string | null
   registrationsOpen: boolean
   basePriceCents: number | null
-  studentDiscountPercent: number
+  studentPriceCents: number
   integrationsReady: boolean
 }
 
 export function calculatePriceCents(
   base: number,
-  discount: number,
+  studentPrice: number,
   student: boolean,
 ): number {
   if (
     !Number.isSafeInteger(base) ||
     base <= 0 ||
-    !Number.isInteger(discount) ||
-    discount < 0 ||
-    discount >= 100
+    !Number.isSafeInteger(studentPrice) ||
+    studentPrice <= 0
   )
     throw new Error('INVALID_PRICE')
-  const price = student
-    ? Number((BigInt(base) * BigInt(100 - discount) + 50n) / 100n)
-    : base
-  if (price < 1) throw new Error('INVALID_PRICE')
-  return price
+  return student ? studentPrice : base
 }
 
 function validDate(value: string): boolean {
@@ -55,7 +50,7 @@ export function canOpenRegistrations(rules: EventRules): boolean {
     new Intl.DateTimeFormat('pt-BR', { timeZone: rules.timeZone }).format()
     calculatePriceCents(
       rules.basePriceCents,
-      rules.studentDiscountPercent,
+      rules.studentPriceCents,
       true,
     )
     return true

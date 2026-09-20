@@ -12,6 +12,6 @@ it('shows the configured event date', () => {
     />,
   )
 
-  expect(screen.getByText('21/02/2027')).toBeVisible()
+  expect(screen.getByText(/Data do evento: 21\/02\/2027/)).toBeVisible()
   expect(screen.queryByText('Em breve')).not.toBeInTheDocument()
 })

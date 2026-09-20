@@ -98,7 +98,7 @@ export function Formulario({
         <div className="student-note">
           <span aria-hidden="true">↗</span>
           <div>
-            <strong>{rules.studentDiscountPercent}% para estudantes</strong>
+            <strong>{formatPrice(rules.studentPriceCents)} para estudantes</strong>
             <p>De qualquer curso, por autodeclaração.</p>
           </div>
         </div>
@@ -187,12 +187,12 @@ export function Formulario({
           : formatPrice(
               calculatePriceCents(
                 rules.basePriceCents!,
-                rules.studentDiscountPercent,
+                rules.studentPriceCents,
                 student,
               ),
             )}
         {student && (
-          <span>Desconto estudantil de {rules.studentDiscountPercent}%</span>
+          <span>Valor para estudantes</span>
         )}
       </p>
       <fieldset disabled={status === 'sending'}>
@@ -272,8 +272,8 @@ export function Formulario({
             required
           />
           <span>
-            Autorizo a LANNcHSR a enviar pelo WhatsApp mensagens sobre minha
-            inscrição, pagamento e acesso ao evento.
+            Autorizo o envio de mensagens pelo WhatsApp relacionadas a esta inscrição,
+            incluindo confirmações, informações sobre pagamento, acesso ao evento e avisos importantes.
           </span>
         </label>
         {errors.whatsappConsent && (

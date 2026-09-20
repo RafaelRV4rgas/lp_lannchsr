@@ -73,16 +73,15 @@ Campos obrigatórios:
 
 Solicitar autorização para mensagens de inscrição, cobrança e acesso pelo WhatsApp e registrar a autorização com data e versão do texto. Apresentar aviso de privacidade que explique a utilização dos dados.
 
-O desconto de estudante vale para qualquer curso e é concedido por autodeclaração, sem upload ou análise de comprovante.
+O valor especial para estudante vale para qualquer curso e é concedido por autodeclaração, sem upload ou análise de comprovante.
 
 Cada CPF pode ter apenas uma inscrição por evento. Reenvios não criam novo cadastro nem cobranças duplicadas. Inscrição pendente permite retomada; inscrição confirmada informa a situação ao titular. A recuperação deve verificar o acesso a um contato já cadastrado ou usar link seguro, sem expor dados pessoais apenas pela digitação do CPF. Validar o CPF não comprova a identidade de quem preenche.
 
 ## 5. Regras comerciais e abertura
 
 - Preço-base: configurável; valor ainda não definido.
-- Desconto estudantil: inicialmente 10%, configurável pelo painel.
-- Valor estudantil: preço-base × 0,90 quando o desconto for 10%, arredondado para centavos.
-- Calcular valores no servidor. Salvar preço, desconto e total aplicados em cada cobrança, preservando cobranças existentes quando as configurações mudarem.
+- Valor estudantil fixo, configurável nas regras do evento.
+- Calcular valores no servidor. Salvar a categoria e o valor aplicados em cada cobrança, preservando cobranças existentes quando as configurações mudarem.
 - Não há limite comercial de inscrições. Eventuais limites da plataforma de transmissão são restrições técnicas e devem ser avaliados na escolha do serviço.
 - Definir uma data não abre inscrições automaticamente. A organização precisa acionar a abertura no painel.
 - Só permitir abertura com data definida, preço válido e integrações de produção prontas.
@@ -136,7 +135,7 @@ Salvar tentativas e identificadores das mensagens; acompanhar status de envio/en
 
 Acesso restrito à organização por autenticação e autorização no servidor.
 
-**Configurações:** data/horário/fuso, abertura e fechamento de inscrições, preço-base, percentual de desconto, validade da cobrança e cadastro/liberação do link do evento.
+**Configurações:** data/horário/fuso, abertura e fechamento de inscrições, preço-base, preço fixo para estudantes, validade da cobrança e cadastro/liberação do link do evento.
 
 **Acompanhamento:** listar e buscar inscrições por nome/CPF, consultar dados do formulário, categoria, valor cobrado, situação do pagamento, confirmação, eventual vencimento da cobrança e status das mensagens. Exibir totais de confirmados e pendentes.
 
@@ -164,7 +163,7 @@ Credenciais ficam exclusivamente no servidor. Aplicar HTTPS, restrição de aces
 
 1. Sem data, não é possível abrir inscrições pela interface nem pela API.
 2. Com data e demais pré-requisitos válidos, a organização consegue abrir e fechar inscrições manualmente.
-3. Estudante vê campos acadêmicos obrigatórios e recebe exatamente o desconto configurado; os demais pagam o preço-base.
+3. Estudante vê campos acadêmicos obrigatórios e paga exatamente o valor estudantil configurado; os demais pagam o preço-base.
 4. Duas submissões para o mesmo CPF não criam duas inscrições; recuperação não expõe dados a terceiros.
 5. Toda cobrança tem vínculo com a inscrição e valores calculados no servidor.
 6. O vencimento da cobrança não é apresentado como reserva de vaga.

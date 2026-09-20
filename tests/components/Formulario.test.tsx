@@ -9,7 +9,7 @@ const closedRules: EventRules = {
   timeZone: null,
   registrationsOpen: false,
   basePriceCents: 2500,
-  studentDiscountPercent: 10,
+  studentPriceCents: 1500,
   integrationsReady: false,
 }
 
@@ -18,6 +18,7 @@ const openRules = {
   startsAt: '2027-03-10T13:00:00-04:00',
   timeZone: 'America/Cuiaba',
   basePriceCents: 10000,
+  studentPriceCents: 6000,
   integrationsReady: true,
   registrationsOpen: true,
 }
@@ -28,13 +29,14 @@ it('keeps registration closed without a valid date', () => {
   ).toBeDisabled()
   expect(screen.queryByLabelText(/CPF/i)).not.toBeInTheDocument()
 })
-it('shows required academic fields and discounted price for students', async () => {
+it('shows required academic fields and the fixed student price', async () => {
   const user = userEvent.setup()
   render(<Formulario rules={openRules} />)
   await user.selectOptions(screen.getByLabelText('Profissão'), 'student')
   expect(screen.getByLabelText('Curso')).toBeRequired()
   expect(screen.getByLabelText('Universidade')).toBeRequired()
-  expect(screen.getByText(/90,00/)).toBeInTheDocument()
+  expect(screen.getByText(/60,00/)).toBeInTheDocument()
+  expect(screen.getByText('Valor para estudantes')).toBeInTheDocument()
   await user.selectOptions(screen.getByLabelText('Profissão'), 'Médico')
   expect(screen.queryByLabelText('Curso')).not.toBeInTheDocument()
 })

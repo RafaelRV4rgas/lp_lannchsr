@@ -25,6 +25,12 @@ export function Hero({title, subtitle, data, registrationAvailable}: Props) {
                     <em>mesma coisa?</em>
                 </h1>
                 <p className="hero-description">{subtitle}</p>
+                <span className="hero-description" style={{
+                    display: 'inline-block',
+                    marginTop: '1rem',
+                }}>
+                    <strong>Data do evento: {data}</strong>
+                </span>
                 <div className="hero-actions">
                     <a
                         className="button"
@@ -35,11 +41,6 @@ export function Hero({title, subtitle, data, registrationAvailable}: Props) {
                             : 'Conheça o simpósio'}{' '}
                         <span aria-hidden="true">➔</span>
                     </a>
-                    <span className="hero-date">
-            Data e horário
-            <br/>
-                        <strong>{data}</strong>
-          </span>
                 </div>
             </div>
             <BrainVisual/>

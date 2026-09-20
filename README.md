@@ -22,12 +22,12 @@ npm run lint
 npm run build
 ```
 
-Os testes cobrem desconto/arredondamento, abertura condicionada, validação e normalização de dados, máscaras e limites de CPF/WhatsApp, campos estudantis, falha de envio, cliques repetidos, idempotência da tentativa, retorno/recuperação, validade da cobrança e conteúdo e animação dos cards de palestrantes. Não comprovam transações de banco ou pagamentos reais, ainda inexistentes.
+Os testes cobrem preço fixo para estudantes, abertura condicionada, validação e normalização de dados, máscaras e limites de CPF/WhatsApp, campos estudantis, falha de envio, cliques repetidos, idempotência da tentativa, retorno/recuperação, validade da cobrança e conteúdo e animação dos cards de palestrantes. Não comprovam transações de banco ou pagamentos reais, ainda inexistentes.
 
 ## Editar conteúdo e regras
 
 - `src/content/event.ts`: textos e apoios do evento. `src/content/speakers.ts`: 10 temas e 12 palestrantes informados pela organização; duas fotos oficiais, imagem genérica nos demais cards, apresentações demonstrativas e CRMs pendentes sinalizados.
-- `src/domain/event.ts`: configuração inicial fechada, desconto de 10% e pré-requisitos para abertura. O backend futuro será a autoridade dessas configurações.
+- `src/domain/event.ts`: configuração inicial fechada, preço fixo para estudantes e pré-requisitos para abertura. O backend futuro será a autoridade dessas configurações.
 - `src/domain/registration.ts`: dados do participante e validação.
 - `src/components/`: apresentação, formulário e acompanhamento.
 - `src/contracts/api.ts` e `src/services/registration-client.ts`: fronteira da API; transporte injetável apenas nos testes.

@@ -5,6 +5,6 @@ export const rules: Readonly<EventRules> = Object.freeze({
     timeZone: null,
     registrationsOpen: false,
     basePriceCents: 2500,
-    studentDiscountPercent: 10,
+    studentPriceCents: 1500,
     integrationsReady: false,
 })

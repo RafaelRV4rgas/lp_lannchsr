@@ -13,8 +13,8 @@
 ## Restrições globais
 
 - Cada CPF pode ter apenas uma inscrição por evento.
-- Desconto estudantil: inicialmente 10%, configurável pelo painel.
-- O desconto de estudante vale para qualquer curso e é concedido por autodeclaração, sem upload ou análise de comprovante.
+- Preço estudantil fixo, configurável nas regras do evento.
+- O valor de estudante vale para qualquer curso e é concedido por autodeclaração, sem upload ou análise de comprovante.
 - Definir uma data não abre inscrições automaticamente. A organização precisa acionar a abertura no painel.
 - Só permitir abertura com data definida, preço válido e integrações de produção prontas.
 - A página de retorno do pagamento não é prova de pagamento.
@@ -61,7 +61,7 @@ Arquivos existentes a modificar: `src/App.tsx`, `src/App.css`, `src/index.css`, 
 
 **Arquivos:** criar `src/content/event.ts`, `src/domain/event.ts`, `tests/domain/event.test.ts`; modificar `package.json` e lockfile para o runner de testes.
 
-**Interface:** `EventRules` consumido pela página, pelo formulário e pelo servidor; `canOpenRegistrations(rules): boolean`; `calculatePriceCents(basePriceCents, discountPercent, isStudent): number`.
+**Interface:** `EventRules` consumido pela página, pelo formulário e pelo servidor; `canOpenRegistrations(rules): boolean`; `calculatePriceCents(basePriceCents, studentPriceCents, isStudent): number`.
 
 ```ts
 export interface EventRules {
@@ -69,10 +69,10 @@ export interface EventRules {
   timeZone: string | null;
   registrationsOpen: boolean;
   basePriceCents: number | null;
-  studentDiscountPercent: number;
+  studentPriceCents: number;
   integrationsReady: boolean; // determinado no servidor
 }
-export function calculatePriceCents(base: number, discount: number, student: boolean) {
+export function calculatePriceCents(base: number, studentPrice: number, student: boolean) {
   if (!Number.isInteger(base) || base <= 0 || !Number.isInteger(discount) || discount < 0 || discount >= 100)
     throw new Error('INVALID_PRICE');
   return student ? Math.round(base * (100 - discount) / 100) : base;
@@ -80,7 +80,7 @@ export function calculatePriceCents(base: number, discount: number, student: boo
 ```
 
 - [x] Instalar o runner compatível e criar `test` como `vitest run` em `package.json`.
-- [x] Escrever os casos antes da função: `expect(calculatePriceCents(10000, 10, true)).toBe(9000)` e `expect(calculatePriceCents(10000, 10, false)).toBe(10000)`; rejeitar preço nulo/negativo e desconto inválido na fronteira da configuração.
+- [x] Escrever os casos antes da função: `expect(calculatePriceCents(10000, 6000, true)).toBe(6000)` e `expect(calculatePriceCents(10000, 6000, false)).toBe(10000)`; rejeitar preços nulos, negativos ou não inteiros na fronteira da configuração.
 - [x] Testar `canOpenRegistrations`: falso sem data válida, fuso, preço ou integrações; verdadeiro com pré-requisitos, sem mudar automaticamente `registrationsOpen`.
 - [x] Executar `npm run test -- tests/domain/event.test.ts`, observar falha pelos símbolos ausentes e implementar as regras até passar.
 - [x] Criar conteúdo com título, subtítulo e informações da spec; `speakers` e `schedule` começam vazios; data e preço públicos começam ausentes, inscrições fechadas.
@@ -259,7 +259,7 @@ export interface PaymentProvider {
 **Arquivos lógicos:** `src/admin/` e `server/admin/`, com rotas, auth e testes especificados na tarefa 6.
 
 - [ ] Implementar login pelo mecanismo selecionado e autorização no servidor em todas as rotas administrativas, inclusive buscas e reenvios.
-- [ ] Criar formulário de configuração com data/hora/fuso, preço, desconto, validade da cobrança, abertura/fechamento e link/liberação. Mostrar efeito de alterações antes de salvar; validar as mesmas regras na API.
+- [ ] Criar formulário de configuração com data/hora/fuso, preço-base, preço estudantil, validade da cobrança, abertura/fechamento e link/liberação. Mostrar efeito de alterações antes de salvar; validar as mesmas regras na API.
 - [ ] Criar listagem paginada, busca por nome/CPF, detalhes, totais, mensagens com falha e exceções de pagamento. Nunca incluir link de transmissão no endpoint público do evento.
 - [ ] Adicionar reenvio elegível, auditoria e acompanhamento de pagamentos duplicados ou tardios. Não adicionar CMS nem botão de aprovação financeira sem evidência.
 - [ ] Testar chamadas diretas não autorizadas, configuração sem data, alteração de preço sem mudar cobrança existente e tentativa de enviar acesso a pendente.
@@ -292,7 +292,7 @@ Não há necessidade de receber materiais para começar as primeiras cinco taref
 | Seção da spec | Tarefas |
 | --- | --- |
 | Evento, conteúdo, escopo e identidade | 1, 2, 11 |
-| Formulário, desconto e CPF único | 1, 3, 4, 7 |
+| Formulário, preço estudantil e CPF único | 1, 3, 4, 7 |
 | Abertura, preço e validade da cobrança | 1, 5, 7, 10 |
 | Pagamento e exceções | 6, 7, 8 |
 | WhatsApp e acesso | 4, 6, 9 |

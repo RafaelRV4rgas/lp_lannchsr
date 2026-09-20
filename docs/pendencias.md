@@ -87,7 +87,7 @@ As escolhas técnicas devem ser registradas também em `docs/decisions/integrati
 - Inscrições só podem abrir com data definida; definir a data não as abre automaticamente.
 - Não há limite comercial de inscrições nem reserva de vaga. Eventual limite da plataforma de transmissão será tratado como restrição técnica do serviço escolhido.
 - A validade do link de pagamento será definida separadamente conforme o provedor.
-- Estudantes de qualquer curso recebem **10% de desconto por autodeclaração**, sem comprovante.
+- Estudantes de qualquer curso pagam um **valor fixo especial por autodeclaração**, sem comprovante.
 - Uma inscrição por CPF por evento.
 - Formulário: nome completo, CPF, profissão, e-mail e WhatsApp; para estudante, curso, semestre e universidade.
 - Solicitação e link de pagamento enviados automaticamente pelo WhatsApp.

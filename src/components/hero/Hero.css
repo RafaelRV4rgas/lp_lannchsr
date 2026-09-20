@@ -48,17 +48,6 @@
   gap: 25px;
   margin-top: 36px;
 }
-.hero-date {
-  font-size: 0.875rem;
-  color: var(--muted);
-  line-height: 1.55;
-  border-left: 1px solid var(--line);
-  padding-left: 24px;
-}
-.hero-date strong {
-  font-weight: 400;
-  color: var(--text);
-}
 .brain-visual {
   position: absolute;
   width: 64%;
@@ -162,9 +151,6 @@
   .hero-actions {
     gap: 16px;
     flex-wrap: wrap;
-  }
-  .hero-date {
-    padding-left: 16px;
   }
   .hero .button {
     font-size: 0.875rem;

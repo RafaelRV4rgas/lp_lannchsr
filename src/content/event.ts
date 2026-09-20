@@ -1,5 +1,6 @@
 import { speakers, talks } from './speakers'
 import {rules} from "./rules.ts";
+import {formatPrice} from '../domain/event'
 
 export const eventContent = {
   title: 'Neurocirurgia é tudo a Mesma Coisa?',
@@ -46,27 +47,27 @@ export const eventContent = {
     {
       question: 'Para quem é o simpósio?',
       answer:
-        'Para estudantes de medicina, profissionais de saúde, médicos considerando a residência e residentes explorando uma subespecialização. Pessoas interessadas no universo da neurocirurgia também são bem-vindas.',
+        'O simpósio é voltado a estudantes de medicina, profissionais da saúde, médicos que estão escolhendo uma residência e residentes interessados em conhecer diferentes subespecialidades. Qualquer pessoa interessada em neurocirurgia também pode participar.',
     },
     {
       question: 'Como será realizado o evento?',
       answer:
-        'O simpósio será on-line. A data, o horário e a plataforma de transmissão serão divulgados em breve.',
-    },
-    {
-      question: 'Estudantes terão desconto?',
-      answer:
-        'Sim. Estudantes de qualquer curso terão 10% de desconto por autodeclaração no formulário, sem envio de comprovante de matrícula. O valor da inscrição será divulgado antes da abertura.',
+        'O simpósio será realizado on-line, no dia 21 de fevereiro de 2027. Antes do evento, os participantes com inscrição confirmada receberão o link de acesso e as orientações necessárias.',
     },
     {
       question: 'Como funcionarão a inscrição e o pagamento?',
       answer:
-        'Quando as inscrições abrirem, você poderá preencher o formulário e receber o link de pagamento pelo WhatsApp. A inscrição será confirmada após a aprovação do pagamento.',
+        'Após preencher o formulário, você receberá pelo WhatsApp a confirmação da solicitação e o link para pagamento. Sua inscrição será confirmada assim que o pagamento for aprovado.',
+    },
+    {
+      question: 'Estudantes terão um valor especial?',
+      answer:
+        `Sim. Estudantes de qualquer curso pagam ${formatPrice(rules.studentPriceCents)}. A condição será informada por autodeclaração no formulário.`,
     },
     {
       question: 'Como receberei o acesso e o certificado?',
       answer:
-        'O link do evento será enviado pelo WhatsApp aos inscritos confirmados, assim que estiver liberado. A emissão e o envio do certificado serão realizados pela organização.',
+        'O link de acesso será enviado pelo WhatsApp aos participantes com inscrição confirmada. Após o evento, a organização enviará as orientações para emissão ou recebimento do certificado.',
     },
   ],
 }

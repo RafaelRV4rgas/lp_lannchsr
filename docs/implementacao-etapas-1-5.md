@@ -8,7 +8,7 @@ Criado em 06/09/2026 e atualizado em 15/09/2026. Branch: `codex/primeiras-cinco-
 | --- | --- |
 | 1 — Conteúdo e estados | Conteúdo centralizado; abertura explícita condicionada a data, fuso, preço e integrações; cálculo em centavos com aritmética inteira |
 | 2 — Página imersiva | Landing page responsiva, cérebro abstrato, seções editoriais, FAQ funcional, identidade bordô/cinza/branco e logo recebido |
-| 3 — Formulário | Campos obrigatórios, CPF, contatos, autodeclaração, campos acadêmicos condicionais, desconto, aviso de finalidade, autorização e estados de envio/erro |
+| 3 — Formulário | Campos obrigatórios, CPF, contatos, autodeclaração, campos acadêmicos condicionais, preço estudantil, aviso de finalidade, autorização e estados de envio/erro |
 | 4 — Contrato e retorno | Cliente HTTP tipado, validação de resposta, página de retorno/recuperação, token somente em memória e retomada por API futura |
 | 5 — Simplificação comercial | Limite e reserva removidos após decisão de operar o evento on-line sem limite comercial; validade da cobrança permanece independente |
 

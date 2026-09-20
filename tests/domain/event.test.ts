@@ -11,7 +11,7 @@ const closedRules: EventRules = {
   timeZone: null,
   registrationsOpen: false,
   basePriceCents: 2500,
-  studentDiscountPercent: 10,
+  studentPriceCents: 1500,
   integrationsReady: false,
 }
 
@@ -20,21 +20,19 @@ describe('event rules', () => {
     expect(closedRules).toMatchObject({
       startsAt: '',
       registrationsOpen: false,
-      studentDiscountPercent: 10,
+      studentPriceCents: 1500,
     })
     expect(closedRules).not.toHaveProperty('capacity')
     expect(closedRules).not.toHaveProperty('reservationEnabled')
     expect(canOpenRegistrations(closedRules)).toBe(false)
   })
-  it('calculates prices in cents and rejects invalid amounts', () => {
-    expect(calculatePriceCents(10000, 10, true)).toBe(9000)
-    expect(calculatePriceCents(10000, 10, false)).toBe(10000)
-    expect(calculatePriceCents(9999, 10, true)).toBe(8999)
-    expect(calculatePriceCents(45, 30, true)).toBe(32)
+  it('uses the configured fixed student price and rejects invalid amounts', () => {
+    expect(calculatePriceCents(10000, 6000, true)).toBe(6000)
+    expect(calculatePriceCents(10000, 6000, false)).toBe(10000)
     for (const base of [0, -1, 1.5, NaN, Infinity])
-      expect(() => calculatePriceCents(base, 10, true)).toThrow()
-    for (const discount of [-1, 100, NaN])
-      expect(() => calculatePriceCents(10000, discount, true)).toThrow()
+      expect(() => calculatePriceCents(base, 6000, true)).toThrow()
+    for (const studentPrice of [0, -1, 1.5, NaN, Infinity])
+      expect(() => calculatePriceCents(10000, studentPrice, true)).toThrow()
   })
   it('requires valid date, timezone, price and integrations; opening is explicit', () => {
     const ready = {
