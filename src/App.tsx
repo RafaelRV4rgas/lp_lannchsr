@@ -8,11 +8,13 @@ import { Formulario } from './components/formulario/Formulario'
 import { eventContent } from './content/event'
 import { registrationsAvailable } from './domain/event'
 import { registrationClient } from './services/registration-client'
+import {SmoothScroll} from './components/motion/SmoothScroll'
 
 export default function App() {
   const defaultRules: EventRules = eventContent.rules;
   return (
     <>
+      <SmoothScroll />
       <a className="skip-link" href="#conteudo">
         Pular para o conteúdo
       </a>
