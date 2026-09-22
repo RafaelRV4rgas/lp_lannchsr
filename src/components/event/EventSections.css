@@ -1,17 +1,17 @@
 .about {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 100px;
+  gap: var(--space-7);
 }
 .about-copy > p {
-  margin-bottom: 22px;
+  margin-bottom: var(--space-3);
 }
 .about-copy > p:first-child {
   font-size: 1.25rem;
   line-height: 1.6;
 }
 .about-copy .text-link {
-  margin-top: 12px;
+  margin-top: var(--space-2);
 }
 .benefits-band {
   background: var(--bordo);
@@ -19,11 +19,11 @@
 }
 .benefits-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  padding-block: 55px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  padding-block: var(--space-6);
 }
 .benefits-grid article {
-  padding-inline: 30px;
+  padding-inline: var(--space-4);
   border-right: 1px solid var(--line);
 }
 .benefits-grid article:first-child {
@@ -39,11 +39,11 @@
   font-style: italic;
   font-size: 1.6rem;
   display: block;
-  margin-bottom: 36px;
+  margin-bottom: var(--space-4);
 }
 .benefits-grid h3 {
   font-size: 1.125rem;
-  margin-bottom: 15px;
+  margin-bottom: var(--space-2);
 }
 .benefits-grid p {
   font-size: 0.875rem;
@@ -53,10 +53,54 @@
   display: flex;
   justify-content: space-between;
   align-items: end;
-  gap: 36px;
+  gap: var(--space-4);
 }
 .section-heading > p {
   font-size: 0.9375rem;
+}
+.specialties-section {
+  margin-top: var(--space-6);
+}
+.specialties-section > .eyebrow {
+  margin-bottom: var(--space-3);
+}
+.specialties-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-bottom: 1px solid var(--line);
+}
+.specialties-grid article {
+  min-height: 148px;
+  padding: var(--space-3) var(--space-4) var(--space-3) 0;
+  border-top: 1px solid var(--line);
+}
+.specialties-grid article:nth-child(even) {
+  padding-inline: var(--space-4) 0;
+  border-left: 1px solid var(--line);
+}
+.specialties-grid h3 {
+  position: relative;
+  padding-left: 16px;
+  font-size: 1.12rem;
+  line-height: 1.35;
+}
+.specialties-grid h3::before {
+  position: absolute;
+  top: 0.48em;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  content: '';
+}
+.specialties-grid p {
+  max-width: 520px;
+  margin-top: var(--space-1);
+  padding-left: 16px;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.65;
 }
 .program-columns {
   display: grid;
@@ -88,7 +132,7 @@
 .faq-section {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
-  gap: 80px;
+  gap: var(--space-6);
   border-block: 1px solid var(--line);
 }
 .faq-list details {
@@ -124,46 +168,64 @@
 }
 @media (max-width: 1000px) {
   .about {
-    gap: 50px;
+    gap: var(--space-5);
+  }
+  .benefits-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .benefits-grid article {
     padding-inline: 20px;
   }
+  .benefits-grid article:nth-child(3) {
+    border-right: 0;
+  }
   .faq-section {
-    gap: 40px;
+    gap: var(--space-5);
   }
 }
 @media (max-width: 760px) {
   .about,
   .faq-section {
     grid-template-columns: 1fr;
-    gap: 35px;
+    gap: var(--space-4);
   }
   .benefits-grid {
     grid-template-columns: 1fr 1fr;
-    padding-block: 15px;
+    padding-block: var(--space-2);
   }
   .benefits-grid article,
   .benefits-grid article:first-child,
   .benefits-grid article:last-child {
-    padding: 25px 18px;
+    padding: var(--space-3) var(--space-2);
     border: 0;
   }
   .benefits-grid article:nth-child(odd) {
     padding-left: 0;
   }
   .benefit-number {
-    margin-bottom: 20px;
+    margin-bottom: var(--space-2);
   }
   .section-heading {
     display: block;
   }
   .section-heading > p {
-    margin-top: 25px;
+    margin-top: var(--space-3);
+  }
+  .specialties-section {
+    margin-top: var(--space-5);
+  }
+  .specialties-grid {
+    grid-template-columns: 1fr;
+  }
+  .specialties-grid article,
+  .specialties-grid article:nth-child(even) {
+    min-height: 0;
+    padding: var(--space-3) 0;
+    border-left: 0;
   }
   .program-columns {
-    gap: 35px;
+    gap: var(--space-4);
     grid-template-columns: 1fr;
-    margin-top: 35px;
+    margin-top: var(--space-4);
   }
 }

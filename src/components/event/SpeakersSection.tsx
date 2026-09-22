@@ -47,7 +47,7 @@ export function SpeakersSection({speakers, talks}: Props) {
 
     return (
         <div className="speakers-section" id="palestrantes">
-            <h3 className="speakers-title eyebrow">Quem conduz essa jornada.</h3>
+            <h3 className="speakers-title eyebrow">QUEM CONDUZ ESSA JORNADA</h3>
             <ol ref={listRef} className="speakers-grid" aria-label="Palestrantes do simpósio">
                 {cards.map(({speaker, topic}) => {
                     const hasPlaceholderPhoto = speaker.photoUrl === '/images/speaker-placeholder.webp'

@@ -6,7 +6,7 @@ export const eventContent = {
   title: 'Neurocirurgia é tudo a Mesma Coisa?',
   subtitle:
     'Simpósio on-line: As diferentes grandes áreas e subespecialidades da Neurocirurgia.',
-  organization: 'Liga de Neurologia e Neurocirurgia do Hospital Santa Rosa',
+  organization: 'Liga Acadêmica de Neurologia e Neurocirurgia do Hospital Santa Rosa',
   president: 'Carolina Ayumi Kozima',
   speakers,
   talks,
@@ -18,29 +18,76 @@ export const eventContent = {
     'Centro de Estudos Cervantes Caporossi',
     'Medneuro',
     'Neurocirurgiões no Ar',
-    'Liga Acadêmica Brasileira de Neurocirurgia',
+    'Liga Brasileira de Neurocirurgia',
   ],
   // Public wording of the additional individual supporter awaits confirmation (docs/pendencias.md).
   benefits: [
     {
       number: '01',
-      title: 'Além da teoria',
-      text: 'Conheça as patologias, os procedimentos e a rotina de diferentes subespecialidades.',
+      title: 'Explore novos caminhos',
+      text: 'Descubra como diferentes subespecialidades transformam conhecimento em decisões, procedimentos e cuidado.',
     },
     {
       number: '02',
-      title: 'Carreiras em perspectiva',
-      text: 'Ouça as experiências e escolhas de neurocirurgiões em suas áreas de atuação.',
+      title: 'Enxergue além da residência',
+      text: 'Conheça rotinas, desafios e escolhas de carreira pela perspectiva de quem vive a neurocirurgia todos os dias.',
     },
     {
       number: '03',
-      title: 'Espaço para perguntar',
-      text: 'Participe das discussões e tire suas dúvidas com os especialistas.',
+      title: 'Converse com especialistas',
+      text: 'Aproxime-se de profissionais de referência e leve suas perguntas para uma discussão aberta ao final do encontro.',
     },
     {
       number: '04',
-      title: 'Conhecimento que fica',
-      text: 'Materiais das aulas, sorteios e certificado pela Academia Brasileira de Neurocirurgia.',
+      title: 'Leve a experiência com você',
+      text: 'Receba materiais das aulas para continuar aprendendo e concorra a prêmios durante o simpósio.',
+    },
+    {
+      number: '05',
+      title: 'Certifique sua participação',
+      text: 'Conclua o simpósio com um certificado emitido pela Academia Brasileira de Neurocirurgia.',
+    },
+  ],
+  specialties: [
+    {
+      title: 'Neurocirurgia endovascular',
+      text: 'Conheça as abordagens endovasculares e a neurorradiologia intervencionista no cuidado das doenças cerebrovasculares.',
+    },
+    {
+      title: 'Neurocirurgia oncológica',
+      text: 'Explore o diagnóstico e o tratamento cirúrgico dos tumores do sistema nervoso e sua atuação multidisciplinar.',
+    },
+    {
+      title: 'Neurocirurgia pediátrica',
+      text: 'Entenda os cuidados especializados para malformações, hidrocefalias, tumores e outras condições da infância.',
+    },
+    {
+      title: 'Neurocirurgia de coluna',
+      text: 'Descubra a prática dedicada às doenças da coluna vertebral e às diferentes possibilidades de tratamento.',
+    },
+    {
+      title: 'Neurocirurgia funcional',
+      text: 'Veja como técnicas de neuromodulação e procedimentos funcionais podem atuar em movimento, dor e epilepsia.',
+    },
+    {
+      title: 'Neurocirurgia de base do crânio',
+      text: 'Conheça cirurgias de alta complexidade que integram planejamento, monitorização e trabalho multidisciplinar.',
+    },
+    {
+      title: 'Microneurocirurgia vascular',
+      text: 'Acompanhe técnicas microcirúrgicas aplicadas a aneurismas, malformações vasculares e distúrbios da circulação cerebral.',
+    },
+    {
+      title: 'Neurocirurgia de nervos periféricos',
+      text: 'Explore o tratamento de compressões, lesões traumáticas e tumores que afetam os nervos periféricos.',
+    },
+    {
+      title: 'Dor crônica',
+      text: 'Conheça caminhos cirúrgicos e de neuromodulação voltados ao cuidado de quadros persistentes e refratários.',
+    },
+    {
+      title: 'Urgência, emergência e neurointensivismo',
+      text: 'Entenda a tomada de decisão em situações neurológicas críticas que exigem avaliação e intervenção rápidas.',
     },
   ],
   faq: [

@@ -12,7 +12,7 @@ export interface Talk {
     speakerIds: string[]
 }
 
-// Names, topics and the three known registrations were supplied by the organization.
+// Names, topics and known professional registrations were supplied by the organization.
 // Replace the marked mock fields with approved materials before final publication.
 function createSpeaker(id: string, name: string, crm: string | null, imgUrl: string | null, bio: string | null): Speaker {
     return {
@@ -25,17 +25,17 @@ function createSpeaker(id: string, name: string, crm: string | null, imgUrl: str
 }
 
 export const speakers: Speaker[] = [
-    createSpeaker('giovani-mendes', 'Dr. Giovani Mendes', 'CRM-MT 4964', '/images/palestrantes/giovanni_test.webp', 'Apresentação demonstrativa: este espaço reunirá a trajetória profissional, a formação e as áreas de atuação do palestrante.'),
-    createSpeaker('cleiton-onofre', 'Dr. Cleiton Onofre', null, null, null),
-    createSpeaker('wilson-novais', 'Dr. Wilson Novais', null, null, null),
-    createSpeaker('renato-santos', 'Dr. Renato Santos', null, '/images/palestrantes/renato_santos.webp', null),
-    createSpeaker('marconi-alves', 'Dr. Marconi Alves', null, null, null),
-    createSpeaker('atahualpa-strapasson', 'Dr. Atahualpa Strapasson', null, null, null),
-    createSpeaker('marcel-yamada', 'Dr. Marcel Yamada', 'CRM-MT 8470', null, null),
-    createSpeaker('luciano-franca', 'Dr. Luciano França', null, null, null),
-    createSpeaker('joao-victor', 'Dr. João Victor', null, null, null),
-    createSpeaker('virgilio-vila', 'Dr. Virgilio Vilá', 'CRM-MT 6414', null, null),
-    createSpeaker('luiz-eduardo', 'Dr. Luiz Eduardo', null, null, null),
+    createSpeaker('giovani-mendes', 'Dr. Giovani Mendes', 'CRM-MT 4964 · RQE 1634', '/images/palestrantes/giovanni_test.webp', 'Neurocirurgião pediátrico e vascular, com residência no Hospital da Baleia.'),
+    createSpeaker('cleiton-onofre', 'Dr. Cleiton Onofre de Menezes', 'CRM-MT 10420 · RQE 8178', null, 'Neurocirurgião do Hospital Santa Rosa, com fellowship em Neurorradiologia Intervencionista. Neurossonologista e orientador da LANNcHSR.'),
+    createSpeaker('wilson-novais', 'Dr. Wilson Guimarães Novais', 'CRM-MT 3743 · RQE 863/94', null, 'Neurocirurgião endovascular e especialista em neurorradiologia intervencionista. Fundador do SOS AVC e integrante do Neurocirurgiões no Ar.'),
+    createSpeaker('renato-santos', 'Dr. Renato Santos Carvalho', 'CRM-MT 8054 · RQE 5805', '/images/palestrantes/renato_santos.webp', 'Neurocirurgião oncológico no Hospital Santa Rosa, integrante da SNOLA e professor universitário no UNIVAG.'),
+    createSpeaker('marconi-alves', 'Dr. Marconi Alves Rosa', 'CRM-MT 4132 · RQE 1282', null, 'Neurocirurgião de nervos periféricos e especialista em dinâmica de fluidos, com fellowship na Mayo Clinic.'),
+    createSpeaker('atahualpa-strapasson', 'Dr. Atahualpa Caue Paim Strapasson', null, null, 'Neurocirurgião funcional e especialista em radiocirurgia. Professor universitário da UFMT.'),
+    createSpeaker('marcel-yamada', 'Dr. Marcel Yamada', 'CRM-MT 8470', null, 'Neurocirurgião de coluna e especialista em dor crônica, com formação na USP Ribeirão Preto.'),
+    createSpeaker('luciano-franca', 'Dr. Luciano França', null, null, 'Neurocirurgião especializado em base do crânio e integrante da Medneuro.'),
+    createSpeaker('joao-victor', 'Dr. João Victor Oliveira Franco Calado', 'CRM-MT 10382 · RQE 8706', null, 'Neurocirurgião com residência no Hospital Santa Rosa e fellowship em neurocirurgia da base do crânio.'),
+    createSpeaker('virgilio-vila', 'Dr. Virgílio Vilá', 'CRM-MT 6414 · RQE 4872', null, 'Neurocirurgião pediátrico com formação na UNIFESP e pela Sociedade Latino-Americana de Neurocirurgia Pediátrica, membro da ISPN.'),
+    createSpeaker('luiz-eduardo', 'Dr. Luiz Eduardo Tenório', 'CRM-MT 8359 · RQE 7512', null, 'Neurocirurgião da coluna vertebral no Hospital Santa Rosa.'),
     createSpeaker('luiz-felipe', 'Dr. Luiz Felipe', null, null, null),
 ]
 
@@ -53,5 +53,5 @@ export const talks: Talk[] = [
     {id: 'base-cranio', title: 'Neurocirurgia de Base de Crânio', speakerIds: ['luciano-franca', 'joao-victor']},
     {id: 'pediatrica', title: 'Neurocirurgia pediátrica', speakerIds: ['virgilio-vila']},
     {id: 'coluna', title: 'Neurocirurgia de Coluna', speakerIds: ['luiz-eduardo']},
-    {id: 'neurointensivismo', title: 'Neurointensivismo', speakerIds: ['luiz-felipe']},
+    {id: 'neurointensivismo', title: 'Neurocirurgia de urgência e emergência — Neurointensivismo', speakerIds: ['luiz-felipe']},
 ]

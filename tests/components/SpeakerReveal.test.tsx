@@ -5,6 +5,50 @@ import { speakers, talks } from '../../src/content/speakers'
 
 afterEach(() => vi.unstubAllGlobals())
 
+it('uses the confirmed speaker identities and updated neurointensivism topic', () => {
+  expect(speakers).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        id: 'wilson-novais',
+        name: 'Dr. Wilson Guimarães Novais',
+        crm: expect.stringContaining('CRM-MT 3743'),
+      }),
+      expect.objectContaining({
+        id: 'cleiton-onofre',
+        name: 'Dr. Cleiton Onofre de Menezes',
+        crm: expect.stringContaining('CRM-MT 10420'),
+      }),
+      expect.objectContaining({
+        id: 'renato-santos',
+        name: 'Dr. Renato Santos Carvalho',
+        crm: expect.stringContaining('CRM-MT 8054'),
+      }),
+      expect.objectContaining({
+        id: 'marconi-alves',
+        name: 'Dr. Marconi Alves Rosa',
+        crm: expect.stringContaining('CRM-MT 4132'),
+      }),
+      expect.objectContaining({
+        id: 'joao-victor',
+        name: 'Dr. João Victor Oliveira Franco Calado',
+        crm: expect.stringContaining('CRM-MT 10382'),
+      }),
+      expect.objectContaining({
+        id: 'luiz-eduardo',
+        name: 'Dr. Luiz Eduardo Tenório',
+        crm: expect.stringContaining('CRM-MT 8359'),
+      }),
+    ]),
+  )
+  expect(talks).toContainEqual(
+    expect.objectContaining({
+      id: 'neurointensivismo',
+      title: 'Neurocirurgia de urgência e emergência — Neurointensivismo',
+      speakerIds: ['luiz-felipe'],
+    }),
+  )
+})
+
 it('reveals each speaker once when its card enters the viewport', () => {
   let notify: IntersectionObserverCallback = () => undefined
   const observed: Element[] = []

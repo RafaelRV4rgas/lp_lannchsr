@@ -169,7 +169,7 @@ export function Formulario({
       aria-label="Solicitação de inscrição"
     >
       <p className="small-label">SUA INSCRIÇÃO</p>
-      <h3>Faça parte do encontro.</h3>
+      <h3>Faça parte do nosso evento.</h3>
       {!available && (
         <p>
           Prévia do formulário. As inscrições ainda estão fechadas e nenhum dado
@@ -282,12 +282,12 @@ export function Formulario({
           </span>
         )}
       </fieldset>
-      <p className="form-privacy">
-        A LANNcHSR utilizará os dados informados para identificar sua inscrição,
-        aplicar a categoria de preço, acompanhar o pagamento e enviar
-        orientações de acesso pelo WhatsApp. O CPF identifica uma única
-        inscrição por pessoa.
-      </p>
+      {/*<p className="form-privacy">*/}
+      {/*  A LANNcHSR utilizará os dados informados para identificar sua inscrição,*/}
+      {/*  aplicar a categoria de preço, acompanhar o pagamento e enviar*/}
+      {/*  orientações de acesso pelo WhatsApp. O CPF identifica uma única*/}
+      {/*  inscrição por pessoa.*/}
+      {/*</p>*/}
       {status === 'error' && (
         <p role="alert" className="field-error">
           Não foi possível enviar agora. Seus dados foram mantidos; tente

@@ -7,7 +7,7 @@ it('renders one card per speaker and repeats the topic for shared talks', () => 
   render(<SpeakersSection speakers={speakers} talks={talks} />)
   expect(
     screen.getByRole('heading', {
-      name: 'Quem conduz essa jornada.',
+      name: 'QUEM CONDUZ ESSA JORNADA',
       level: 3,
     }),
   ).toHaveClass('eyebrow')
@@ -23,9 +23,19 @@ it('renders one card per speaker and repeats the topic for shared talks', () => 
 
 it('shows the supplied photos and CRMs while using explicit fallbacks for pending material', () => {
   render(<SpeakersSection speakers={speakers} talks={talks} />)
-  for (const crm of ['CRM-MT 4964', 'CRM-MT 8470', 'CRM-MT 6414'])
-    expect(screen.getByText(crm)).toBeVisible()
-  expect(screen.getAllByText('CRM a informar')).toHaveLength(9)
+  for (const crm of [
+    'CRM-MT 4964',
+    'CRM-MT 10420',
+    'CRM-MT 3743',
+    'CRM-MT 8054',
+    'CRM-MT 4132',
+    'CRM-MT 8470',
+    'CRM-MT 10382',
+    'CRM-MT 6414',
+    'CRM-MT 8359',
+  ])
+    expect(screen.getByText(new RegExp(crm))).toBeVisible()
+  expect(screen.getAllByText('CRM a informar')).toHaveLength(3)
   expect(
     screen.getAllByAltText(
       'Retrato genérico demonstrativo, não representa o palestrante',
@@ -35,12 +45,12 @@ it('shows the supplied photos and CRMs while using explicit fallbacks for pendin
     screen.getByRole('img', { name: 'Foto de Dr. Giovani Mendes' }),
   ).toHaveAttribute('src', '/images/palestrantes/giovanni_test.webp')
   expect(
-    screen.getByRole('img', { name: 'Foto de Dr. Renato Santos' }),
+    screen.getByRole('img', { name: 'Foto de Dr. Renato Santos Carvalho' }),
   ).toHaveAttribute('src', '/images/palestrantes/renato_santos.webp')
-  expect(screen.getAllByText(/Apresentação demonstrativa:/)).toHaveLength(12)
+  expect(screen.getAllByText(/Apresentação demonstrativa:/)).toHaveLength(1)
 })
 
-it('provides complete mock profiles and valid unique references for every talk', () => {
+it('provides complete profiles and valid unique references for every talk', () => {
   const assigned = talks.flatMap(talk => talk.speakerIds)
   expect(new Set(assigned).size).toBe(12)
   for (const speaker of speakers) {

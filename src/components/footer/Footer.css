@@ -1,20 +1,20 @@
 .site-footer {
   border-top: 1px solid var(--line);
-  padding-block: 55px 25px;
+  padding-block: var(--space-6) var(--space-3);
   background: #0c0a0c;
 }
 .footer-top {
   display: flex;
   justify-content: space-between;
-  gap: 40px;
+  gap: var(--space-5);
 }
 .footer-top .eyebrow {
-  margin-bottom: 20px;
+  margin-bottom: var(--space-2);
 }
 .organization {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: var(--space-3);
   max-width: 440px;
 }
 .organization img {
@@ -35,11 +35,11 @@
   align-self: center;
 }
 .president p {
-  margin-top: 14px;
+  margin-top: var(--space-2);
   font-size: 0.9375rem;
 }
 .supporters {
-  margin-block: 45px;
+  margin-block: var(--space-5);
 }
 .supporters ul {
   list-style: none;
@@ -53,7 +53,7 @@
 }
 .footer-bottom {
   border-top: 1px solid var(--line);
-  padding-top: 25px;
+  padding-top: var(--space-3);
   display: flex;
   justify-content: space-between;
   gap: 18px;
