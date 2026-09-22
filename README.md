@@ -42,7 +42,9 @@ O token de retorno é recebido no fragmento, removido da URL antes da renderiza�
 
 O cérebro é uma imagem original de pontos e conexões, com movimento CSS discreto. A versão móvel/tablet é estática e mais leve; a preferência por redução de movimento desativa a animação. Não se trata de um modelo 3D interativo. O logotipo recebido foi mantido; cores e arquivo definitivo da marca ainda dependem da organização.
 
-Os cards dos palestrantes entram em sequência quando a seção aparece na tela. Essa animação também respeita a preferência do sistema por movimento reduzido. As fotos de Dr. Giovani Mendes e Dr. Renato Santos já foram incorporadas; os outros 10 cards usam uma imagem genérica temporária. As 12 apresentações curtas ainda são demonstrativas. Há 3 CRMs informados e 9 pendentes.
+Os cards dos palestrantes entram em sequência quando a seção aparece na tela. Essa animação também respeita a preferência do sistema por movimento reduzido. As fotos de Dr. Giovani Mendes e Dr. Renato Santos já foram incorporadas; os outros 10 cards usam uma imagem genérica temporária. Onze apresentações curtas usam os dados profissionais recebidos e a apresentação de Dr. Luiz Felipe continua demonstrativa. Há 9 CRMs informados e 3 pendentes.
+
+Antes dos palestrantes, a página apresenta uma grade responsiva com as 10 subespecialidades abordadas e uma descrição curta de cada área, sem numeração visual. Os rótulos “SUBESPECIALIDADES ABORDADAS” e “QUEM CONDUZ ESSA JORNADA” seguem o mesmo padrão visual `eyebrow`, em caixa alta.
 
 A navegação utiliza Lenis para scroll inercial moderado. Títulos, textos, benefícios, FAQ, inscrição e rodapé são revelados uma única vez ao entrarem na tela. Os dois comportamentos respeitam `prefers-reduced-motion`.
 

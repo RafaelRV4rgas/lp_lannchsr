@@ -73,6 +73,26 @@ export function EventSections({content}: { content: EventContent }) {
                         apresentados por especialistas que vivem essas áreas na prática.
                     </p>
                 </div>
+                <section
+                    className="specialties-section"
+                    aria-label="Subespecialidades abordadas"
+                >
+                    <p className="eyebrow" data-scroll-reveal>
+                        SUBESPECIALIDADES ABORDADAS
+                    </p>
+                    <div className="specialties-grid">
+                        {content.specialties.map((specialty, index) => (
+                            <article
+                                key={specialty.title}
+                                data-scroll-reveal
+                                data-reveal-delay={(index % 2) + 1}
+                            >
+                                <h3>{specialty.title}</h3>
+                                <p>{specialty.text}</p>
+                            </article>
+                        ))}
+                    </div>
+                </section>
                 <SpeakersSection speakers={content.speakers} talks={content.talks}/>
             </section>
             <section

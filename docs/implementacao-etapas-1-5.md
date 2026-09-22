@@ -35,4 +35,4 @@ Criado em 06/09/2026 e atualizado em 15/09/2026. Branch: `codex/primeiras-cinco-
 
 A API ainda não existe. Sem data, preço e integrações, a versão pública permanece fechada. Não houve processamento real de CPF, pagamento, WhatsApp ou confirmação de inscrição. A prévia local exibe o formulário para revisão, mas mantém o envio bloqueado.
 
-Após as cinco tarefas iniciais, foram incorporados os 10 temas, os 12 palestrantes, duas fotos oficiais, o seletor de semestre e a animação de entrada dos cards. Ainda faltam 10 fotos, 12 apresentações curtas e 9 CRMs. A próxima etapa estrutural continua sendo a tarefa 6: escolha da infraestrutura e dos provedores, com detalhamento dos adaptadores.
+Após as cinco tarefas iniciais, foram incorporados os 10 temas, os 12 palestrantes, duas fotos oficiais, o seletor de semestre e a animação de entrada dos cards. Ainda faltam 10 fotos, a apresentação curta de Dr. Luiz Felipe e 3 CRMs. A próxima etapa estrutural continua sendo a tarefa 6: escolha da infraestrutura e dos provedores, com detalhamento dos adaptadores.

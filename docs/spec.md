@@ -1,6 +1,6 @@
 # Spec — Simpósio de Neurocirurgia
 
-Versão: 1.2 · Atualizada em: 15/09/2026
+Versão: 1.3 · Atualizada em: 21/09/2026
 
 Documento de escopo do produto, consolidado a partir das decisões da organização. As dependências ainda não escolhidas estão explicitadas na seção 12; não representam funcionalidades prontas. As salvaguardas técnicas abaixo são propostas para viabilizar as regras aprovadas.
 
@@ -18,7 +18,7 @@ Apresentar as diferenças entre as grandes áreas e subespecialidades da neuroci
 
 **Presidência:** Carolina Ayumi Kozima.
 
-**Organização:** Liga de Neurologia e Neurocirurgia do Hospital Santa Rosa (LANNcHSR).
+**Organização:** Liga Acadêmica de Neurologia e Neurocirurgia do Hospital Santa Rosa (LANNcHSR).
 
 **Apoios informados no material recebido:**
 
@@ -29,7 +29,7 @@ Apresentar as diferenças entre as grandes áreas e subespecialidades da neuroci
 - Medneuro.
 - Neurocirurgiões no Ar.
 - Dr Giovani Mendes 2200 deputado federal MT (redação recebida; validar apresentação pública e material de marca).
-- Liga Acadêmica Brasileira de Neurocirurgia (LABN).
+- Liga Brasileira de Neurocirurgia.
 
 ## 2. Escopo
 
@@ -47,7 +47,9 @@ Direção aprovada: **imersiva, com cérebro abstrato formado por pontos e conex
 - Bordô, cinza e branco como base, conforme o logotipo fornecido. Valores exatos das cores e tipografia dependem dos arquivos oficiais disponíveis.
 - Título, subtítulo, informações do evento e chamada de inscrição com prioridade sobre a animação.
 - Seções de apresentação, público e benefícios, programação, palestrantes, inscrição, dúvidas frequentes, organização e apoios.
-- A programação reúne 12 palestrantes em 10 temas. Duas fotos oficiais já foram incorporadas; os demais cards usam imagem genérica temporária e as apresentações curtas continuam demonstrativas.
+- A programação apresenta uma grade sem numeração com as 10 subespecialidades abordadas antes dos cards dos palestrantes, conectando os conteúdos aos especialistas responsáveis.
+- “SUBESPECIALIDADES ABORDADAS” e “QUEM CONDUZ ESSA JORNADA” usam o padrão visual de rótulo da página: caixa alta, tipografia compacta, maior espaçamento entre letras e cor de destaque. O primeiro é um rótulo textual da grade; o segundo permanece como título `h3` da seção de palestrantes.
+- A programação reúne 12 palestrantes em 10 temas. Duas fotos oficiais já foram incorporadas; os demais cards usam imagem genérica temporária. Onze apresentações curtas usam os dados profissionais recebidos e a apresentação de Dr. Luiz Felipe continua demonstrativa.
 - Os cards dos palestrantes entram em sequência quando aparecem na tela, respeitando a preferência por movimento reduzido.
 - A navegação usa scroll inercial moderado e revela os principais blocos uma única vez ao entrarem na tela, preservando o movimento nativo para quem prefere redução de animações.
 - Layout responsivo, formulário legível e navegável por teclado, campos com rótulos e mensagens de erro acessíveis.
@@ -182,7 +184,7 @@ Credenciais ficam exclusivamente no servidor. Aplicar HTTPS, restrição de aces
 | Data, horário e fuso do evento | Data definida em 21/02/2027; horário e fuso oficial ainda pendentes |
 | Preço-base | Organização definirá antes da abertura |
 | Validade da cobrança | Definir prazo conforme os recursos do provedor de pagamento |
-| Programação e palestrantes | Nomes e 10 temas recebidos; horários e ordem pendentes; 2 de 12 fotos, 0 de 12 apresentações e 3 de 12 CRMs recebidos |
+| Programação e palestrantes | Nomes e 10 temas recebidos; horários e ordem pendentes; 2 de 12 fotos, 11 de 12 apresentações e 9 de 12 CRMs recebidos |
 | Plataforma de transmissão | Ainda não escolhida; cadastrar link antes de liberá-lo aos confirmados |
 | Provedor de pagamento | Escolher API com cobrança identificável e webhook; avaliar expiração e estorno |
 | Formas de pagamento | Definir meios aceitos e compatibilidade com o vencimento da cobrança |

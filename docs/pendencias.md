@@ -13,8 +13,8 @@ Marcar um item somente quando a decisão ou o material estiver registrado. Os ca
 | [x] | Temas e palestrantes de cada sessão | 10 temas e 12 palestrantes recebidos; cadastrados em `src/content/speakers.ts` | Estruturar programação |
 | [ ] | Horários e ordem das apresentações | Solicitar material | Finalizar programação |
 | [ ] | Fotografias dos palestrantes | Recebidas: Dr. Giovani Mendes e Dr. Renato Santos. Faltam 10; a prévia usa uma imagem genérica temporária | Finalizar seção de palestrantes |
-| [ ] | Apresentações curtas dos 12 palestrantes | A prévia usa textos demonstrativos identificados | Finalizar seção de palestrantes |
-| [ ] | CRMs dos 9 palestrantes restantes | Recebidos CRM-MT 4964 (Giovani Mendes), 8470 (Marcel Yamada) e 6414 (Virgilio Vilá) | Completar identificação profissional |
+| [ ] | Apresentação curta de Dr. Luiz Felipe | Os outros 11 perfis usam os dados profissionais recebidos; Dr. Luiz Felipe permanece com texto demonstrativo | Finalizar seção de palestrantes |
+| [ ] | CRMs de Dr. Atahualpa Strapasson, Dr. Luciano França e Dr. Luiz Felipe | Recebidos 9 dos 12 CRMs | Completar identificação profissional |
 | [ ] | Plataforma de transmissão | Em aberto | Preparar transmissão e integração operacional |
 | [ ] | Link de acesso ao evento | Em aberto | Liberar acesso aos inscritos confirmados |
 | [ ] | Contato oficial de atendimento: WhatsApp e/ou e-mail | Em aberto | Orientar participantes e tratar problemas |
@@ -82,7 +82,7 @@ As escolhas técnicas devem ser registradas também em `docs/decisions/integrati
 ## 6. Regras já definidas — não precisam ser rediscutidas
 
 - Evento on-line: **Neurocirurgia é tudo a Mesma Coisa?**
-- Presidência: Carolina Ayumi Kozima; organização: LANNcHSR.
+- Presidência: Carolina Ayumi Kozima; organização: Liga Acadêmica de Neurologia e Neurocirurgia do Hospital Santa Rosa (LANNcHSR).
 - Direção visual imersiva, com cérebro abstrato de pontos e conexões, movimento sutil e base em bordô, cinza e branco.
 - Inscrições só podem abrir com data definida; definir a data não as abre automaticamente.
 - Não há limite comercial de inscrições nem reserva de vaga. Eventual limite da plataforma de transmissão será tratado como restrição técnica do serviço escolhido.
