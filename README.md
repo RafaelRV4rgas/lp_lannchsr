@@ -34,7 +34,7 @@ Os testes cobrem preço fixo para estudantes, abertura condicionada, validação
 
 ## Estado atual e limitações
 
-Sem data, preço e integrações, a página não coleta inscrições: mostra “Inscrições em breve”. No ambiente de desenvolvimento, uma prévia permite revisar o formulário fechado sem habilitar o envio. O semestre do estudante é selecionado em uma lista de 1º a 12º semestre e “Outro”.
+O evento será realizado em 20 e 21/02/2027, no fuso de Cuiabá (`America/Cuiaba`), e o frontend usa R$ 25,00 para o público geral e R$ 15,00 para estudantes. As inscrições continuam fechadas porque faltam os horários, a confirmação final dos valores e as integrações reais; `registrationsOpen` e `integrationsReady` permanecem falsos. No ambiente de desenvolvimento, uma prévia permite revisar o formulário fechado sem habilitar o envio. O semestre do estudante é selecionado em uma lista de 1º a 12º semestre e “Outro”.
 
 `/inscricao` contém a interface de recuperação. O cliente HTTP está pronto para consumir os endpoints documentados, mas nenhum servidor está implementado. Chamadas sem backend exibem erro; não simulam envio de WhatsApp ou pagamento.
 

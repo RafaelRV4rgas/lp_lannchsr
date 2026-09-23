@@ -1,6 +1,6 @@
 # Pendências para finalizar o projeto
 
-Atualizado em 15/09/2026. Referências: [spec](./spec.md) e [plano de implementação](./superpowers/plans/2026-09-06-simposio-neuro.md).
+Atualizado em 23/09/2026. Referências: [spec](./spec.md) e [plano de implementação](./superpowers/plans/2026-09-06-simposio-neuro.md).
 
 Marcar um item somente quando a decisão ou o material estiver registrado. Os campos “Resposta” ficam em aberto para preenchimento pela organização ou pelo responsável técnico. As propostas abaixo não são decisões já aprovadas.
 
@@ -8,8 +8,9 @@ Marcar um item somente quando a decisão ou o material estiver registrado. Os ca
 
 | Concluído | Informação necessária | Resposta / material | Necessário para |
 | --- | --- | --- | --- |
-| [x] | Data do evento | 21/02/2027 | Abrir inscrições após completar os demais requisitos |
-| [ ] | Horário de início, término previsto e fuso oficial | Em aberto | Divulgar informações completas e orientar participantes |
+| [x] | Datas do evento | 20 e 21/02/2027 | Divulgar os dois dias do simpósio |
+| [x] | Fuso oficial | America/Cuiaba (Cuiabá, MT) | Interpretar e divulgar corretamente os horários |
+| [ ] | Horário de início e término previsto de cada dia | Em aberto | Completar a programação e registrar os timestamps técnicos |
 | [x] | Temas e palestrantes de cada sessão | 10 temas e 12 palestrantes recebidos; cadastrados em `src/content/speakers.ts` | Estruturar programação |
 | [ ] | Horários e ordem das apresentações | Solicitar material | Finalizar programação |
 | [ ] | Fotografias dos palestrantes | Recebidas: Dr. Giovani Mendes e Dr. Renato Santos. Faltam 10; a prévia usa uma imagem genérica temporária | Finalizar seção de palestrantes |
@@ -25,7 +26,7 @@ O lembrete para solicitar programação e palestrantes foi executado em **07/09/
 
 | Concluído | Decisão necessária | Resposta | Necessário para |
 | --- | --- | --- | --- |
-| [ ] | Preço-base da inscrição em reais | Em aberto | Calcular e gerar cobranças |
+| [ ] | Confirmar os preços finais da inscrição | Frontend configurado com R$ 25,00 geral e R$ 15,00 estudante; falta aprovação final para produção | Publicar os valores e gerar cobranças corretas |
 | [ ] | Formas de pagamento aceitas | Em aberto | Escolher e configurar o provedor |
 | [ ] | Se aceitar cartão: haverá parcelamento? Quantidade de parcelas e eventual custo para participante | Em aberto; dispensar se cartão não for aceito | Informar condições de pagamento |
 | [ ] | Qual será a validade da cobrança? | Em aberto; definir conforme os recursos do provedor | Configurar o checkout e pagamentos tardios |
@@ -103,6 +104,6 @@ As escolhas técnicas devem ser registradas também em `docs/decisions/integrati
 
 **Depende dos serviços escolhidos:** adaptadores reais de pagamento, WhatsApp, persistência, autenticação e implantação.
 
-**Antes de abrir inscrições pagas:** preencher data/horário, preço, meios de pagamento e validade da cobrança; concluir regras operacionais, contas e integrações testadas, atendimento, privacidade e acessos administrativos. Materiais editoriais devem ser revisados para que a oferta pública seja fiel ao evento.
+**Antes de abrir inscrições pagas:** definir os horários dos dois dias, confirmar os preços configurados, meios de pagamento e validade da cobrança; concluir regras operacionais, contas e integrações testadas, atendimento, privacidade e acessos administrativos. No código, registrar o início no formato ISO compatível com `America/Cuiaba`, marcar as integrações como prontas somente após os testes e então realizar a abertura manual. Materiais editoriais devem ser revisados para que a oferta pública seja fiel ao evento.
 
 **Pode ser concluído depois da abertura, mas antes de enviar acesso:** cadastro e liberação do link de transmissão. Enquanto não estiver liberado, confirmar pagamento sem prometer que o link já foi enviado.

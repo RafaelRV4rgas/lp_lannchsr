@@ -5,6 +5,7 @@ import {
   registrationsAvailable,
   type EventRules,
 } from '../../src/domain/event'
+import { rules } from '../../src/content/rules'
 
 const closedRules: EventRules = {
   startsAt: '',
@@ -16,6 +17,11 @@ const closedRules: EventRules = {
 }
 
 describe('event rules', () => {
+  it('keeps registration closed until the two-day event receives a start time', () => {
+    expect(rules.startsAt).toBe('')
+    expect(rules.timeZone).toBe('America/Cuiaba')
+    expect(canOpenRegistrations(rules)).toBe(false)
+  })
   it('starts closed with an invalid date, even with a configured price', () => {
     expect(closedRules).toMatchObject({
       startsAt: '',

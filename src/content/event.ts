@@ -6,6 +6,7 @@ export const eventContent = {
   title: 'Neurocirurgia é tudo a Mesma Coisa?',
   subtitle:
     'Simpósio on-line: As diferentes grandes áreas e subespecialidades da Neurocirurgia.',
+  dateLabel: '20 e 21/02/2027',
   organization: 'Liga Acadêmica de Neurologia e Neurocirurgia do Hospital Santa Rosa',
   president: 'Carolina Ayumi Kozima',
   speakers,
@@ -99,7 +100,7 @@ export const eventContent = {
     {
       question: 'Como será realizado o evento?',
       answer:
-        'O simpósio será realizado on-line, no dia 21 de fevereiro de 2027. Antes do evento, os participantes com inscrição confirmada receberão o link de acesso e as orientações necessárias.',
+        'O simpósio será realizado on-line nos dias 20 e 21 de fevereiro de 2027. Antes do evento, os participantes com inscrição confirmada receberão o link de acesso e as orientações necessárias.',
     },
     {
       question: 'Como funcionarão a inscrição e o pagamento?',

@@ -39,7 +39,7 @@ export default function App() {
         <Hero
           title={eventContent.title}
           subtitle={eventContent.subtitle}
-          data={defaultRules.startsAt}
+          data={eventContent.dateLabel}
           registrationAvailable={registrationsAvailable(defaultRules)}
         />
         <EventSections content={eventContent} />

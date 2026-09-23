@@ -22,15 +22,16 @@
 - Nunca enviar acesso para inscrições pendentes ou expiradas.
 - Conteúdo e formulário devem funcionar mesmo sem carregar a animação.
 - Não há CMS, emissão de certificados, transmissão própria ou conta de participante nesta versão.
+- O evento ocorre em 20 e 21/02/2027 no fuso `America/Cuiaba`; modelar os dias/horários da programação sem reduzir o evento a um único texto ou timestamp.
 - Preservar alterações existentes do usuário; revisar `git status` antes de cada tarefa e criar commits somente com arquivos da tarefa.
 
-## Progresso em 06/09/2026
+## Progresso atualizado em 23/09/2026
 
-Tarefas **1–5 concluídas no escopo de frontend, contratos e regras puras**. Tarefas 6–11 não iniciadas. Evidências e decisões: [registro da implementação](../../implementacao-etapas-1-5.md). Backend, transações, cobranças e WhatsApp reais continuam pendentes.
+Tarefas **1–5 concluídas no escopo de frontend, contratos e regras puras**. Depois delas, a interface recebeu validação e máscaras de CPF/WhatsApp, seletor de semestre, 10 subespecialidades, 12 palestrantes, animação dos cards, scroll inercial, scroll reveal e revisão de conteúdo/benefícios. A última verificação completa registrou 37 testes aprovados, além de typecheck, lint e build. Tarefas 6–11 não foram iniciadas. Evidências e decisões: [registro da implementação](../../implementacao-etapas-1-5.md). Backend, persistência, transações, cobranças e WhatsApp reais continuam pendentes.
 
-## Estado encontrado e estratégia
+## Estado atual e estratégia
 
-`src/App.tsx` renderiza `Formulario` e `Footer`; o formulário ainda é um texto e o CSS mantém estilos do template. `package.json` oferece `dev`, `build`, `lint` e `preview`, sem suíte de testes. `compose.yaml` menciona build de uma imagem, mas não constitui uma arquitetura de backend definida.
+`src/App.tsx` já renderiza a landing page e o formulário funcional de frontend. `package.json` oferece `dev`, `build`, `lint`, `typecheck` e uma suíte Vitest. A página informa que o evento ocorrerá em 20 e 21/02/2027 e a configuração usa o fuso `America/Cuiaba`, além dos valores de trabalho de R$ 25,00 geral e R$ 15,00 estudante. As inscrições permanecem fechadas. Para abrir, ainda será necessário definir os horários dos dois dias, registrar o início em ISO, confirmar os preços, concluir e testar as integrações, alterar `integrationsReady` e realizar a abertura manual por `registrationsOpen`. `compose.yaml` não constitui uma arquitetura de backend definida.
 
 O trabalho será organizado em três entregas: página e formulário; núcleo de inscrições; integrações e administração. As tarefas abaixo descrevem os contratos e cenários de aceite. A tarefa 6 produz o plano complementar específico da infraestrutura escolhida, sem bloquear as tarefas 1–5 nem fingir que integrações não escolhidas já têm configuração executável.
 
@@ -183,7 +184,7 @@ export interface RegistrationClient {
 **Entrada:** requisitos anteriores e contas/condições comerciais informadas pela organização. Não exige programação nem fotografias de palestrantes.
 
 - [ ] Comparar até duas opções viáveis por integração em documentação oficial atual: criação identificável/idempotente de cobrança, expiração, autenticação do webhook, consulta, estorno, meios aceitos e tarifas.
-- [ ] Registrar na decisão de infraestrutura: runtime, banco transacional, migrations, execução agendada, fila/outbox, autenticação administrativa, segredos e ambientes de teste/produção.
+- [ ] Registrar na decisão de infraestrutura: runtime, banco transacional, migrations, representação dos dois dias/horários do evento, execução agendada, fila/outbox, autenticação administrativa, segredos e ambientes de teste/produção.
 - [ ] Registrar no WhatsApp: número, conta, mecanismo de envio, modelos de cobrança/confirmação/acesso/recuperação, callbacks de entrega, tratamento de timeouts e custos.
 - [ ] Definir política operacional de cancelamento, estorno, pagamentos duplicados e cobranças existentes após fechamento. Proposta: fechamento impede novas cobranças, mas respeita a validade já comunicada; decisão final fica registrada antes de produção.
 - [ ] Converter tarefas 7–11 em passos específicos do stack: arquivos exatos, migrations, handlers, comandos, fixtures e testes executáveis. Acrescentar os adaptadores concretos aos contratos abaixo, sem reformular o frontend inteiro.
@@ -195,7 +196,7 @@ export interface RegistrationClient {
 
 **Arquivos lógicos:** `server/registrations/`, `server/events/`, migrations e testes de integração definidos no complemento da tarefa 6.
 
-- [ ] Criar tabelas equivalentes a evento, inscrição, cobrança, consentimento, tokens/sessões, eventos recebidos, outbox e auditoria. Impor unicidade `(event_id, cpf_normalizado)`, identificador de cobrança e chave de evento externo.
+- [ ] Criar tabelas equivalentes a evento, dias/sessões da programação, inscrição, cobrança, consentimento, tokens/sessões, eventos recebidos, outbox e auditoria. Impor unicidade `(event_id, cpf_normalizado)`, identificador de cobrança e chave de evento externo.
 - [ ] Implementar submissão idempotente com regras executadas no servidor; dados cadastrais não são sobrescritos por submissão duplicada.
 - [ ] Confirmar pagamento e criar a notificação de confirmação de forma idempotente.
 - [ ] Implementar tratamento idempotente da expiração de cobranças, com horário do servidor; verificar o prazo também durante consultas para não depender da pontualidade do job.
@@ -259,7 +260,7 @@ export interface PaymentProvider {
 **Arquivos lógicos:** `src/admin/` e `server/admin/`, com rotas, auth e testes especificados na tarefa 6.
 
 - [ ] Implementar login pelo mecanismo selecionado e autorização no servidor em todas as rotas administrativas, inclusive buscas e reenvios.
-- [ ] Criar formulário de configuração com data/hora/fuso, preço-base, preço estudantil, validade da cobrança, abertura/fechamento e link/liberação. Mostrar efeito de alterações antes de salvar; validar as mesmas regras na API.
+- [ ] Criar formulário de configuração com os dois dias/horários e fuso, preço-base, preço estudantil, validade da cobrança, abertura/fechamento e link/liberação. Mostrar efeito de alterações antes de salvar; validar as mesmas regras na API.
 - [ ] Criar listagem paginada, busca por nome/CPF, detalhes, totais, mensagens com falha e exceções de pagamento. Nunca incluir link de transmissão no endpoint público do evento.
 - [ ] Adicionar reenvio elegível, auditoria e acompanhamento de pagamentos duplicados ou tardios. Não adicionar CMS nem botão de aprovação financeira sem evidência.
 - [ ] Testar chamadas diretas não autorizadas, configuração sem data, alteração de preço sem mudar cobrança existente e tentativa de enviar acesso a pendente.
@@ -271,7 +272,7 @@ export interface PaymentProvider {
 
 **Arquivos:** atualizar `src/content/event.ts`, assets oficiais, `README.md`; criar `tests/e2e/registration.spec.ts` e `docs/operations.md`; configurações de deploy específicas no complemento.
 
-- [ ] Incorporar programação, palestrantes, logos oficiais, data, valor e políticas recebidas. Atualizar somente decisões afetadas na spec e neste plano; não substituir por exemplos de teste.
+- [ ] Incorporar horários e ordem dos dois dias da programação, materiais restantes dos palestrantes, logos oficiais, valores finais e políticas recebidas. Atualizar somente decisões afetadas na spec e neste plano; não substituir por exemplos de teste.
 - [ ] Verificar primeiro `npm run lint`, `npm run build` e `npm run test`. Rodar E2E via script `test:e2e` definido no complemento.
 - [ ] Validar no navegador e sandbox: profissional, estudante, duplicação de CPF, expiração da cobrança, retomada segura, pagamento duplicado, envio falho e acesso liberado antes/depois da confirmação.
 - [ ] Verificar abertura condicionada à data e às integrações; preservar inscrições fechadas enquanto faltar algum pré-requisito operacional.
