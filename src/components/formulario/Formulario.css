@@ -83,6 +83,22 @@
   border-left: 2px solid var(--accent);
   padding-left: 16px;
 }
+.form-process-note,
+.student-verification-note,
+.form-privacy {
+  line-height: 1.6;
+}
+.form-process-note {
+  margin-block: var(--space-2);
+}
+.student-verification-note {
+  color: var(--muted);
+  font-size: 0.8125rem;
+  margin-top: var(--space-2);
+}
+.form-privacy {
+  margin-top: var(--space-3);
+}
 .consent {
   display: flex;
   gap: 12px;

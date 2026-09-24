@@ -37,8 +37,26 @@ it('shows required academic fields and the fixed student price', async () => {
   expect(screen.getByLabelText('Universidade')).toBeRequired()
   expect(screen.getByText(/60,00/)).toBeInTheDocument()
   expect(screen.getByText('Valor para estudantes')).toBeInTheDocument()
+  expect(
+    screen.getByText(/carteirinha será conferida.*WhatsApp/i),
+  ).toBeVisible()
+  expect(
+    screen.queryByLabelText(/carteirinha|comprovante/i),
+  ).not.toBeInTheDocument()
   await user.selectOptions(screen.getByLabelText('Profissão'), 'Médico')
   expect(screen.queryByLabelText('Curso')).not.toBeInTheDocument()
+})
+
+it('explains the manual process, consent and data use', () => {
+  render(<Formulario rules={openRules} />)
+
+  expect(screen.getByText(/ao enviar este formulário.*solicitará/i)).toBeVisible()
+  expect(screen.getByRole('checkbox')).toHaveAccessibleName(
+    /conferir os dados.*orientar o pagamento.*confirmar a inscrição/i,
+  )
+  expect(
+    screen.getByText(/não envie carteirinha ou comprovante/i),
+  ).toBeVisible()
 })
 it('validates fields without sending and retains data when transport fails', async () => {
   const user = userEvent.setup()
@@ -81,14 +99,21 @@ it('blocks duplicate submissions while pending and reuses the key after failure'
     screen.getByRole('button', { name: 'Solicitar inscrição' }),
   )
   expect(onSubmit).toHaveBeenCalledOnce()
-  expect(screen.getByRole('button', { name: 'Enviando…' })).toBeDisabled()
+  expect(
+    screen.getByRole('button', { name: 'Enviando solicitação…' }),
+  ).toBeDisabled()
   expect(screen.getByLabelText('CPF')).toBeDisabled()
   rejectRequest(new Error('timeout'))
   await screen.findByRole('alert')
   await user.click(screen.getByRole('button', { name: 'Solicitar inscrição' }))
   expect(onSubmit).toHaveBeenCalledTimes(2)
   expect(onSubmit.mock.calls[1][1]).toBe(onSubmit.mock.calls[0][1])
-  expect(screen.getByRole('status')).toHaveTextContent('Solicitação recebida')
+  const result = screen.getByRole('status')
+  expect(result).toHaveTextContent('Solicitação recebida')
+  expect(result).toHaveTextContent(/WhatsApp informado/i)
+  expect(result).toHaveTextContent(/continuará o atendimento/i)
+  expect(result).toHaveTextContent(/ainda não confirma sua inscrição/i)
+  expect(screen.queryByText(/link de pagamento/i)).not.toBeInTheDocument()
 })
 
 it('reports missing fields in a closed local preview without sending', async () => {
@@ -107,6 +132,15 @@ it('reports missing fields in a closed local preview without sending', async () 
   )
   expect(screen.getByLabelText('Nome completo')).toHaveFocus()
   expect(screen.getByLabelText('CPF')).toHaveAttribute('aria-invalid', 'true')
+  expect(onSubmit).not.toHaveBeenCalled()
+
+  await user.type(screen.getByLabelText('Nome completo'), 'Pessoa de Teste')
+  await user.type(screen.getByLabelText('CPF'), '52998224725')
+  await user.selectOptions(screen.getByLabelText('Profissão'), 'Médico')
+  await user.type(screen.getByLabelText('E-mail'), 'teste@example.com')
+  await user.type(screen.getByLabelText('WhatsApp com DDD'), '65999991234')
+  await user.click(screen.getByRole('checkbox'))
+  await user.click(screen.getByRole('button', { name: 'Solicitar inscrição' }))
   expect(onSubmit).not.toHaveBeenCalled()
 })
 
