@@ -1,35 +1,62 @@
 import { expect, it, vi } from 'vitest'
 import { createRegistrationClient } from '../src/services/registration-client'
-it('uses a header token and rejects malformed server responses', async () => {
+import type { RegistrationInput } from '../src/domain/registration'
+
+const validInput: RegistrationInput = {
+  fullName: 'Pessoa de Teste',
+  cpf: '52998224725',
+  profession: 'Médico',
+  email: 'teste@example.com',
+  whatsapp: '+5565999991234',
+  whatsappConsent: true,
+}
+
+it('submits one registration request with its idempotency key', async () => {
   const transport = vi.fn().mockResolvedValue(
-    new Response(
-      JSON.stringify({
-        status: 'confirmed',
-        paymentUrl: null,
-        paymentExpiresAt: null,
-      }),
-    ),
+    new Response(JSON.stringify({ accepted: true })),
   )
   const client = createRegistrationClient(transport)
-  await client.read('secret')
+
+  await expect(client.submit(validInput, 'request-key')).resolves.toEqual({
+    accepted: true,
+  })
   expect(transport).toHaveBeenCalledWith(
-    '/api/registration',
+    '/api/registrations',
     expect.objectContaining({
-      headers: expect.objectContaining({ Authorization: 'Bearer secret' }),
-      cache: 'no-store',
+      method: 'POST',
+      headers: expect.objectContaining({ 'Idempotency-Key': 'request-key' }),
+      body: JSON.stringify(validInput),
     }),
   )
-  transport.mockResolvedValue(
-    new Response(JSON.stringify({ status: 'made-up' })),
-  )
-  await expect(client.read('secret')).rejects.toThrow()
+  expect(Object.keys(client)).toEqual(['submit'])
 })
-it('rejects errors and never sends empty access tokens', async () => {
-  const transport = vi
-    .fn()
-    .mockResolvedValue(new Response('{}', { status: 500 }))
+
+it('rejects an empty idempotency key without sending a request', async () => {
+  const transport = vi.fn()
   const client = createRegistrationClient(transport)
-  await expect(client.read('')).rejects.toThrow()
+
+  await expect(client.submit(validInput, '')).rejects.toThrow(
+    'IDEMPOTENCY_REQUIRED',
+  )
   expect(transport).not.toHaveBeenCalled()
-  await expect(client.read('secret')).rejects.toThrow()
+})
+
+it('rejects HTTP errors', async () => {
+  const transport = vi.fn().mockResolvedValue(new Response('{}', { status: 500 }))
+  const client = createRegistrationClient(transport)
+
+  await expect(client.submit(validInput, 'request-key')).rejects.toThrow(
+    'REQUEST_FAILED',
+  )
+})
+
+it('rejects malformed acceptance responses', async () => {
+  const transport = vi.fn().mockResolvedValue(
+    new Response(JSON.stringify({ accepted: false })),
+  )
+  const client = createRegistrationClient(transport)
+
+  await expect(client.submit(validInput, 'request-key')).rejects.toThrow(
+    'INVALID_RESPONSE',
+  )
 })
