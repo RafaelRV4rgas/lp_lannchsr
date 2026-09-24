@@ -2,15 +2,15 @@ import { expect, it, vi } from 'vitest'
 import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Formulario } from '../../src/components/formulario/Formulario'
-import type { EventRules } from '../../src/domain/event'
+import type { SymposiumRules } from '../../src/domain/symposium'
 
-const closedRules: EventRules = {
+const closedRules: SymposiumRules = {
   startsAt: '',
   timeZone: null,
-  registrationsOpen: false,
+  requestsOpen: false,
   basePriceCents: 2500,
   studentPriceCents: 1500,
-  integrationsReady: false,
+  backendReady: false,
 }
 
 const openRules = {
@@ -19,8 +19,8 @@ const openRules = {
   timeZone: 'America/Cuiaba',
   basePriceCents: 10000,
   studentPriceCents: 6000,
-  integrationsReady: true,
-  registrationsOpen: true,
+  backendReady: true,
+  requestsOpen: true,
 }
 it('keeps registration closed without a valid date', () => {
   render(<Formulario rules={closedRules} />)

@@ -2,9 +2,9 @@ import { useRef, useState, type FormEvent } from 'react'
 import {
   calculatePriceCents,
   formatPrice,
-  registrationsAvailable,
-  type EventRules,
-} from '../../domain/event'
+  requestsAvailable,
+  type SymposiumRules,
+} from '../../domain/symposium'
 import {
   formatBrazilianPhone,
   formatCpf,
@@ -18,7 +18,7 @@ import './Formulario.css'
 import {eventContent} from "../../content/event.ts";
 
 interface Props {
-  rules?: EventRules
+  rules?: SymposiumRules
   previewWhenClosed?: boolean
   onSubmit?: (
     input: RegistrationInput,
@@ -47,7 +47,7 @@ export function Formulario({
   const key = useRef<string | null>(null)
   const formRef = useRef<HTMLFormElement>(null)
   const student = input.profession === 'student'
-  const available = registrationsAvailable(rules)
+  const available = requestsAvailable(rules)
   const hasErrors = Object.values(errors).some(Boolean)
   const change = (name: keyof RegistrationInput, value: string | boolean) => {
     setInput((previous) => ({ ...previous, [name]: value }))

@@ -1,6 +1,6 @@
 import { speakers, talks } from './speakers'
 import {rules} from "./rules.ts";
-import {formatPrice} from '../domain/event'
+import {formatPrice} from '../domain/symposium'
 
 export const eventContent = {
   title: 'Neurocirurgia é tudo a Mesma Coisa?',

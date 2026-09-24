@@ -1,10 +1,10 @@
-import type { EventRules } from '../domain/event'
+import type { SymposiumRules } from '../domain/symposium'
 
-export const rules: Readonly<EventRules> = Object.freeze({
+export const rules: Readonly<SymposiumRules> = Object.freeze({
     startsAt: '',
     timeZone: 'America/Cuiaba',
-    registrationsOpen: false,
+    requestsOpen: false,
     basePriceCents: 2500,
     studentPriceCents: 1500,
-    integrationsReady: false,
+    backendReady: false,
 })
