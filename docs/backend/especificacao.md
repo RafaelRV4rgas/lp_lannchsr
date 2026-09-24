@@ -36,8 +36,8 @@ cancelada, o formulário não altera o cadastro.
 ## Primeira mensagem
 
 Após persistir a solicitação, o backend enviará uma única mensagem inicial que
-confirma o recebimento e explica a continuidade manual. Ela não apresentará a
-inscrição como pré-aprovada e não conterá cobrança.
+confirma o recebimento e explica a continuidade manual. Ela não comunicará
+aprovação da inscrição e não conterá cobrança.
 
 Uma falha da mensagem não remove a inscrição. O envio deve possuir chave única,
 poucas retentativas e situação `aguardando_envio`, `enviada` ou `falha` para

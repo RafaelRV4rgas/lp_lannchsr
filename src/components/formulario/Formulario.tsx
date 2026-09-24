@@ -99,7 +99,7 @@ export function Formulario({
           <span aria-hidden="true">↗</span>
           <div>
             <strong>{formatPrice(rules.studentPriceCents)} para estudantes</strong>
-            <p>De qualquer curso, por autodeclaração.</p>
+            <p>De qualquer curso, com carteirinha conferida pelo WhatsApp.</p>
           </div>
         </div>
         <button className="button" disabled>

@@ -28,6 +28,8 @@ it('keeps registration closed without a valid date', () => {
     screen.getByRole('button', { name: /inscrições em breve/i }),
   ).toBeDisabled()
   expect(screen.queryByLabelText(/CPF/i)).not.toBeInTheDocument()
+  expect(screen.getByText(/carteirinha.*WhatsApp/i)).toBeVisible()
+  expect(screen.queryByText(/autodeclaração/i)).not.toBeInTheDocument()
 })
 it('shows required academic fields and the fixed student price', async () => {
   const user = userEvent.setup()
