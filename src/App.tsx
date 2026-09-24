@@ -1,18 +1,18 @@
 import './App.css'
-import type {EventRules} from './domain/event'
+import type {SymposiumRules} from './domain/symposium'
 
 import { Hero } from './components/hero/Hero'
 import { EventSections } from './components/event/EventSections'
 import { Footer } from './components/footer/Footer'
 import { Formulario } from './components/formulario/Formulario'
 import { eventContent } from './content/event'
-import { registrationsAvailable } from './domain/event'
+import { requestsAvailable } from './domain/symposium'
 import { registrationClient } from './services/registration-client'
 import {SmoothScroll} from './components/motion/SmoothScroll'
 import {useScrollReveal} from './components/motion/useScrollReveal'
 
 export default function App() {
-  const defaultRules: EventRules = eventContent.rules;
+  const defaultRules: SymposiumRules = eventContent.rules;
   useScrollReveal()
 
   return (
@@ -39,8 +39,8 @@ export default function App() {
         <Hero
           title={eventContent.title}
           subtitle={eventContent.subtitle}
-          data={defaultRules.startsAt}
-          registrationAvailable={registrationsAvailable(defaultRules)}
+          data={eventContent.dateLabel}
+          registrationAvailable={requestsAvailable(defaultRules)}
         />
         <EventSections content={eventContent} />
         <section

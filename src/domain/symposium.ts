@@ -1,10 +1,8 @@
-export interface EventRules {
-  startsAt: string
+export interface SymposiumRules {
+  registrationClosesAt: string
   timeZone: string | null
-  registrationsOpen: boolean
   basePriceCents: number | null
   studentPriceCents: number
-  integrationsReady: boolean
 }
 
 export function calculatePriceCents(
@@ -38,29 +36,15 @@ function validDate(value: string): boolean {
   )
 }
 
-export function canOpenRegistrations(rules: EventRules): boolean {
-  if (
-    !validDate(rules.startsAt) ||
-    !rules.timeZone ||
-    rules.basePriceCents === null ||
-    !rules.integrationsReady
-  )
+export function requestsAvailable(
+  rules: SymposiumRules,
+  now: Date = new Date(),
+): boolean {
+  if (!validDate(rules.registrationClosesAt) || !Number.isFinite(now.getTime()))
     return false
-  try {
-    new Intl.DateTimeFormat('pt-BR', { timeZone: rules.timeZone }).format()
-    calculatePriceCents(
-      rules.basePriceCents,
-      rules.studentPriceCents,
-      true,
-    )
-    return true
-  } catch {
-    return false
-  }
+  return now.getTime() < Date.parse(rules.registrationClosesAt)
 }
 
-export const registrationsAvailable = (rules: EventRules): boolean =>
-  rules.registrationsOpen && canOpenRegistrations(rules)
 export const formatPrice = (cents: number): string =>
   new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(
     cents / 100,

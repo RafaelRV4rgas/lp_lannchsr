@@ -1,11 +1,12 @@
 import { speakers, talks } from './speakers'
 import {rules} from "./rules.ts";
-import {formatPrice} from '../domain/event'
+import {formatPrice} from '../domain/symposium'
 
 export const eventContent = {
   title: 'Neurocirurgia é tudo a Mesma Coisa?',
   subtitle:
     'Simpósio on-line: As diferentes grandes áreas e subespecialidades da Neurocirurgia.',
+  dateLabel: '20 e 21/02/2027',
   organization: 'Liga Acadêmica de Neurologia e Neurocirurgia do Hospital Santa Rosa',
   president: 'Carolina Ayumi Kozima',
   speakers,
@@ -99,22 +100,22 @@ export const eventContent = {
     {
       question: 'Como será realizado o evento?',
       answer:
-        'O simpósio será realizado on-line, no dia 21 de fevereiro de 2027. Antes do evento, os participantes com inscrição confirmada receberão o link de acesso e as orientações necessárias.',
+        'O simpósio será realizado on-line nos dias 20 e 21 de fevereiro de 2027. Antes do evento, os participantes com inscrição confirmada receberão o link de acesso e as orientações necessárias.',
     },
     {
       question: 'Como funcionarão a inscrição e o pagamento?',
       answer:
-        'Após preencher o formulário, você receberá pelo WhatsApp a confirmação da solicitação e o link para pagamento. Sua inscrição será confirmada assim que o pagamento for aprovado.',
+        'O formulário envia uma solicitação de inscrição. Nossa equipe continuará o atendimento pelo WhatsApp para conferir seus dados e enviar manualmente as orientações de pagamento. A confirmação acontece após a conferência do pagamento pela equipe.',
     },
     {
       question: 'Estudantes terão um valor especial?',
       answer:
-        `Sim. Estudantes de qualquer curso pagam ${formatPrice(rules.studentPriceCents)}. A condição será informada por autodeclaração no formulário.`,
+        `Sim. Estudantes de qualquer curso podem receber o valor de ${formatPrice(rules.studentPriceCents)} após a conferência manual das informações e da carteirinha pelo WhatsApp. Se a condição não for validada, ainda será possível participar pelo valor geral.`,
     },
     {
       question: 'Como receberei o acesso e o certificado?',
       answer:
-        'O link de acesso será enviado pelo WhatsApp aos participantes com inscrição confirmada. Após o evento, a organização enviará as orientações para emissão ou recebimento do certificado.',
+        'Nossa equipe enviará manualmente pelo WhatsApp o acesso aos participantes com inscrição confirmada. Após o evento, a organização enviará as orientações para emissão ou recebimento do certificado.',
     },
   ],
 }

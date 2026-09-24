@@ -1,6 +1,9 @@
+> **Documento histórico:** este arquivo descreve o fluxo automatizado anterior
+> e não representa a especificação vigente. Consulte `docs/visao-geral.md`.
+
 # Registro da implementação — tarefas 1–5
 
-Criado em 06/09/2026 e atualizado em 15/09/2026. Branch: `codex/primeiras-cinco-tarefas`.
+Criado em 06/09/2026 e atualizado em 23/09/2026. Implementação atualmente mantida na branch de trabalho do projeto.
 
 ## Entregas
 
@@ -24,7 +27,7 @@ Criado em 06/09/2026 e atualizado em 15/09/2026. Branch: `codex/primeiras-cinco-
 
 ## Verificação
 
-- 33 testes automatizados de regras, componentes e cliente HTTP passaram.
+- 39 testes automatizados de regras, componentes e cliente HTTP passaram na última verificação completa.
 - Verificação de tipos inclui os testes, além dos arquivos da aplicação.
 - Build de produção e lint verificados na entrega.
 - Inspeção de navegador em 360, 768 e 1440 pixels. Verificado carregamento das imagens e ausência de rolagem horizontal; FAQ abriu corretamente. Layout de tablet foi ajustado para composição vertical da abertura.
@@ -33,6 +36,6 @@ Criado em 06/09/2026 e atualizado em 15/09/2026. Branch: `codex/primeiras-cinco-
 
 ## Limites importantes
 
-A API ainda não existe. Sem data, preço e integrações, a versão pública permanece fechada. Não houve processamento real de CPF, pagamento, WhatsApp ou confirmação de inscrição. A prévia local exibe o formulário para revisão, mas mantém o envio bloqueado.
+A API ainda não existe. As datas públicas de 20 e 21/02/2027, o fuso `America/Cuiaba` e valores de trabalho já constam no frontend, mas os horários, a confirmação final dos preços e as integrações continuam pendentes. A configuração mantém `registrationsOpen: false` e `integrationsReady: false`; por isso a versão pública permanece fechada. Não houve processamento real de CPF, pagamento, WhatsApp ou confirmação de inscrição. A prévia local exibe o formulário para revisão, mas mantém o envio bloqueado.
 
 Após as cinco tarefas iniciais, foram incorporados os 10 temas, os 12 palestrantes, duas fotos oficiais, o seletor de semestre e a animação de entrada dos cards. Ainda faltam 10 fotos, a apresentação curta de Dr. Luiz Felipe e 3 CRMs. A próxima etapa estrutural continua sendo a tarefa 6: escolha da infraestrutura e dos provedores, com detalhamento dos adaptadores.

@@ -1,3 +1,6 @@
+> **Documento histórico:** este arquivo descreve o fluxo automatizado anterior
+> e não representa a especificação vigente. Consulte `docs/visao-geral.md`.
+
 # Contrato de inscrições — tarefas 1–5
 
 Implementado nesta etapa: tipos, cliente HTTP, validação das respostas e interfaces de solicitação/retorno/recuperação. **Nenhum endpoint está implementado ainda.** A persistência, autorização, deduplicação real, cobrança e mensagens pertencem às tarefas posteriores.

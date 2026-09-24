@@ -1,10 +1,10 @@
-import { useRef, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import {
   calculatePriceCents,
   formatPrice,
-  registrationsAvailable,
-  type EventRules,
-} from '../../domain/event'
+  requestsAvailable,
+  type SymposiumRules,
+} from '../../domain/symposium'
 import {
   formatBrazilianPhone,
   formatCpf,
@@ -18,7 +18,7 @@ import './Formulario.css'
 import {eventContent} from "../../content/event.ts";
 
 interface Props {
-  rules?: EventRules
+  rules?: SymposiumRules
   previewWhenClosed?: boolean
   onSubmit?: (
     input: RegistrationInput,
@@ -43,12 +43,26 @@ export function Formulario({
   const [status, setStatus] = useState<
     'idle' | 'sending' | 'accepted' | 'error'
   >('idle')
+  const [availabilityCheckedAt, setAvailabilityCheckedAt] = useState(
+    () => new Date(),
+  )
   const submitting = useRef(false)
   const key = useRef<string | null>(null)
   const formRef = useRef<HTMLFormElement>(null)
   const student = input.profession === 'student'
-  const available = registrationsAvailable(rules)
+  const available = requestsAvailable(rules, availabilityCheckedAt)
   const hasErrors = Object.values(errors).some(Boolean)
+  useEffect(() => {
+    const closesAt = Date.parse(rules.registrationClosesAt)
+    const delay = closesAt - availabilityCheckedAt.getTime()
+    if (!Number.isFinite(closesAt) || delay <= 0) return
+
+    const timeout = window.setTimeout(
+      () => setAvailabilityCheckedAt(new Date()),
+      Math.min(delay, 2_147_483_647),
+    )
+    return () => window.clearTimeout(timeout)
+  }, [availabilityCheckedAt, rules.registrationClosesAt])
   const change = (name: keyof RegistrationInput, value: string | boolean) => {
     setInput((previous) => ({ ...previous, [name]: value }))
     setErrors((previous) => ({ ...previous, [name]: undefined }))
@@ -65,7 +79,10 @@ export function Formulario({
       formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus()
       return
     }
-    if (!available) return
+    if (!requestsAvailable(rules)) {
+      setAvailabilityCheckedAt(new Date())
+      return
+    }
     submitting.current = true
     setStatus('sending')
     try {
@@ -86,24 +103,22 @@ export function Formulario({
         data-scroll-reveal
         data-reveal-delay="1"
       >
-        <span className="small-label">VAMOS NOS ENCONTRAR EM BREVE</span>
+        <span className="small-label">INSCRIÇÕES ENCERRADAS</span>
         <h3>
           Novas conexões
           <br />
           começam aqui.
         </h3>
-        <p>
-          A data e o valor serão divulgados antes da abertura das inscrições.
-        </p>
+        <p>O prazo para solicitar inscrição terminou.</p>
         <div className="student-note">
           <span aria-hidden="true">↗</span>
           <div>
             <strong>{formatPrice(rules.studentPriceCents)} para estudantes</strong>
-            <p>De qualquer curso, por autodeclaração.</p>
+            <p>De qualquer curso, com carteirinha conferida pelo WhatsApp.</p>
           </div>
         </div>
         <button className="button" disabled>
-          Inscrições em breve
+          Inscrições encerradas
         </button>
         <p className="form-footnote">Evento on-line</p>
       </div>
@@ -113,11 +128,11 @@ export function Formulario({
       <div className="registration-card" role="status">
         <h3>Solicitação recebida</h3>
         <p>
-          Se os dados estiverem corretos, você receberá as orientações pelo
-          WhatsApp cadastrado. Se já houver uma inscrição, as instruções de
-          retomada serão enviadas ao contato original.
+          Enviaremos uma mensagem para o WhatsApp informado. Nossa equipe
+          continuará o atendimento por lá para conferir seus dados e fornecer
+          as orientações de pagamento.
         </p>
-        <p>A solicitação ainda não é uma inscrição confirmada.</p>
+        <p>O envio do formulário ainda não confirma sua inscrição.</p>
       </div>
     )
   function field(
@@ -168,7 +183,7 @@ export function Formulario({
       ref={formRef}
       aria-label="Solicitação de inscrição"
     >
-      <p className="small-label">SUA INSCRIÇÃO</p>
+      <p className="small-label">SUA SOLICITAÇÃO</p>
       <h3>Faça parte do nosso evento.</h3>
       {!available && (
         <p>
@@ -181,6 +196,12 @@ export function Formulario({
           Preencha os campos obrigatórios e corrija os dados destacados abaixo.
         </p>
       )}
+      <p className="form-process-note">
+        Ao enviar este formulário, você solicitará sua inscrição. Nossa equipe
+        continuará o atendimento pelo WhatsApp para conferir os dados e enviar
+        as orientações de pagamento. A inscrição somente será confirmada após
+        essa etapa.
+      </p>
       <p className="form-price">
         {rules.basePriceCents === null
           ? 'Valor em breve'
@@ -227,6 +248,10 @@ export function Formulario({
         </div>
         {student && (
           <div className="academic-fields">
+            <p className="student-verification-note">
+              A carteirinha será conferida posteriormente pelo WhatsApp. Não
+              envie o documento por este formulário.
+            </p>
             {field('course', 'Curso')}
             <div className="field">
               <label htmlFor="semester">Semestre</label>
@@ -272,8 +297,10 @@ export function Formulario({
             required
           />
           <span>
-            Autorizo o envio de mensagens pelo WhatsApp relacionadas a esta inscrição,
-            incluindo confirmações, informações sobre pagamento, acesso ao evento e avisos importantes.
+            Autorizo a LANNcHSR a entrar em contato comigo pelo WhatsApp para
+            conferir os dados desta solicitação, orientar o pagamento,
+            confirmar a inscrição e enviar informações relacionadas ao
+            simpósio.
           </span>
         </label>
         {errors.whatsappConsent && (
@@ -282,12 +309,12 @@ export function Formulario({
           </span>
         )}
       </fieldset>
-      {/*<p className="form-privacy">*/}
-      {/*  A LANNcHSR utilizará os dados informados para identificar sua inscrição,*/}
-      {/*  aplicar a categoria de preço, acompanhar o pagamento e enviar*/}
-      {/*  orientações de acesso pelo WhatsApp. O CPF identifica uma única*/}
-      {/*  inscrição por pessoa.*/}
-      {/*</p>*/}
+      <p className="form-privacy">
+        Os dados informados serão utilizados para processar sua solicitação de
+        inscrição e realizar o atendimento relacionado ao evento. A condição
+        de estudante será conferida manualmente pelo WhatsApp. Não envie
+        carteirinha ou comprovante de pagamento por este formulário.
+      </p>
       {status === 'error' && (
         <p role="alert" className="field-error">
           Não foi possível enviar agora. Seus dados foram mantidos; tente
@@ -295,10 +322,10 @@ export function Formulario({
         </p>
       )}
       <button className="button" type="submit" disabled={status === 'sending'}>
-        {status === 'sending' ? 'Enviando…' : 'Solicitar inscrição'}
+        {status === 'sending' ? 'Enviando solicitação…' : 'Solicitar inscrição'}
       </button>
       <p className="form-footnote">
-        A confirmação acontece após a aprovação do pagamento.
+        O envio do formulário ainda não confirma sua inscrição.
       </p>
     </form>
   )

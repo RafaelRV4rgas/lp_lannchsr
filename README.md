@@ -1,17 +1,29 @@
 # Simpósio de Neurocirurgia · LANNcHSR
 
-Landing page em React, TypeScript e Vite para “Neurocirurgia é tudo a Mesma Coisa?”. Implementação das tarefas 1–5 do plano: interface pública, formulário, regras puras e contratos para integração futura.
+Landing page em React, TypeScript e Vite para o simpósio on-line
+**Neurocirurgia é tudo a Mesma Coisa?**, marcado para 20 e 21/02/2027.
+
+## Fluxo do produto
+
+O formulário inicia uma solicitação de inscrição. No fluxo operacional
+planejado, o backend registrará os dados e enviará somente a primeira mensagem
+pelo WhatsApp. A equipe continuará manualmente a conferência, validação da
+carteirinha, pagamento, confirmação, dúvidas, reembolso e envio do acesso.
+
+Backend, painel e WhatsApp real ainda não estão implementados. O formulário
+fica disponível até 20/02/2027 às 00:00 no fuso de Cuiabá, mas o envio real
+retornará erro enquanto o endpoint do backend não existir.
 
 ## Executar
 
-Validado com Node.js 24 e npm. A instalação precisa incluir as dependências opcionais nativas da plataforma.
+Validado com Node.js 24 e npm:
 
 ```bash
 npm ci
 npm run dev
 ```
 
-O Vite usa a porta 5173. Para produção estática, o diretório gerado é `dist/`; a hospedagem deve encaminhar `/inscricao` para `index.html`, sem tratar `/api/*` como fallback HTML quando o backend for conectado.
+O Vite usa a porta 5173. A build estática é gerada em `dist/`.
 
 ## Verificar
 
@@ -22,38 +34,48 @@ npm run lint
 npm run build
 ```
 
-Os testes cobrem preço fixo para estudantes, abertura condicionada, validação e normalização de dados, máscaras e limites de CPF/WhatsApp, campos estudantis, falha de envio, cliques repetidos, idempotência da tentativa, retorno/recuperação, validade da cobrança e conteúdo e animação dos cards de palestrantes. Não comprovam transações de banco ou pagamentos reais, ainda inexistentes.
+Os testes cobrem regras de abertura, preços, validação e normalização do
+formulário, campos estudantis, acessibilidade, falha de transporte,
+idempotência, conteúdo e animações. Eles não comprovam persistência, mensagens
+ou pagamentos reais, pois esses serviços ainda não existem.
 
-## Editar conteúdo e regras
+## Conteúdo e código
 
-- `src/content/event.ts`: textos e apoios do evento. `src/content/speakers.ts`: 10 temas e 12 palestrantes informados pela organização; duas fotos oficiais, imagem genérica nos demais cards, apresentações demonstrativas e CRMs pendentes sinalizados.
-- `src/domain/event.ts`: configuração inicial fechada, preço fixo para estudantes e pré-requisitos para abertura. O backend futuro será a autoridade dessas configurações.
-- `src/domain/registration.ts`: dados do participante e validação.
-- `src/components/`: apresentação, formulário e acompanhamento.
-- `src/contracts/api.ts` e `src/services/registration-client.ts`: fronteira da API; transporte injetável apenas nos testes.
+- `src/content/event.ts`: textos, benefícios, FAQ, temas e referências aos
+  palestrantes.
+- `src/content/speakers.ts`: palestrantes e apresentações.
+- `src/content/rules.ts`: configuração atual do evento.
+- `src/domain/symposium.ts`: regras puras do simpósio e abertura das
+  solicitações.
+- `src/domain/registration.ts`: dados, máscaras, normalização e validação do
+  formulário.
+- `src/components/`: apresentação e experiência da landing page.
+- `src/contracts/api.ts` e `src/services/registration-client.ts`: fronteira
+  mínima para o futuro envio da solicitação.
 
-## Estado atual e limitações
+## Estado e limitações
 
-Sem data, preço e integrações, a página não coleta inscrições: mostra “Inscrições em breve”. No ambiente de desenvolvimento, uma prévia permite revisar o formulário fechado sem habilitar o envio. O semestre do estudante é selecionado em uma lista de 1º a 12º semestre e “Outro”.
+- Valores atualmente configurados: R$ 25,00 geral e R$ 15,00 estudante; falta
+  confirmação final.
+- A categoria estudante dependerá da conferência manual da carteirinha pelo
+  WhatsApp.
+- O formulário não recebe carteirinha nem comprovante.
+- Novas solicitações são bloqueadas a partir de 20/02/2027 às 00:00 no fuso
+  `America/Cuiaba`.
+- Não há consulta, recuperação, cobrança, confirmação ou acesso automáticos.
+- Horários, materiais de marca, alguns dados de palestrantes, contato oficial
+  e política completa de privacidade continuam pendentes.
 
-`/inscricao` contém a interface de recuperação. O cliente HTTP está pronto para consumir os endpoints documentados, mas nenhum servidor está implementado. Chamadas sem backend exibem erro; não simulam envio de WhatsApp ou pagamento.
+## Documentação canônica
 
-O token de retorno é recebido no fragmento, removido da URL antes da renderização e mantido apenas em memória. Validade, verificação de contato e unicidade serão impostas pelo backend. Não inserir dados pessoais reais nos testes.
+- [Visão geral](docs/visao-geral.md)
+- [Regras do simpósio](docs/simposio/regras.md)
+- [Landing page](docs/landing-page/especificacao.md)
+- [Backend futuro](docs/backend/especificacao.md)
+- [Painel futuro](docs/painel/especificacao.md)
+- [Operação manual](docs/operacao/fluxo-manual.md)
+- [Roadmap](docs/roadmap/automacoes-futuras.md)
+- [Pendências](docs/pendencias.md)
 
-O cérebro é uma imagem original de pontos e conexões, com movimento CSS discreto. A versão móvel/tablet é estática e mais leve; a preferência por redução de movimento desativa a animação. Não se trata de um modelo 3D interativo. O logotipo recebido foi mantido; cores e arquivo definitivo da marca ainda dependem da organização.
-
-Os cards dos palestrantes entram em sequência quando a seção aparece na tela. Essa animação também respeita a preferência do sistema por movimento reduzido. As fotos de Dr. Giovani Mendes e Dr. Renato Santos já foram incorporadas; os outros 10 cards usam uma imagem genérica temporária. Onze apresentações curtas usam os dados profissionais recebidos e a apresentação de Dr. Luiz Felipe continua demonstrativa. Há 9 CRMs informados e 3 pendentes.
-
-Antes dos palestrantes, a página apresenta uma grade responsiva com as 10 subespecialidades abordadas e uma descrição curta de cada área, sem numeração visual. Os rótulos “SUBESPECIALIDADES ABORDADAS” e “QUEM CONDUZ ESSA JORNADA” seguem o mesmo padrão visual `eyebrow`, em caixa alta.
-
-A navegação utiliza Lenis para scroll inercial moderado. Títulos, textos, benefícios, FAQ, inscrição e rodapé são revelados uma única vez ao entrarem na tela. Os dois comportamentos respeitam `prefers-reduced-motion`.
-
-Nenhuma publicação, integração financeira ou envio real foi realizado nesta etapa.
-
-## Documentação
-
-- [Spec](docs/spec.md)
-- [Plano](docs/superpowers/plans/2026-09-06-simposio-neuro.md)
-- [Pendências da organização](docs/pendencias.md)
-- [Contrato de inscrições](docs/api-inscricoes.md)
-- [Registro da implementação](docs/implementacao-etapas-1-5.md)
+Os arquivos em `docs/historico/` documentam o fluxo automatizado anterior e
+não representam a especificação vigente.

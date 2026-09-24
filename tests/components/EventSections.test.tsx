@@ -1,4 +1,5 @@
 import { render, screen, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { expect, it, vi } from 'vitest'
 import { StrictMode } from 'react'
 import { EventSections } from '../../src/components/event/EventSections'
@@ -61,6 +62,26 @@ it('highlights the certificate as a fifth benefit', () => {
       .getByRole('heading', { name: 'Leve a experiência com você' })
       .closest('article'),
   ).not.toHaveTextContent(/certificado/i)
+})
+
+it('describes manual follow-up without promising automated payment or access', async () => {
+  const user = userEvent.setup()
+  render(<EventSections content={eventContent} />)
+
+  await user.click(screen.getByText('Como funcionarão a inscrição e o pagamento?'))
+  await user.click(screen.getByText('Estudantes terão um valor especial?'))
+  await user.click(screen.getByText('Como receberei o acesso e o certificado?'))
+
+  expect(
+    screen.getByText(/equipe continuará o atendimento pelo WhatsApp/i),
+  ).toBeVisible()
+  expect(screen.getByText(/carteirinha.*WhatsApp/i)).toBeVisible()
+  expect(
+    screen.getByText(/confirmação.*após.*pagamento/i),
+  ).toBeVisible()
+  expect(
+    screen.queryByText(/sistema enviará|automaticamente/i),
+  ).not.toBeInTheDocument()
 })
 
 it('reveals section content once when it enters the viewport', () => {

@@ -1,6 +1,9 @@
+> **Documento histórico:** este arquivo descreve o fluxo automatizado anterior
+> e não representa a especificação vigente. Consulte `docs/visao-geral.md`.
+
 # Spec — Simpósio de Neurocirurgia
 
-Versão: 1.3 · Atualizada em: 21/09/2026
+Versão: 1.4 · Atualizada em: 23/09/2026
 
 Documento de escopo do produto, consolidado a partir das decisões da organização. As dependências ainda não escolhidas estão explicitadas na seção 12; não representam funcionalidades prontas. As salvaguardas técnicas abaixo são propostas para viabilizar as regras aprovadas.
 
@@ -56,7 +59,7 @@ Direção aprovada: **imersiva, com cérebro abstrato formado por pontos e conex
 - Animação simplificada no celular, estática com preferência por redução de movimento e alternativa estática quando a renderização não for suportada.
 - Conteúdo e formulário devem funcionar mesmo sem carregar a animação.
 
-Sem data definida, apresentar “Data e horário em breve” e “Inscrições em breve”, sem aceitar inscrições ou gerar cobranças. O ambiente de desenvolvimento pode exibir uma prévia não enviável para revisão. Usar apenas nomes e temas confirmados; fotos e apresentações pendentes devem permanecer marcadas como conteúdo temporário até a substituição.
+O evento ocorrerá on-line em dois dias, **20 e 21/02/2027**, no fuso **America/Cuiaba**. Os horários continuam pendentes. Enquanto a configuração técnica não contiver data/hora ISO válida, preços válidos, integrações prontas e abertura manual, apresentar “Inscrições em breve”, sem aceitar inscrições ou gerar cobranças. O ambiente de desenvolvimento pode exibir uma prévia não enviável para revisão. Usar apenas nomes e temas confirmados; fotos e apresentações pendentes devem permanecer marcadas como conteúdo temporário até a substituição.
 
 ## 4. Formulário e identificação
 
@@ -81,12 +84,13 @@ Cada CPF pode ter apenas uma inscrição por evento. Reenvios não criam novo ca
 
 ## 5. Regras comerciais e abertura
 
-- Preço-base: configurável; valor ainda não definido.
-- Valor estudantil fixo, configurável nas regras do evento.
+- Preço-base atualmente configurado no frontend: **R$ 25,00**; confirmar como valor público final antes da abertura.
+- Valor estudantil fixo atualmente configurado no frontend: **R$ 15,00**, para estudantes de qualquer curso por autodeclaração; confirmar como valor público final antes da abertura.
 - Calcular valores no servidor. Salvar a categoria e o valor aplicados em cada cobrança, preservando cobranças existentes quando as configurações mudarem.
 - Não há limite comercial de inscrições. Eventuais limites da plataforma de transmissão são restrições técnicas e devem ser avaliados na escolha do serviço.
 - Definir uma data não abre inscrições automaticamente. A organização precisa acionar a abertura no painel.
 - Só permitir abertura com data definida, preço válido e integrações de produção prontas.
+- A configuração atual mantém inscrições indisponíveis: `registrationsOpen` e `integrationsReady` estão falsos. O fuso já está definido como `America/Cuiaba`, mas `startsAt` permanece vazio até a definição do horário de início e seu registro no formato ISO exigido pelo domínio.
 - Fechamento manual impede novas inscrições e cobranças. A política para cobranças já emitidas deve ser explícita na implementação; não cancelar pagamentos recebidos silenciosamente.
 
 ## 6. Validade da cobrança
@@ -137,7 +141,7 @@ Salvar tentativas e identificadores das mensagens; acompanhar status de envio/en
 
 Acesso restrito à organização por autenticação e autorização no servidor.
 
-**Configurações:** data/horário/fuso, abertura e fechamento de inscrições, preço-base, preço fixo para estudantes, validade da cobrança e cadastro/liberação do link do evento.
+**Configurações:** dias e horários do evento no fuso oficial, abertura e fechamento de inscrições, preço-base, preço fixo para estudantes, validade da cobrança e cadastro/liberação do link do evento.
 
 **Acompanhamento:** listar e buscar inscrições por nome/CPF, consultar dados do formulário, categoria, valor cobrado, situação do pagamento, confirmação, eventual vencimento da cobrança e status das mensagens. Exibir totais de confirmados e pendentes.
 
@@ -155,7 +159,7 @@ Separar responsabilidades:
 - **Processamento assíncrono:** envio e retentativas de WhatsApp e reconciliação de pagamentos.
 - **Administração:** acesso protegido, consultas, configuração e liberação de acesso.
 
-Dados principais: configuração do evento, inscrição, cobrança/pagamento, consentimento, notificação e histórico administrativo. Manter estados de pagamento e notificação separados do estado da inscrição; falha no WhatsApp não desfaz pagamento confirmado.
+Dados principais: configuração do evento, dias/sessões da programação, inscrição, cobrança/pagamento, consentimento, notificação e histórico administrativo. Como o simpósio ocorre em dois dias, o backend deve armazenar o período ou os dias da programação separadamente; `startsAt` continua sendo o instante de início usado pela regra de abertura, e não deve ser reutilizado como o único campo editorial do evento. Manter estados de pagamento e notificação separados do estado da inscrição; falha no WhatsApp não desfaz pagamento confirmado.
 
 Estados de inscrição previstos: aguardando pagamento, confirmada e expirada para retomada. Guardar separadamente situações de cobrança como criada, aprovada, expirada, cancelada e estornada, conforme o provedor.
 
@@ -181,8 +185,8 @@ Credenciais ficam exclusivamente no servidor. Aplicar HTTPS, restrição de aces
 
 | Item | Situação / ação necessária |
 | --- | --- |
-| Data, horário e fuso do evento | Data definida em 21/02/2027; horário e fuso oficial ainda pendentes |
-| Preço-base | Organização definirá antes da abertura |
+| Datas, horários e fuso do evento | Evento em 20 e 21/02/2027, fuso America/Cuiaba; horários dos dois dias ainda pendentes |
+| Preços | Frontend configurado com R$ 25,00 geral e R$ 15,00 estudante; confirmar valores finais antes da abertura |
 | Validade da cobrança | Definir prazo conforme os recursos do provedor de pagamento |
 | Programação e palestrantes | Nomes e 10 temas recebidos; horários e ordem pendentes; 2 de 12 fotos, 11 de 12 apresentações e 9 de 12 CRMs recebidos |
 | Plataforma de transmissão | Ainda não escolhida; cadastrar link antes de liberá-lo aos confirmados |

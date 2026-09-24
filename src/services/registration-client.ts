@@ -1,8 +1,4 @@
-import {
-  parseRegistrationResult,
-  type RegistrationClient,
-} from '../contracts/api'
-import { digitsOnly, validCpf } from '../domain/registration'
+import type { RegistrationClient } from '../contracts/api'
 
 export function createRegistrationClient(
   transport: typeof fetch = (...args) => fetch(...args),
@@ -27,10 +23,6 @@ export function createRegistrationClient(
       )
     return response.json()
   }
-  function auth(token: string) {
-    if (!token.trim()) throw new Error('ACCESS_REQUIRED')
-    return { Authorization: `Bearer ${token}` }
-  }
   function idempotency(key: string) {
     if (!key.trim()) throw new Error('IDEMPOTENCY_REQUIRED')
     return { 'Idempotency-Key': key }
@@ -52,28 +44,6 @@ export function createRegistrationClient(
           method: 'POST',
           headers: idempotency(key),
           body: JSON.stringify(input),
-        }),
-      )
-    },
-    async recover(cpf) {
-      if (!validCpf(cpf)) throw new Error('INVALID_CPF')
-      return accepted(
-        await request('/api/registrations/recovery', {
-          method: 'POST',
-          body: JSON.stringify({ cpf: digitsOnly(cpf) }),
-        }),
-      )
-    },
-    async read(token) {
-      return parseRegistrationResult(
-        await request('/api/registration', { headers: auth(token) }),
-      )
-    },
-    async resume(token, key) {
-      return parseRegistrationResult(
-        await request('/api/registration/resume', {
-          method: 'POST',
-          headers: { ...auth(token), ...idempotency(key) },
         }),
       )
     },
