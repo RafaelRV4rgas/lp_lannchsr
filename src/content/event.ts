@@ -105,17 +105,17 @@ export const eventContent = {
     {
       question: 'Como funcionarão a inscrição e o pagamento?',
       answer:
-        'Após preencher o formulário, você receberá pelo WhatsApp a confirmação da solicitação e o link para pagamento. Sua inscrição será confirmada assim que o pagamento for aprovado.',
+        'O formulário envia uma solicitação de inscrição. Nossa equipe continuará o atendimento pelo WhatsApp para conferir seus dados e enviar manualmente as orientações de pagamento. A confirmação acontece após a conferência do pagamento pela equipe.',
     },
     {
       question: 'Estudantes terão um valor especial?',
       answer:
-        `Sim. Estudantes de qualquer curso pagam ${formatPrice(rules.studentPriceCents)}. A condição será informada por autodeclaração no formulário.`,
+        `Sim. Estudantes de qualquer curso podem receber o valor de ${formatPrice(rules.studentPriceCents)} após a conferência manual das informações e da carteirinha pelo WhatsApp. Se a condição não for validada, ainda será possível participar pelo valor geral.`,
     },
     {
       question: 'Como receberei o acesso e o certificado?',
       answer:
-        'O link de acesso será enviado pelo WhatsApp aos participantes com inscrição confirmada. Após o evento, a organização enviará as orientações para emissão ou recebimento do certificado.',
+        'Nossa equipe enviará manualmente pelo WhatsApp o acesso aos participantes com inscrição confirmada. Após o evento, a organização enviará as orientações para emissão ou recebimento do certificado.',
     },
   ],
 }
