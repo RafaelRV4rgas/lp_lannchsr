@@ -10,9 +10,9 @@ planejado, o backend registrará os dados e enviará somente a primeira mensagem
 pelo WhatsApp. A equipe continuará manualmente a conferência, validação da
 carteirinha, pagamento, confirmação, dúvidas, reembolso e envio do acesso.
 
-Backend, painel e WhatsApp real ainda não estão implementados. A versão
-pública mantém as solicitações fechadas; no desenvolvimento, o formulário é
-exibido como prévia não enviável.
+Backend, painel e WhatsApp real ainda não estão implementados. O formulário
+fica disponível até 20/02/2027 às 00:00 no fuso de Cuiabá, mas o envio real
+retornará erro enquanto o endpoint do backend não existir.
 
 ## Executar
 
@@ -60,6 +60,8 @@ ou pagamentos reais, pois esses serviços ainda não existem.
 - A categoria estudante dependerá da conferência manual da carteirinha pelo
   WhatsApp.
 - O formulário não recebe carteirinha nem comprovante.
+- Novas solicitações são bloqueadas a partir de 20/02/2027 às 00:00 no fuso
+  `America/Cuiaba`.
 - Não há consulta, recuperação, cobrança, confirmação ou acesso automáticos.
 - Horários, materiais de marca, alguns dados de palestrantes, contato oficial
   e política completa de privacidade continuam pendentes.

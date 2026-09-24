@@ -46,7 +46,11 @@ Os horários de cada dia continuam pendentes.
 
 ## Abertura
 
-Definir datas ou preços não abre solicitações automaticamente. A abertura é
-manual e só pode ocorrer com data e horário válidos, preços confirmados,
-backend pronto, canal oficial configurado, privacidade publicada e operação
-preparada.
+- A disponibilidade é controlada exclusivamente por `registrationClosesAt`.
+- O valor configurado é `2027-02-20T00:00:00-04:00`, início do primeiro dia
+  do evento no fuso de Cuiabá.
+- Antes desse instante, o formulário fica disponível.
+- Nesse instante e depois dele, novas solicitações ficam bloqueadas.
+- Data ausente ou inválida bloqueia o formulário por segurança.
+- Não existem regras separadas de início, abertura manual ou prontidão do
+  backend.

@@ -414,7 +414,8 @@ somente para documentos canônicos.
    ser enviada pelo formulário.
 6. O frontend não oferece recuperação, acompanhamento ou retomada de cobrança.
 7. O frontend não exibe link, vencimento ou estado de pagamento.
-8. A versão pública mantém o formulário fechado sem backend.
+8. A versão pública disponibiliza o formulário até
+   `2027-02-20T00:00:00-04:00`; a disponibilidade não depende do backend.
 9. A prévia de desenvolvimento não envia dados quando as solicitações estão
    fechadas.
 10. Máscaras, validações, acessibilidade, idempotência e prevenção de duplo

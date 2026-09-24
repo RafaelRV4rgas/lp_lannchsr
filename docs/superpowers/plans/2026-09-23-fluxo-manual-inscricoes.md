@@ -1,5 +1,9 @@
 # Fluxo Manual de Solicitações de Inscrição — Implementation Plan
 
+> Plano executado e preservado como registro. A regra de disponibilidade aqui
+> descrita foi substituída em 24/09/2026 por `registrationClosesAt`; consulte a
+> documentação canônica em `docs/landing-page/especificacao.md`.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Atualizar a landing page para representar somente uma solicitação de inscrição seguida de atendimento manual pelo WhatsApp e reorganizar a documentação por responsabilidade.

@@ -1,32 +1,58 @@
 import { expect, it, vi } from 'vitest'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Formulario } from '../../src/components/formulario/Formulario'
 import type { SymposiumRules } from '../../src/domain/symposium'
 
 const closedRules: SymposiumRules = {
-  startsAt: '',
+  registrationClosesAt: '2000-01-01T00:00:00-04:00',
   timeZone: null,
-  requestsOpen: false,
   basePriceCents: 2500,
   studentPriceCents: 1500,
-  backendReady: false,
 }
 
 const openRules = {
   ...closedRules,
-  startsAt: '2027-03-10T13:00:00-04:00',
+  registrationClosesAt: '2099-01-01T00:00:00-04:00',
   timeZone: 'America/Cuiaba',
   basePriceCents: 10000,
   studentPriceCents: 6000,
-  backendReady: true,
-  requestsOpen: true,
 }
-it('keeps registration closed without a valid date', () => {
+it('closes an already rendered form when the cutoff arrives', () => {
+  vi.useFakeTimers()
+  vi.setSystemTime(new Date('2027-02-19T23:59:59-04:00'))
+
+  try {
+    render(
+      <Formulario
+        rules={{
+          ...openRules,
+          registrationClosesAt: '2027-02-20T00:00:00-04:00',
+        }}
+      />,
+    )
+    expect(
+      screen.getByRole('button', { name: 'Solicitar inscrição' }),
+    ).toBeEnabled()
+
+    act(() => vi.advanceTimersByTime(1000))
+
+    expect(
+      screen.getByRole('button', { name: /inscrições encerradas/i }),
+    ).toBeDisabled()
+  } finally {
+    vi.useRealTimers()
+  }
+})
+
+it('keeps registration closed after the closing date', () => {
   render(<Formulario rules={closedRules} />)
   expect(
-    screen.getByRole('button', { name: /inscrições em breve/i }),
+    screen.getByRole('button', { name: /inscrições encerradas/i }),
   ).toBeDisabled()
+  expect(
+    screen.getByText(/prazo para solicitar inscrição terminou/i),
+  ).toBeVisible()
   expect(screen.queryByLabelText(/CPF/i)).not.toBeInTheDocument()
   expect(screen.getByText(/carteirinha.*WhatsApp/i)).toBeVisible()
   expect(screen.queryByText(/autodeclaração/i)).not.toBeInTheDocument()

@@ -1,6 +1,6 @@
 # Especificação da landing page
 
-Status: implementada com formulário fechado para envio real.
+Status: implementada com formulário disponível até a data de fechamento.
 
 ## Responsabilidade
 
@@ -64,10 +64,15 @@ exclusão de dados.
 
 ## Disponibilidade e transporte
 
+O formulário fica disponível antes de `2027-02-20T00:00:00-04:00` e bloqueia
+novas solicitações nesse instante ou depois dele. Data ausente ou inválida
+também o bloqueia. Não há regra adicional de início, abertura manual ou
+prontidão do backend.
+
 O cliente HTTP possui somente `POST /api/registrations`, com chave de
 idempotência e resposta genérica `{ "accepted": true }`. Esse endpoint ainda
-não existe. Por isso, a versão pública mantém solicitações fechadas; a prévia
-de desenvolvimento exibe e valida o formulário, mas não chama o transporte.
+não existe; portanto, o formulário pode ser preenchido, mas tentativas reais
+de envio retornam erro e preservam os dados preenchidos.
 
 Não existem rota de acompanhamento, recuperação por CPF, token no navegador,
 retomada de cobrança ou consulta financeira.

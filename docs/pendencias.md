@@ -31,8 +31,9 @@ Atualizado em 24/09/2026. Consulte a [visão geral](./visao-geral.md) e as
 | Definir responsáveis por atendimento, confirmação e acesso | Em aberto |
 
 A integração financeira não bloqueia a conclusão visual da landing page. Ela
-pertence ao roadmap híbrido. Backend, painel e canal real, porém, são
-necessários antes de abrir solicitações ao público.
+pertence ao roadmap híbrido. Backend, painel e canal real continuam necessários
+para processar solicitações, embora não controlem a disponibilidade visual do
+formulário.
 
 ## 3. Validação estudantil
 
@@ -63,7 +64,7 @@ O consentimento resumido da landing page não substitui essas definições.
 - Apresentação pública do apoio “Dr Giovani Mendes 2200 deputado federal MT”.
 - Regras de certificado, materiais, sorteios e eventual replay.
 
-## 6. Implementação futura obrigatória antes da abertura
+## 6. Implementação futura obrigatória para processar solicitações
 
 - Backend persistente e endpoint de solicitação.
 - Primeira mensagem automática pelo WhatsApp oficial.
@@ -72,8 +73,8 @@ O consentimento resumido da landing page não substitui essas definições.
 - Tratamento de falha da primeira mensagem.
 - Ambientes, segredos, backup e monitoramento.
 
-Esses itens ainda não existem. Não marcar `backendReady` nem `requestsOpen`
-como verdadeiros antes da implementação e da validação operacional.
+Esses itens ainda não existem. O formulário é bloqueado somente pela data de
+fechamento; até o backend ser implementado, tentativas de envio retornarão erro.
 
 ## 7. Roadmap não bloqueante da primeira versão manual
 

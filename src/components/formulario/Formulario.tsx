@@ -1,4 +1,4 @@
-import { useRef, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import {
   calculatePriceCents,
   formatPrice,
@@ -43,12 +43,26 @@ export function Formulario({
   const [status, setStatus] = useState<
     'idle' | 'sending' | 'accepted' | 'error'
   >('idle')
+  const [availabilityCheckedAt, setAvailabilityCheckedAt] = useState(
+    () => new Date(),
+  )
   const submitting = useRef(false)
   const key = useRef<string | null>(null)
   const formRef = useRef<HTMLFormElement>(null)
   const student = input.profession === 'student'
-  const available = requestsAvailable(rules)
+  const available = requestsAvailable(rules, availabilityCheckedAt)
   const hasErrors = Object.values(errors).some(Boolean)
+  useEffect(() => {
+    const closesAt = Date.parse(rules.registrationClosesAt)
+    const delay = closesAt - availabilityCheckedAt.getTime()
+    if (!Number.isFinite(closesAt) || delay <= 0) return
+
+    const timeout = window.setTimeout(
+      () => setAvailabilityCheckedAt(new Date()),
+      Math.min(delay, 2_147_483_647),
+    )
+    return () => window.clearTimeout(timeout)
+  }, [availabilityCheckedAt, rules.registrationClosesAt])
   const change = (name: keyof RegistrationInput, value: string | boolean) => {
     setInput((previous) => ({ ...previous, [name]: value }))
     setErrors((previous) => ({ ...previous, [name]: undefined }))
@@ -65,7 +79,10 @@ export function Formulario({
       formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus()
       return
     }
-    if (!available) return
+    if (!requestsAvailable(rules)) {
+      setAvailabilityCheckedAt(new Date())
+      return
+    }
     submitting.current = true
     setStatus('sending')
     try {
@@ -86,15 +103,13 @@ export function Formulario({
         data-scroll-reveal
         data-reveal-delay="1"
       >
-        <span className="small-label">VAMOS NOS ENCONTRAR EM BREVE</span>
+        <span className="small-label">INSCRIÇÕES ENCERRADAS</span>
         <h3>
           Novas conexões
           <br />
           começam aqui.
         </h3>
-        <p>
-          A data e o valor serão divulgados antes da abertura das inscrições.
-        </p>
+        <p>O prazo para solicitar inscrição terminou.</p>
         <div className="student-note">
           <span aria-hidden="true">↗</span>
           <div>
@@ -103,7 +118,7 @@ export function Formulario({
           </div>
         </div>
         <button className="button" disabled>
-          Inscrições em breve
+          Inscrições encerradas
         </button>
         <p className="form-footnote">Evento on-line</p>
       </div>

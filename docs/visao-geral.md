@@ -27,19 +27,20 @@ primeira versão operacional.
 
 | Área | Estado | Observação |
 | --- | --- | --- |
-| Landing page | Implementada | Conteúdo, formulário, validações e prévia local estão disponíveis. |
-| Envio da solicitação | Contrato no frontend | Não existe backend; a versão pública permanece fechada. |
+| Landing page | Implementada | Conteúdo, formulário e validações estão disponíveis até a data de fechamento. |
+| Envio da solicitação | Contrato no frontend | Não existe backend; tentativas de envio ainda retornam erro. |
 | Backend | Especificado | Persistência e primeira mensagem ainda não foram implementadas. |
 | Painel administrativo | Especificado | A operação manual ainda não possui interface própria. |
 | WhatsApp | Planejado | Somente a primeira mensagem será automática na versão inicial. |
 | Pagamento | Operação manual planejada | Sem criação ou consulta automática de cobrança. |
 | Modo financeiro híbrido | Roadmap | Integração com provedor e webhooks ficam para uma etapa futura. |
 
-## Limite atual
+## Disponibilidade do formulário
 
-As solicitações devem permanecer fechadas até que backend, canal oficial de
-WhatsApp, privacidade, atendimento e operação estejam prontos. A prévia exibida
-em desenvolvimento não envia dados.
+O formulário fica disponível enquanto o instante atual for anterior a
+`2027-02-20T00:00:00-04:00`. Ao chegar a esse instante, no início do primeiro
+dia do evento em Cuiabá, novas solicitações são bloqueadas. Essa é a única
+regra de disponibilidade; não existem travas manuais de abertura ou de backend.
 
 ## Documentação canônica
 

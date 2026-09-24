@@ -28,6 +28,8 @@ it('shows both event days independently from the technical opening date', () => 
   )
 
   expect(screen.getByText(/Data do evento: 20 e 21\/02\/2027/)).toBeVisible()
-  expect(eventContent.rules.startsAt).toBe('')
+  expect(eventContent.rules.registrationClosesAt).toBe(
+    '2027-02-20T00:00:00-04:00',
+  )
   expect(eventContent.rules.timeZone).toBe('America/Cuiaba')
 })
