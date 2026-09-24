@@ -1,3 +1,6 @@
+> **Documento histórico:** este arquivo descreve o fluxo automatizado anterior
+> e não representa a especificação vigente. Consulte `docs/visao-geral.md`.
+
 # Spec — Simpósio de Neurocirurgia
 
 Versão: 1.4 · Atualizada em: 23/09/2026

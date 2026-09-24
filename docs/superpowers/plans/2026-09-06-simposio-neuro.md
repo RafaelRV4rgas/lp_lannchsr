@@ -1,3 +1,7 @@
+> **Documento histórico:** este plano descreve o fluxo automatizado anterior e
+> não representa a especificação vigente. Consulte `docs/visao-geral.md` e o
+> plano `docs/superpowers/plans/2026-09-23-fluxo-manual-inscricoes.md`.
+
 # Plano de implementação — Simpósio de Neurocirurgia
 
 > **Para execução por agentes:** usar `superpowers:executing-plans` para executar as tarefas com checkpoints. Passos usam caixas de seleção para acompanhar o progresso. Este documento planeja o trabalho; não autoriza iniciar a implementação ou contratar serviços.

@@ -1,3 +1,6 @@
+> **Documento histórico:** este arquivo descreve o fluxo automatizado anterior
+> e não representa a especificação vigente. Consulte `docs/visao-geral.md`.
+
 # Registro da implementação — tarefas 1–5
 
 Criado em 06/09/2026 e atualizado em 23/09/2026. Implementação atualmente mantida na branch de trabalho do projeto.
